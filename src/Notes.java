@@ -52,9 +52,9 @@ public class Notes {
 	public void setBack() {
 		this.back = back;
 	}
-	public void addNote() {
+	public void addNote() { // Function to add note.
 		Scanner s = new Scanner(System.in);
-		title = s.nextLine();
+		title = s.nextLine(); // Continue addNote function;
 		
 	}
 	
