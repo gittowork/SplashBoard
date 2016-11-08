@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Notes {
 	protected String title;
@@ -14,6 +15,47 @@ public class Notes {
 		day = d;
 		year = y;
 		back = b;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public String getNote() {
+		return note;
+	}
+	public int getMonth() {
+		return month;
+	}
+	public int getDay() {
+		return day;
+	}
+	public int getYear() {
+		return year;
+	}
+	public String getBack() {
+		return back;
+	}
+	public void setTitle() {
+		this.title = title;
+	}
+	public void setNote() {
+		this.note = note;
+	}
+	public void setMonth() {
+		this.month = month;
+	}
+	public void setDay() {
+		this.day = day;
+	}
+	public void setYear() {
+		this.year = year;
+	}
+	public void setBack() {
+		this.back = back;
+	}
+	public void addNote() {
+		Scanner s = new Scanner(System.in);
+		title = s.nextLine();
+		
 	}
 	
 	
