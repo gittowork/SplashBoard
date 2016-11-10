@@ -23,7 +23,7 @@ JFrame frame = new JFrame("FrameDemo");
 
 public void yearScreen(GImage o){
 
-	//pop up for displaying the year on seperate screen
+	//pop up for displaying the year on separate screen
 	
 }
 
