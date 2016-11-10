@@ -33,6 +33,7 @@ public class Event extends Calendar{
 		o.add(months, BorderLayout.EAST);
 		o.add(days, BorderLayout.EAST);
 		o.add(title, BorderLayout.BEFORE_FIRST_LINE);
+		o.add(years, BorderLayout.WEST);
 		
 	}
 	
