@@ -1,12 +1,12 @@
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-
+import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class Calendar {
+public class CalendarClass {
 
 protected int month;
 protected int day;
@@ -26,6 +26,8 @@ protected int msHeight = 300;
 protected int msWidth = 400;
 protected int dsHeight = 300;
 protected int dsWidth = 400;
+protected int PROGRAM_HEIGHT = 600;
+protected int PROGRAM_WIDTH = 800;
 private JFrame frame;
 private JPanel p;
 private JButton back;
@@ -33,7 +35,14 @@ private JButton add;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 
 
+public static void main(String[] args){
+	java.awt.EventQueue.invokeLater(new Runnable(){
+	@Override
+	public void run(){
+	CalendarClass c = new CalendarClass();
 
+	}});
+}
 
 public void yearScreen(){
 	frame.setPreferredSize(new Dimension(ysHeight, ysWidth));
