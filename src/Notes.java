@@ -70,7 +70,7 @@ public class Notes {
 	frm.getContentPane().add(title, BorderLayout.CENTER);
 	frm.pack();
 	frm.setVisible(true);
-	
+	//
 	}
 	
 }
