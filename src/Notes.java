@@ -1,26 +1,29 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.Scanner;
+import javax.swing.JTextField;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
 
 public class Notes {
-	protected String title;
-	protected String note;
 	protected int month;
 	protected int day;
 	protected int year;
 	protected String back;
+	protected JFrame frm = new JFrame();
+	protected int SCREEN_HEIGHT = 1366;
+	
+	
+	public static void main(String[] args) {
+		// This is equivalent to "run".
+	}
 	
 	public Notes (String t, String n, int m, int d, int y, String b) {
-		title = t;
-		note = n;
 		month = m;
 		day = d;
 		year = y;
 		back = b;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public String getNote() {
-		return note;
 	}
 	public int getMonth() {
 		return month;
@@ -34,12 +37,6 @@ public class Notes {
 	public String getBack() {
 		return back;
 	}
-	public void setTitle() {
-		this.title = title;
-	}
-	public void setNote() {
-		this.note = note;
-	}
 	public void setMonth() {
 		this.month = month;
 	}
@@ -52,11 +49,28 @@ public class Notes {
 	public void setBack() {
 		this.back = back;
 	}
-	public void addNote() { // Function to add note.
-		Scanner s = new Scanner(System.in);
-		title = s.nextLine(); // Continue addNote function;
+	public void saveNote() { //To add completed note on screen.
+		
 		
 	}
 	
+	public void folderScreen() {
+		
+	}
+	
+	public void noteScreen() {
+		
+	}
+	
+	public void addNoteScreen() {
+	frm.setPreferredSize(new Dimension(1366, 768)); //Screen dimension.
+	JTextField title = new JTextField("Note Title");
+	title.setEditable(true);
+	title.setLocation(683, 384);
+	frm.getContentPane().add(title, BorderLayout.CENTER);
+	frm.pack();
+	frm.setVisible(true);
+	
+	}
 	
 }
