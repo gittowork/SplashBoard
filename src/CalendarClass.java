@@ -1,16 +1,21 @@
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import acm.program.*;
+import acm.graphics.*;
+import acm.util.*;
+import java.awt.*;
+import java.awt.event.*;
 
 
-public class CalendarClass {
+public class CalendarClass extends GraphicsProgram{
 
 protected int month;
 protected int day;
-protected int year; 
+private int year; 
 protected int startmin;
 protected int starthour;
 protected int endmin;
@@ -33,24 +38,47 @@ private JPanel p;
 private JButton back;
 private JButton add;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
-
+private GLine newline;
 
 public static void main(String[] args){
 	java.awt.EventQueue.invokeLater(new Runnable(){
 	@Override
 	public void run(){
 	CalendarClass c = new CalendarClass();
+	c.yearScreen();
 
 	}});
 }
 
+
+
 public void yearScreen(){
-	frame.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	JFrame frame = new JFrame("Calendar");
+	p = new JPanel();
+	p.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	frame.getContentPane().add(p ,BorderLayout.CENTER);
+	newline = new GLine(0, 100, 100, 100);
+	add(newline);
+	addKeyListeners();
+	addMouseListeners();
+	addActionListeners();
+	addButtons();
+	frame.pack();
+	frame.setVisible(true);
+	
+	
+	
+	
+	
+	
 
 
 	//pop up for displaying the year on separate screen
 	
 }
+
+
+
 
 
 
@@ -81,11 +109,23 @@ public void addImages(){
 }
 
 public void addButtons(){
-	add = new JButton("add");
+	add = new JButton("add", null);
+	add.setActionCommand("add");
 	add.addActionListener((ActionListener) this);
-	back = new JButton("back");
+	back = new JButton("back", null);
+	back.setActionCommand(null);
 	back.addActionListener((ActionListener) this);
 }
+
+public void actionPerformed(ActionEvent e) {
+    if ("add".equals(e.getActionCommand())) {
+     //add event
+    } else {
+        //go back
+    }
+} 
+
+
 
 
 }
