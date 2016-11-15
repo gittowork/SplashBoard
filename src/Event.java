@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +19,7 @@ public class Event extends Calendar{
 	private JPanel o;
 	private JPanel m;
 	private JPanel s;
+	private JPanel t;
 	private JFrame frm;
 	private JComboBox months;
 	private JComboBox days;
@@ -62,6 +64,8 @@ public class Event extends Calendar{
 		s.setPreferredSize(new Dimension(200, 50));
 		m = new JPanel();
 		m.setPreferredSize(new Dimension(200, 100));
+		t = new JPanel();
+		t.setPreferredSize(new Dimension(50, 50));
 		months = new JComboBox();
 		months.addItem("Month");
 		for(int i = 0; i < 12; i++){
@@ -72,12 +76,17 @@ public class Event extends Calendar{
 		text = new JTextArea(1, 20);
 		ta = new JTextArea(5, 20);
 		JScrollPane scrollpane = new JScrollPane(ta);
+		back = new JButton("Back");
+		back.setVerticalTextPosition(AbstractButton.CENTER);
+		back.setForeground(Color.BLUE);;
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
 		s.add(days, BorderLayout.WEST);
 		s.add(months, BorderLayout.CENTER);
 		s.add(years, BorderLayout.EAST);
 		m.add(ta, BorderLayout.CENTER);
+		m.add(t, BorderLayout.WEST);
+		t.add(back, BorderLayout.SOUTH);
 		//o.setBackground(Color.MAGENTA);
 		frm = new JFrame("Add Event");
 		frm.add(o, BorderLayout.NORTH);
