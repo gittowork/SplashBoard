@@ -47,17 +47,6 @@ public class Event extends CalendarClass{
 	}
 	
 	public void drawPanel(){ 
-		frm.add(o, BorderLayout.CENTER);
-		o.setPreferredSize(new Dimension(PROGRAM_WIDTH, PROGRAM_HEIGHT));
-		months = new JComboBox(month);
-		months.setSelectedIndex(12);
-		months.addActionListener((ActionListener) this);
-		days.setSelectedIndex(10);
-		days.addActionListener((ActionListener) this);
-		o.add(months, BorderLayout.EAST);
-		o.add(days, BorderLayout.EAST);
-		o.add(title, BorderLayout.BEFORE_FIRST_LINE);
-
 		days = new JComboBox();	
 		days.addItem("Days");;
 		for(int i= 1; i < 32; i++){
