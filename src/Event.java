@@ -28,6 +28,8 @@ public class Event extends CalendarClass{
 	private JTextArea ta;
 	private JButton back;
 	private JButton confirm;
+	private JComboBox hour;
+	private JComboBox min;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
@@ -57,14 +59,24 @@ public class Event extends CalendarClass{
 		for(int i = 2016; i < 2022; i++){
 			years.addItem(i);
 		}
+		hour = new JComboBox();
+		hour.addItem("Hr");
+		for(int i = 1; i < 13; i++){
+			hour.addItem(i);
+		}
+		min = new JComboBox();
+		min.addItem("Min");
+		for(int i = 1; i < 61; i++){
+			min.addItem(i);
+		}
 		o = new JPanel();
-		o.setPreferredSize(new Dimension(200, 50));
+		o.setPreferredSize(new Dimension(480, 120));
 		s =  new JPanel();
-		s.setPreferredSize(new Dimension(200, 50));
+		s.setPreferredSize(new Dimension(480, 120));
 		m = new JPanel();
-		m.setPreferredSize(new Dimension(200, 100));
+		m.setPreferredSize(new Dimension(480, 400));
 		t = new JPanel();
-		t.setPreferredSize(new Dimension(50, 50));
+		t.setPreferredSize(new Dimension(480, 50));
 		months = new JComboBox();
 		months.addItem("Month");
 		for(int i = 0; i < 12; i++){
@@ -72,23 +84,30 @@ public class Event extends CalendarClass{
 		}
 		title.setForeground(Color.BLUE);
 		Description.setForeground(Color.blue);
+		Description.setHorizontalAlignment(JLabel.CENTER);
 		text = new JTextArea(1, 20);
 		ta = new JTextArea(5, 20);
+		ta.setPreferredSize(new Dimension(450, 300));
 		JScrollPane scrollpane = new JScrollPane(ta);
 		back = new JButton("Back");
 		back.setVerticalTextPosition(AbstractButton.CENTER);
 		back.setForeground(Color.BLUE);
-		back.setBounds(40, 20, PROGRAM_WIDTH - 1, 0);
+		confirm = new JButton("Confirm");
+		confirm.setVerticalTextPosition(AbstractButton.CENTER);
+		confirm.setForeground(Color.BLUE);
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
 		s.add(days, BorderLayout.WEST);
 		s.add(months, BorderLayout.CENTER);
 		s.add(years, BorderLayout.EAST);
-		//t.add(back, BorderLayout.WEST);
+		t.add(back, BorderLayout.WEST);
+		t.add(confirm, BorderLayout.EAST);
 		m.add(Description, BorderLayout.NORTH);
 		m.add(ta, BorderLayout.CENTER);
-		m.add(back, BorderLayout.SOUTH);
-		m.setBackground(Color.MAGENTA);
+		m.add(t, BorderLayout.SOUTH);
+		m.setBackground(Color.CYAN);
+		t.setBackground(Color.GRAY);
+		s.setBackground(Color.GRAY);
 		frm = new JFrame("Add Event");
 		frm.add(o, BorderLayout.NORTH);
 		frm.add(s, BorderLayout.CENTER);
