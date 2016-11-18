@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Scanner;
 import javax.swing.JTextField;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -63,7 +62,7 @@ public class Notes {
 	title.setEditable(true);
 	title.setLocation(683, 384);
 	frm.getContentPane().add(title, BorderLayout.CENTER);
-	frm.pack();
+	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 	frm.setVisible(true);
 	//
 	}
