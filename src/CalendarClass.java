@@ -57,10 +57,9 @@ public void yearScreen(){
 	p = new JPanel();
 	p.setPreferredSize(new Dimension(ysHeight, ysWidth));
 	frame.getContentPane().add(p ,BorderLayout.CENTER);
-	newline = new GLine(0, 100, 100, 100);
+	newline = new GLine(0, 0, 100, 100);
 	add(newline);
-	addKeyListeners();
-	addMouseListeners();
+	newline.setVisible(true);
 	addActionListeners();
 	addButtons();
 	frame.pack();
@@ -76,7 +75,9 @@ public void yearScreen(){
 	//pop up for displaying the year on separate screen
 	
 }
-//
+//Empty Square first
+// Draw circle, make circle move in a larger circle
+// Draw another circle, have it move in a larger radius circle
 
 
 
