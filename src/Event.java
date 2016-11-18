@@ -16,19 +16,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Event extends CalendarClass{
-	/*
 	private JPanel o;
 	private JPanel m;
 	private JPanel s;
 	private JPanel t;
 	private JFrame frm;
 	private JComboBox months;
-
-	private JComboBox<Integer> days;
-	private JComboBox year;
-	private JLabel title = new JLabel("Event");
-	private String[] monthStrings = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-
 	private JComboBox days;
 	private JComboBox years;
 	private JTextArea text;
@@ -54,23 +47,8 @@ public class Event extends CalendarClass{
 	}
 	
 	public void drawPanel(){ 
-
-		for(int i = 1; i < 31; i++){
-			days.addItem(i);
-		}
-		frm.add(o, BorderLayout.CENTER);
-		o.setPreferredSize(new Dimension(PROGRAM_WIDTH, PROGRAM_HEIGHT));
-		months = new JComboBox(monthStrings);
-		months.setSelectedIndex(12);
-		months.addActionListener((ActionListener) this);
-		days.setSelectedIndex(10);
-		days.addActionListener((ActionListener) this);
-		/*o.add(months, BorderLayout.EAST);
-		o.add(days, BorderLayout.EAST);
-		o.add(title, BorderLayout.BEFORE_FIRST_LINE);*/
-
-	/*	days = new JComboBox();	
-		days.addItem("Day");
+		days = new JComboBox();	
+		days.addItem("Days");;
 		for(int i= 1; i < 32; i++){
 			days.addItem(i);
 		}
@@ -99,25 +77,28 @@ public class Event extends CalendarClass{
 		JScrollPane scrollpane = new JScrollPane(ta);
 		back = new JButton("Back");
 		back.setVerticalTextPosition(AbstractButton.CENTER);
-		back.setForeground(Color.BLUE);;
+		back.setForeground(Color.BLUE);
+		back.setBounds(40, 20, PROGRAM_WIDTH - 1, 0);
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
 		s.add(days, BorderLayout.WEST);
 		s.add(months, BorderLayout.CENTER);
 		s.add(years, BorderLayout.EAST);
+		//t.add(back, BorderLayout.WEST);
+		m.add(Description, BorderLayout.NORTH);
 		m.add(ta, BorderLayout.CENTER);
-		m.add(t, BorderLayout.WEST);
-		t.add(back, BorderLayout.SOUTH);
-		//o.setBackground(Color.MAGENTA);
+		m.add(back, BorderLayout.SOUTH);
+		m.setBackground(Color.MAGENTA);
 		frm = new JFrame("Add Event");
 		frm.add(o, BorderLayout.NORTH);
 		frm.add(s, BorderLayout.CENTER);
 		frm.add(m, BorderLayout.SOUTH);
+		//frm.add(back, BorderLayout.SOUTH);
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
 	}
 	
-*/
+
 }
 
