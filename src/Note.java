@@ -1,4 +1,4 @@
 
-public class Note extends Notes {
+//public class Note extends Notes {
 
-}
+//}

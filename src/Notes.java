@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -11,14 +13,26 @@ public class Notes {
 	protected int year;
 	protected String back;
 	protected JFrame frm = new JFrame();
-	protected static int PROGRAM_HEIGHT = 1366;
+	protected static int PROGRAM_HEIGHT = 1280;
+	protected static int PROGRAM_WIDTH = 1024;
 	
-	public Notes (String t, String n, int m, int d, int y, String b) {
+	public static void main(String[] args) {
+		// This is equivalent to "run".
+		java.awt.EventQueue.invokeLater(new Runnable(){
+			@Override
+			public void run() {
+				Notes n = new Notes();
+				n.addNoteScreen();
+			}
+		});
+	}
+	
+	/*public Notes (String t, String n, int m, int d, int y, String b) {
 		month = m;
 		day = d;
 		year = y;
 		back = b;
-	}
+	}*/
 	public int getMonth() {
 		return month;
 	}
@@ -57,18 +71,15 @@ public class Notes {
 	}
 	
 	public void addNoteScreen() {
-	frm.setPreferredSize(new Dimension(1366, 768)); //Screen dimension.
+	frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 	JTextField title = new JTextField("Note Title");
 	title.setEditable(true);
 	title.setLocation(683, 384);
+	title.setFont(new Font("Serif",Font.PLAIN,60)); // Sets font style and size of font. 
 	frm.getContentPane().add(title, BorderLayout.CENTER);
 	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 	frm.setVisible(true);
 	//
-	}
-	
-	public static void main(String[] args) {
-		// This is equivalent to "run".
 	}
 	
 }
