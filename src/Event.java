@@ -89,6 +89,7 @@ public class Event extends CalendarClass{
 		ta = new JTextArea(5, 20);
 		ta.setPreferredSize(new Dimension(450, 300));
 		JScrollPane scrollpane = new JScrollPane(ta);
+		ta.setLineWrap(true);
 		back = new JButton("Back");
 		back.setVerticalTextPosition(AbstractButton.CENTER);
 		back.setForeground(Color.BLUE);
