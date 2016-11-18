@@ -40,6 +40,7 @@ private JButton add;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
 
+
 public static void main(String[] args){
 	java.awt.EventQueue.invokeLater(new Runnable(){
 	@Override
@@ -52,14 +53,15 @@ public static void main(String[] args){
 
 
 
-public void yearScreen(){
+public void yearScreen(Graphics g){
 	JFrame frame = new JFrame("Calendar");
 	p = new JPanel();
 	p.setPreferredSize(new Dimension(ysHeight, ysWidth));
 	frame.getContentPane().add(p ,BorderLayout.CENTER);
-	newline = new GLine(0, 0, 100, 100);
-	add(newline);
-	newline.setVisible(true);
+	//newline = new GLine(0, 0, 100, 100);
+	//p.add(newline);
+	g.drawLine(0, 0, 100, 100);
+	//newline.setVisible(true);
 	addActionListeners();
 	addButtons();
 	frame.pack();
