@@ -12,12 +12,7 @@ public class Notes {
 	protected int year;
 	protected String back;
 	protected JFrame frm = new JFrame();
-	protected int SCREEN_HEIGHT = 1366;
-	
-	
-	public static void main(String[] args) {
-		// This is equivalent to "run".
-	}
+	protected static int PROGRAM_HEIGHT = 1366;
 	
 	public Notes (String t, String n, int m, int d, int y, String b) {
 		month = m;
@@ -71,6 +66,10 @@ public class Notes {
 	frm.pack();
 	frm.setVisible(true);
 	//
+	}
+	
+	public static void main(String[] args) {
+		// This is equivalent to "run".
 	}
 	
 }
