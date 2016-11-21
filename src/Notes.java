@@ -76,7 +76,7 @@ public class Notes {
 		
 	}
 	
-	public void folderScreen() {
+	public void folderScreen() { //Consider taking this out?.....
 		
 	}
 	
