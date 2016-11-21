@@ -34,6 +34,7 @@ public class Notes {
 	protected static int PROGRAM_WIDTH = 1024;
 	private JPanel p1;
 	private JPanel p2;
+	private JPanel p3;
 	private JButton save;
 	private JButton backButton;
 	
@@ -119,7 +120,10 @@ public class Notes {
 	p1.add(p2, BorderLayout.EAST); // Adds save button to East side of the North panel.
 	
 	// Back Button:
-	
+	p3 = new JPanel();
+	backButton = new JButton("Back");
+	p3.add(backButton);
+	p1.add(p3, BorderLayout.WEST);
 	
 	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 	frm.setVisible(true);
