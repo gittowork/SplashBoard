@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class CalendarClass extends GraphicsProgram{
+public class CalendarClass  extends GraphicsProgram{
 
 protected int month;
 protected int day;
@@ -26,15 +26,17 @@ protected String description;
 protected Boolean allday;
 protected Boolean meridian;
 protected int ysHeight = 600;
-protected int ysWidth = 800;
+protected int ysWidth = 600;
 protected int msHeight = 300;
 protected int msWidth = 400;
 protected int dsHeight = 300;
 protected int dsWidth = 400;
 protected int PROGRAM_HEIGHT = 600;
 protected int PROGRAM_WIDTH = 800;
+private static final int subdivisionsY = 3;
+private static final int subdivisionsX = 4;
 private JFrame frame;
-private JPanel p;
+
 private JButton back;
 private JButton add;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
@@ -51,16 +53,35 @@ public static void main(String[] args){
 	}});
 }
 
+public void addPanel(){
+	
+	
+}
 
-
-public void yearScreen(Graphics g){
+public void yearScreen(){
 	JFrame frame = new JFrame("Calendar");
-	p = new JPanel();
-	p.setPreferredSize(new Dimension(ysHeight, ysWidth));
-	frame.getContentPane().add(p ,BorderLayout.CENTER);
+	GridBagConstraints gbc = new GridBagConstraints();
+	JPanel panel = new JPanel(){
+	
+	@Override public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		for (int i = 1; i < subdivisionsX; i++) {
+            int x = i * ysHeight/subdivisionsX;
+            g2.drawLine(x, 0, x, getSize().height);
+         }
+		for (int i = 1; i < subdivisionsY; i++) {
+            int y = i * ysHeight/subdivisionsY;
+            g2.drawLine(0, y, getSize().width, y);
+         }	
+	}
+	};
+	
+	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	frame.getContentPane().add(panel ,BorderLayout.CENTER);
 	//newline = new GLine(0, 0, 100, 100);
-	//p.add(newline);
-	g.drawLine(0, 0, 100, 100);
+	//panel.add(newline);
+	//g.drawLine(0, 0, 100, 100);
 	//newline.setVisible(true);
 	addActionListeners();
 	addButtons();
