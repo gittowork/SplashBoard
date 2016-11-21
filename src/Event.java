@@ -101,6 +101,8 @@ public class Event extends CalendarClass{
 		s.add(days, BorderLayout.WEST);
 		s.add(months, BorderLayout.CENTER);
 		s.add(years, BorderLayout.EAST);
+		s.add(hour, BorderLayout.SOUTH);
+		s.add(min, BorderLayout.SOUTH);
 		t.add(back, BorderLayout.WEST);
 		t.add(confirm, BorderLayout.EAST);
 		m.add(Description, BorderLayout.NORTH);
