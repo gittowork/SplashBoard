@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import acm.program.*;
 import acm.graphics.*;
@@ -60,7 +61,9 @@ public void addPanel(){
 
 public void yearScreen(){
 	JFrame frame = new JFrame("Calendar");
+	JLabel label = new JLabel("String");
 	GridBagConstraints gbc = new GridBagConstraints();
+	
 	JPanel panel = new JPanel(){
 	
 	@Override public void paintComponent(Graphics g){
@@ -76,7 +79,7 @@ public void yearScreen(){
          }	
 	}
 	};
-	
+	panel.add(label);
 	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
 	frame.getContentPane().add(panel ,BorderLayout.CENTER);
 	//newline = new GLine(0, 0, 100, 100);
