@@ -38,8 +38,8 @@ private static final int subdivisionsYyear = 3;
 private static final int subdivisionsXyear = 3;
 private static final int subdivisionsYmonth = 3;
 private static final int subdivisionsXmonth = 4;
-private static final int subdivisionsYday = 5;
-private static final int subdivisionsXday = 6;
+private static final int subdivisionsYday = 6;
+private static final int subdivisionsXday = 6; //change to 7 later
 private JFrame frame;
 
 private JButton back;
@@ -54,8 +54,8 @@ public static void main(String[] args){
 	public void run(){
 	CalendarClass c = new CalendarClass();
 //	c.yearScreen();
-	c.monthScreen();
-//	c.dayScreen();
+//	c.monthScreen();
+	c.dayScreen();
 
 
 	}});
@@ -200,7 +200,7 @@ public void monthScreen(){
 	JLabel component9 = new JLabel("October");
 	JLabel component10 = new JLabel("November");
 	JLabel component11 = new JLabel("December");
-	panel.add(component11, 0, 0);
+	panel.add(component11, 0, 0); //see yearscreen for explanation
 	panel.add(component10, 1, 0);
 	panel.add(component3, 2, 0);
 	panel.add(component8, 0, 1);
@@ -252,7 +252,73 @@ public void dayScreen(){
 	
 	frame.setPreferredSize(new Dimension(dsHeight, dsWidth));
 	frame.getContentPane().add(panel ,BorderLayout.CENTER);
-	panel.setLayout(new GridLayout(3,3,150,150));
+	panel.setLayout(new GridLayout(6,6,80,80));
+	JLabel component = new JLabel("1");
+	JLabel component1 = new JLabel("2");
+	JLabel component2 = new JLabel("3");
+	JLabel component3 = new JLabel("4");
+	JLabel component4 = new JLabel("5");
+	JLabel component5 = new JLabel("6");
+	JLabel component6 = new JLabel("7");
+	JLabel component7 = new JLabel("8");
+	JLabel component8 = new JLabel("9");
+	JLabel component9 = new JLabel("10");
+	JLabel component0 = new JLabel("11");
+	JLabel component11 = new JLabel("12");
+	JLabel component12 = new JLabel("13");
+	JLabel component13 = new JLabel("14");
+	JLabel component14 = new JLabel("15");
+	JLabel component15 = new JLabel("16");
+	JLabel component16 = new JLabel("17");
+	JLabel component17 = new JLabel("18");
+	JLabel component18 = new JLabel("19");
+	JLabel component19 = new JLabel("20");
+	JLabel component20 = new JLabel("21");
+	JLabel component21 = new JLabel("22");
+	JLabel component22 = new JLabel("23");
+	JLabel component23 = new JLabel("24");
+	JLabel component24 = new JLabel("25");
+	JLabel component25 = new JLabel("26");
+	JLabel component26 = new JLabel("27");
+	JLabel component27 = new JLabel("28");
+	JLabel component28 = new JLabel("29");
+	JLabel component29 = new JLabel("30");
+	JLabel component30 = new JLabel("31");
+	panel.add(component30, 0, 0);
+	panel.add(component29, 1, 0);
+	panel.add(component28, 2, 0);
+	panel.add(component27, 3, 0);
+	panel.add(component26, 4, 0);
+	panel.add(component25, 5, 0);
+	panel.add(component, 6, 0);
+	panel.add(component24, 0, 1);
+	panel.add(component23, 1, 1);
+	panel.add(component22, 2, 1);
+	panel.add(component21, 3, 1);
+	panel.add(component20, 4, 1);
+	panel.add(component19, 5, 1);
+	panel.add(component1, 6, 1);
+	panel.add(component18, 0, 2);
+	panel.add(component17, 1, 2);
+	panel.add(component16, 2, 2);
+	panel.add(component15, 3, 2);
+	panel.add(component14, 4, 2);
+	panel.add(component13, 5, 2);
+	panel.add(component2, 6, 2);
+	panel.add(component12, 0, 3);
+	panel.add(component11, 1, 3);
+	panel.add(component0, 2, 3);
+	panel.add(component9, 3, 3);
+	panel.add(component8, 4, 3);
+	panel.add(component7, 5, 3);
+	panel.add(component3, 6, 3);
+	panel.add(component6, 0, 4);
+	panel.add(component5, 1, 4);
+	panel.add(component4, 2, 4);
+	
+
+	
+	
 
 	addActionListeners();
 	addButtons();
