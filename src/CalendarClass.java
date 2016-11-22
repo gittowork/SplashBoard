@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import acm.program.*;
 import acm.graphics.*;
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class CalendarClass extends GraphicsProgram{
+public class CalendarClass  extends GraphicsProgram{
 
 protected int month;
 protected int day;
@@ -26,41 +27,113 @@ protected String description;
 protected Boolean allday;
 protected Boolean meridian;
 protected int ysHeight = 600;
-protected int ysWidth = 800;
-protected int msHeight = 300;
-protected int msWidth = 400;
-protected int dsHeight = 300;
-protected int dsWidth = 400;
+protected int ysWidth = 600;
+protected int msHeight = 600;
+protected int msWidth = 600;
+protected int dsHeight = 600;
+protected int dsWidth = 600;
 protected int PROGRAM_HEIGHT = 600;
 protected int PROGRAM_WIDTH = 800;
+private static final int subdivisionsYyear = 3;
+private static final int subdivisionsXyear = 3;
+private static final int subdivisionsYmonth = 3;
+private static final int subdivisionsXmonth = 4;
+private static final int subdivisionsYday = 6;
+private static final int subdivisionsXday = 6; //change to 7 later
 private JFrame frame;
-private JPanel p;
+
 private JButton back;
 private JButton add;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
+
 
 public static void main(String[] args){
 	java.awt.EventQueue.invokeLater(new Runnable(){
 	@Override
 	public void run(){
 	CalendarClass c = new CalendarClass();
+	c.dayScreen();
+	c.monthScreen();
 	c.yearScreen();
+
 
 	}});
 }
 
+public void addPanel(){	//wanted to see if this created a grid of JLabel
+	int i = 3;
+	int j = 4;
+	JPanel[][] panelHolder = new JPanel[i][j];
+	setLayout(new GridLayout(i,j));
+	
+	for(int m = 0; m < i; m++){
+		for(int n = 0; n < j; n++){
+			add(panelHolder[m][n]);
+		}
+	}
+	panelHolder[2][3].add(new JLabel("Test"));
+}
 
+public void testGrid(){ // another test to try a grid layout
+	JFrame frame = new JFrame("Test");
+	JPanel panel = new JPanel();
+	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	panel.setLayout(new GridLayout(3,3,1,1));
+	JLabel component = new JLabel("Test");
+	panel.add(component, 0, 0);
+	
+	frame.pack();
+	frame.setVisible(true);
+}
 
 public void yearScreen(){
-	JFrame frame = new JFrame("Calendar");
-	p = new JPanel();
-	p.setPreferredSize(new Dimension(ysHeight, ysWidth));
-	frame.getContentPane().add(p ,BorderLayout.CENTER);
-	newline = new GLine(0, 100, 100, 100);
-	add(newline);
-	addKeyListeners();
-	addMouseListeners();
+	JFrame frame = new JFrame("Year");
+	
+	
+	
+	JPanel panel = new JPanel(){
+	
+	@Override public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		for (int i = 1; i < subdivisionsXyear; i++) {
+            int x = i * ysHeight/subdivisionsXyear;
+            g2.drawLine(x, 0, x, getSize().height);
+         }
+		for (int i = 1; i < subdivisionsYyear; i++) {
+            int y = i * ysHeight/subdivisionsYyear;
+            g2.drawLine(0, y, getSize().width, y);
+         }	
+	}	// add sequencing of the days
+	};	// look for date class, gives current day
+	
+	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	panel.setLayout(new GridLayout(3,3,150,150));
+	JLabel component = new JLabel("2016");
+	JLabel component1 = new JLabel("2017");
+	JLabel component2 = new JLabel("2018");
+	JLabel component3 = new JLabel("2019");
+	JLabel component4 = new JLabel("2020");
+	JLabel component5 = new JLabel("2021");
+	JLabel component6 = new JLabel("2022");
+	JLabel component7 = new JLabel("2023");
+	JLabel component8 = new JLabel("2024");
+	panel.add(component8, 0, 0);			//the reason these are out of order is due to the way I ordered the row and columns, and also how the GridLayout function works
+	panel.add(component7, 1, 0);
+	panel.add(component, 2, 0);
+	panel.add(component5, 0, 1);
+	panel.add(component6, 0, 2);
+	panel.add(component3, 1, 1);
+	panel.add(component4, 1, 2);
+	panel.add(component1, 2, 1);
+	panel.add(component2, 2, 2);
+	
+	frame.getContentPane().add(panel ,BorderLayout.CENTER);
+	//newline = new GLine(0, 0, 100, 100);
+	//panel.add(newline);
+	//g.drawLine(0, 0, 100, 100);
+	//newline.setVisible(true);
 	addActionListeners();
 	addButtons();
 	frame.pack();
@@ -76,7 +149,9 @@ public void yearScreen(){
 	//pop up for displaying the year on separate screen
 	
 }
-//
+//Empty Square first
+// Draw circle, make circle move in a larger circle
+// Draw another circle, have it move in a larger radius circle
 
 
 
@@ -88,9 +163,63 @@ public int getData(){
 }
 
 public void monthScreen(){
-	frame.setPreferredSize(new Dimension(msHeight, msWidth));
+	
 	//appears simultaneously with dayScreen on identical panels
-
+	JFrame frame = new JFrame("Month");
+	
+	
+	
+	JPanel panel = new JPanel(){
+	
+	@Override public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		for (int i = 1; i < subdivisionsXmonth; i++) {
+            int x = i * ysHeight/subdivisionsXmonth;
+            g2.drawLine(x, 0, x, getSize().height);
+         }
+		for (int i = 1; i < subdivisionsYmonth; i++) {
+            int y = i * ysHeight/subdivisionsYmonth;
+            g2.drawLine(0, y, getSize().width, y);
+         }	
+	}	// add sequencing of the days
+	};	// look for date class, gives current day
+	
+	frame.setPreferredSize(new Dimension(msHeight, msWidth));
+	frame.getContentPane().add(panel ,BorderLayout.CENTER);
+	panel.setLayout(new GridLayout(3,4,100,100));
+	JLabel component = new JLabel("January");
+	JLabel component1 = new JLabel("February");
+	JLabel component2 = new JLabel("March");
+	JLabel component3 = new JLabel("April");
+	JLabel component4 = new JLabel("May");
+	JLabel component5 = new JLabel("June");
+	JLabel component6 = new JLabel("July");
+	JLabel component7 = new JLabel("August");
+	JLabel component8 = new JLabel("September");
+	JLabel component9 = new JLabel("October");
+	JLabel component10 = new JLabel("November");
+	JLabel component11 = new JLabel("December");
+	panel.add(component11, 0, 0); //see yearscreen for explanation
+	panel.add(component10, 1, 0);
+	panel.add(component3, 2, 0);
+	panel.add(component8, 0, 1);
+	panel.add(component9, 0, 2);
+	panel.add(component6, 1, 1);
+	panel.add(component7, 1, 2);
+	panel.add(component4, 2, 1);
+	panel.add(component5, 2, 2);
+	panel.add(component, 3, 0);
+	panel.add(component1, 3, 1);
+	panel.add(component2, 3, 2);
+	
+	
+	addActionListeners();
+	addButtons();
+	frame.pack();
+	frame.setVisible(true);
+	
+	
 }
 
 public void removeEvent(){
@@ -99,8 +228,103 @@ public void removeEvent(){
 }
 
 public void dayScreen(){
-	frame.setPreferredSize(new Dimension(dsHeight, dsWidth));
+	
 	//appears simultaneously with dayScreen on identical panels
+	JFrame frame = new JFrame("Day");
+	JLabel label = new JLabel("String");
+	
+	
+	JPanel panel = new JPanel(){
+	
+	@Override public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		for (int i = 1; i < subdivisionsXday; i++) {
+            int x = i * ysHeight/subdivisionsXday;
+            g2.drawLine(x, 0, x, getSize().height);
+         }
+		for (int i = 1; i < subdivisionsYday; i++) {
+            int y = i * ysHeight/subdivisionsYday;
+            g2.drawLine(0, y, getSize().width, y);
+         }	
+	}	// add sequencing of the days
+	};	// look for date class, gives current day
+	
+	frame.setPreferredSize(new Dimension(dsHeight, dsWidth));
+	frame.getContentPane().add(panel ,BorderLayout.CENTER);
+	panel.setLayout(new GridLayout(6,6,80,80));
+	JLabel component = new JLabel("1");
+	JLabel component1 = new JLabel("2");
+	JLabel component2 = new JLabel("3");
+	JLabel component3 = new JLabel("4");
+	JLabel component4 = new JLabel("5");
+	JLabel component5 = new JLabel("6");
+	JLabel component6 = new JLabel("7");
+	JLabel component7 = new JLabel("8");
+	JLabel component8 = new JLabel("9");
+	JLabel component9 = new JLabel("10");
+	JLabel component0 = new JLabel("11");
+	JLabel component11 = new JLabel("12");
+	JLabel component12 = new JLabel("13");
+	JLabel component13 = new JLabel("14");
+	JLabel component14 = new JLabel("15");
+	JLabel component15 = new JLabel("16");
+	JLabel component16 = new JLabel("17");
+	JLabel component17 = new JLabel("18");
+	JLabel component18 = new JLabel("19");
+	JLabel component19 = new JLabel("20");
+	JLabel component20 = new JLabel("21");
+	JLabel component21 = new JLabel("22");
+	JLabel component22 = new JLabel("23");
+	JLabel component23 = new JLabel("24");
+	JLabel component24 = new JLabel("25");
+	JLabel component25 = new JLabel("26");
+	JLabel component26 = new JLabel("27");
+	JLabel component27 = new JLabel("28");
+	JLabel component28 = new JLabel("29");
+	JLabel component29 = new JLabel("30");
+	JLabel component30 = new JLabel("31");
+	panel.add(component30, 0, 0); //push comment
+	panel.add(component29, 1, 0);
+	panel.add(component28, 2, 0);
+	panel.add(component27, 3, 0);
+	panel.add(component26, 4, 0);
+	panel.add(component25, 5, 0);
+	panel.add(component, 6, 0);
+	panel.add(component24, 0, 1);
+	panel.add(component23, 1, 1);
+	panel.add(component22, 2, 1);
+	panel.add(component21, 3, 1);
+	panel.add(component20, 4, 1);
+	panel.add(component19, 5, 1);
+	panel.add(component1, 6, 1);
+	panel.add(component18, 0, 2);
+	panel.add(component17, 1, 2);
+	panel.add(component16, 2, 2);
+	panel.add(component15, 3, 2);
+	panel.add(component14, 4, 2);
+	panel.add(component13, 5, 2);
+	panel.add(component2, 6, 2);
+	panel.add(component12, 0, 3);
+	panel.add(component11, 1, 3);
+	panel.add(component0, 2, 3);
+	panel.add(component9, 3, 3);
+	panel.add(component8, 4, 3);
+	panel.add(component7, 5, 3);
+	panel.add(component3, 6, 3);
+	panel.add(component6, 0, 4);
+	panel.add(component5, 1, 4);
+	panel.add(component4, 2, 4);
+	
+
+	
+	
+
+	addActionListeners();
+	addButtons();
+	frame.pack();
+	frame.setVisible(true);
+	
 }
 
 public void addImages(){
