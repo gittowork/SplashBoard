@@ -115,7 +115,7 @@ public class Event extends CalendarClass{
 		frm.add(o, BorderLayout.NORTH);
 		frm.add(s, BorderLayout.CENTER);
 		frm.add(t, BorderLayout.SOUTH);
-		//frm.add(back, BorderLayout.SOUTH);
+		frm.add(back, BorderLayout.SOUTH);
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
