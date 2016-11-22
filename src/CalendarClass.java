@@ -53,9 +53,9 @@ public static void main(String[] args){
 	@Override
 	public void run(){
 	CalendarClass c = new CalendarClass();
-//	c.yearScreen();
-//	c.monthScreen();
 	c.dayScreen();
+	c.monthScreen();
+	c.yearScreen();
 
 
 	}});
