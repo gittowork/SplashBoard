@@ -95,9 +95,9 @@ public class Event extends CalendarClass{
 		text = new JTextArea(5, 20);
 		//ta = new JTextArea(5, 20);
 		//ta.setPreferredSize(new Dimension(450, 300));
-		JScrollPane scrollpane = new JScrollPane(t);
-		//ta.setLineWrap(true);
-		back = new JButton("Back");
+		JScrollPane scrollpane = new JScrollPane(text);
+		text.setLineWrap(true);
+		back = new JButton("Cancel");
 		back.setVerticalTextPosition(AbstractButton.CENTER);
 		back.setForeground(Color.BLUE);
 		confirm = new JButton("Confirm");
