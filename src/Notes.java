@@ -123,7 +123,7 @@ public class Notes {
 	p3 = new JPanel(); 
 	backButton = new JButton("Back");
 	p3.add(backButton);
-	p1.add(p3, BorderLayout.WEST); // Add back button icon and reformat button layout.
+	p1.add(p3); // Add back button icon and reformat button layout.
 	
 	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 	frm.setVisible(true);
