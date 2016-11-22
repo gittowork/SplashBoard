@@ -49,16 +49,19 @@ public class Event extends CalendarClass{
 	}
 	
 	public void drawPanel(){ 
+		//adding the days to the combo box
 		days = new JComboBox();	
 		days.addItem("Days");;
 		for(int i= 1; i < 32; i++){
 			days.addItem(i);
 		}
+		//adding 5 years to the combo box
 		years = new JComboBox();
 		years.addItem("Year");
 		for(int i = 2016; i < 2022; i++){
 			years.addItem(i);
 		}
+		//adding the hours to the combo box
 		hour = new JComboBox();
 		hour.addItem("Hr");
 		for(int i = 1; i < 13; i++){
