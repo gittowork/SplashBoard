@@ -51,7 +51,7 @@ public class Event extends CalendarClass{
 	public void drawPanel(){ 
 		//adding the days to the combo box
 		days = new JComboBox();	
-		days.addItem("Days");;
+		days.addItem("Day");;
 		for(int i= 1; i < 32; i++){
 			days.addItem(i);
 		}
