@@ -53,8 +53,8 @@ public static void main(String[] args){
 	@Override
 	public void run(){
 	CalendarClass c = new CalendarClass();
-	c.yearScreen();
-//	c.monthScreen();
+//	c.yearScreen();
+	c.monthScreen();
 //	c.dayScreen();
 
 
@@ -166,7 +166,7 @@ public void monthScreen(){
 	
 	//appears simultaneously with dayScreen on identical panels
 	JFrame frame = new JFrame("Month");
-	JLabel label = new JLabel("String");
+	
 	
 	
 	JPanel panel = new JPanel(){
@@ -184,13 +184,36 @@ public void monthScreen(){
          }	
 	}	// add sequencing of the days
 	};	// look for date class, gives current day
-	panel.add(label);
+	
 	frame.setPreferredSize(new Dimension(msHeight, msWidth));
 	frame.getContentPane().add(panel ,BorderLayout.CENTER);
-	//newline = new GLine(0, 0, 100, 100);
-	//panel.add(newline);
-	//g.drawLine(0, 0, 100, 100);
-	//newline.setVisible(true);
+	panel.setLayout(new GridLayout(3,4,100,100));
+	JLabel component = new JLabel("January");
+	JLabel component1 = new JLabel("February");
+	JLabel component2 = new JLabel("March");
+	JLabel component3 = new JLabel("April");
+	JLabel component4 = new JLabel("May");
+	JLabel component5 = new JLabel("June");
+	JLabel component6 = new JLabel("July");
+	JLabel component7 = new JLabel("August");
+	JLabel component8 = new JLabel("September");
+	JLabel component9 = new JLabel("October");
+	JLabel component10 = new JLabel("November");
+	JLabel component11 = new JLabel("December");
+	panel.add(component11, 0, 0);
+	panel.add(component10, 1, 0);
+	panel.add(component3, 2, 0);
+	panel.add(component8, 0, 1);
+	panel.add(component9, 0, 2);
+	panel.add(component6, 1, 1);
+	panel.add(component7, 1, 2);
+	panel.add(component4, 2, 1);
+	panel.add(component5, 2, 2);
+	panel.add(component, 3, 0);
+	panel.add(component1, 3, 1);
+	panel.add(component2, 3, 2);
+	
+	
 	addActionListeners();
 	addButtons();
 	frame.pack();
@@ -226,13 +249,11 @@ public void dayScreen(){
          }	
 	}	// add sequencing of the days
 	};	// look for date class, gives current day
-	panel.add(label);
+	
 	frame.setPreferredSize(new Dimension(dsHeight, dsWidth));
 	frame.getContentPane().add(panel ,BorderLayout.CENTER);
-	//newline = new GLine(0, 0, 100, 100);
-	//panel.add(newline);
-	//g.drawLine(0, 0, 100, 100);
-	//newline.setVisible(true);
+	panel.setLayout(new GridLayout(3,3,150,150));
+
 	addActionListeners();
 	addButtons();
 	frame.pack();
