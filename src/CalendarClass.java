@@ -77,8 +77,8 @@ public void yearScreen(){
             int y = i * ysHeight/subdivisionsY;
             g2.drawLine(0, y, getSize().width, y);
          }	
-	}
-	};
+	}	// add sequencing of the days
+	};	// look for date class, gives current day
 	panel.add(label);
 	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
 	frame.getContentPane().add(panel ,BorderLayout.CENTER);
