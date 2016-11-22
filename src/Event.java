@@ -30,6 +30,7 @@ public class Event extends CalendarClass{
 	private JButton confirm;
 	private JComboBox hour;
 	private JComboBox min;
+	private JComboBox meridium;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
@@ -72,6 +73,9 @@ public class Event extends CalendarClass{
 		for(int i = 1; i < 61; i++){
 			min.addItem(i);
 		}
+		meridium = new JComboBox();
+		meridium.addItem("AM");
+		meridium.addItem("PM");
 		o = new JPanel();
 		o.setPreferredSize(new Dimension(480, 120));
 		s =  new JPanel();
@@ -106,6 +110,7 @@ public class Event extends CalendarClass{
 		s.add(years, BorderLayout.EAST);
 		s.add(hour, BorderLayout.SOUTH);
 		s.add(min, BorderLayout.SOUTH);
+		s.add(meridium, BorderLayout.SOUTH);
 		t.add(back, BorderLayout.WEST);
 		t.add(confirm, BorderLayout.EAST);
 		//m.add(Description, BorderLayout.NORTH);
