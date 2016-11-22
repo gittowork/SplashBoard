@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
@@ -70,7 +71,7 @@ public class Event extends CalendarClass{
 		}
 		min = new JComboBox();
 		min.addItem("Min");
-		for(int i = 1; i < 61; i++){
+		for(int i = 0; i < 60; i++){
 			min.addItem(i);
 		}
 		meridium = new JComboBox();
@@ -128,7 +129,13 @@ public class Event extends CalendarClass{
 		frm.pack();
 		frm.setVisible(true);
 	}
-	
-
+	public void backButton(){
+		back.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				frm.dispose();
+			}
+		});
+	}
+		
 }
 
