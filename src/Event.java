@@ -30,6 +30,7 @@ public class Event extends CalendarClass{
 	private JButton confirm;
 	private JComboBox hour;
 	private JComboBox min;
+	private JComboBox meridium;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
@@ -49,16 +50,19 @@ public class Event extends CalendarClass{
 	}
 	
 	public void drawPanel(){ 
+		//adding the days to the combo box
 		days = new JComboBox();	
-		days.addItem("Days");;
+		days.addItem("Day");;
 		for(int i= 1; i < 32; i++){
 			days.addItem(i);
 		}
+		//adding 5 years to the combo box
 		years = new JComboBox();
 		years.addItem("Year");
 		for(int i = 2016; i < 2022; i++){
 			years.addItem(i);
 		}
+		//adding the hours to the combo box
 		hour = new JComboBox();
 		hour.addItem("Hr");
 		for(int i = 1; i < 13; i++){
@@ -69,12 +73,15 @@ public class Event extends CalendarClass{
 		for(int i = 1; i < 61; i++){
 			min.addItem(i);
 		}
+		meridium = new JComboBox();
+		meridium.addItem("AM");
+		meridium.addItem("PM");
 		o = new JPanel();
 		o.setPreferredSize(new Dimension(480, 120));
 		s =  new JPanel();
 		s.setPreferredSize(new Dimension(480, 120));
-		m = new JPanel();
-		m.setPreferredSize(new Dimension(480, 400));
+		//m = new JPanel();
+		//m.setPreferredSize(new Dimension(480, 400));
 		t = new JPanel();
 		t.setPreferredSize(new Dimension(480, 50));
 		months = new JComboBox();
@@ -83,12 +90,13 @@ public class Event extends CalendarClass{
 			months.addItem(month[i]);
 		}
 		title.setForeground(Color.BLUE);
-		Description.setForeground(Color.blue);
-		Description.setHorizontalAlignment(JLabel.CENTER);
-		text = new JTextArea(1, 20);
-		ta = new JTextArea(5, 20);
-		ta.setPreferredSize(new Dimension(450, 300));
-		JScrollPane scrollpane = new JScrollPane(ta);
+		//Description.setForeground(Color.blue);
+		//Description.setHorizontalAlignment(JLabel.CENTER);
+		text = new JTextArea(5, 20);
+		//ta = new JTextArea(5, 20);
+		//ta.setPreferredSize(new Dimension(450, 300));
+		JScrollPane scrollpane = new JScrollPane(t);
+		//ta.setLineWrap(true);
 		back = new JButton("Back");
 		back.setVerticalTextPosition(AbstractButton.CENTER);
 		back.setForeground(Color.BLUE);
@@ -100,18 +108,21 @@ public class Event extends CalendarClass{
 		s.add(days, BorderLayout.WEST);
 		s.add(months, BorderLayout.CENTER);
 		s.add(years, BorderLayout.EAST);
+		s.add(hour, BorderLayout.SOUTH);
+		s.add(min, BorderLayout.SOUTH);
+		s.add(meridium, BorderLayout.SOUTH);
 		t.add(back, BorderLayout.WEST);
 		t.add(confirm, BorderLayout.EAST);
-		m.add(Description, BorderLayout.NORTH);
-		m.add(ta, BorderLayout.CENTER);
-		m.add(t, BorderLayout.SOUTH);
-		m.setBackground(Color.CYAN);
+		//m.add(Description, BorderLayout.NORTH);
+		//m.add(ta, BorderLayout.CENTER);
+		//m.add(t, BorderLayout.SOUTH);
+		//m.setBackground(Color.CYAN);
 		t.setBackground(Color.GRAY);
 		s.setBackground(Color.GRAY);
 		frm = new JFrame("Add Event");
 		frm.add(o, BorderLayout.NORTH);
 		frm.add(s, BorderLayout.CENTER);
-		frm.add(m, BorderLayout.SOUTH);
+		frm.add(t, BorderLayout.SOUTH);
 		//frm.add(back, BorderLayout.SOUTH);
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
