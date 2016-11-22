@@ -284,7 +284,7 @@ public void dayScreen(){
 	JLabel component28 = new JLabel("29");
 	JLabel component29 = new JLabel("30");
 	JLabel component30 = new JLabel("31");
-	panel.add(component30, 0, 0);
+	panel.add(component30, 0, 0); //push comment
 	panel.add(component29, 1, 0);
 	panel.add(component28, 2, 0);
 	panel.add(component27, 3, 0);
