@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.AbstractButton;
 import javax.swing.ComboBoxModel;
@@ -16,22 +17,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class Event extends CalendarClass{
+public class Event {
 	private JPanel o;
 	private JPanel m;
 	private JPanel s;
 	private JPanel t;
 	private JFrame frm;
-	private JComboBox months;
-	private JComboBox days;
-	private JComboBox years;
-	private JTextArea text;
-	private JTextArea ta;
-	private JButton back;
-	private JButton confirm;
-	private JComboBox hour;
-	private JComboBox min;
-	private JComboBox meridium;
+	protected JComboBox months;
+	protected JComboBox days;
+	protected JComboBox years;
+	protected JTextArea text;
+	protected JTextArea ta;
+	protected JButton back;
+	protected JButton confirm;
+	protected JComboBox hour;
+	protected JComboBox min;
+	protected JComboBox meridium;
+	private CalSave e;
+	private HashMap hm;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
@@ -136,6 +139,20 @@ public class Event extends CalendarClass{
 			}
 		});
 	}
+	
+	public void confirmButton(){
+		confirm.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				save();
+			}
+		});
+	}
 		
+	public void save(){
+		e = new CalSave();
+		hm = new HashMap();
+		
+		
+	}
 }
 
