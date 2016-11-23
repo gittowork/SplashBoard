@@ -72,6 +72,7 @@ public class Event {
 		for(int i = 1; i < 13; i++){
 			hour.addItem(i);
 		}
+		//adding the minutes to the combo box
 		min = new JComboBox();
 		min.addItem("Min");
 		for(int i = 0; i < 60; i++){
