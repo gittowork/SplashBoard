@@ -1,10 +1,14 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import acm.program.*;
 import acm.graphics.*;
 import acm.util.*;
@@ -26,6 +30,7 @@ protected String title;
 protected String description;
 protected Boolean allday;
 protected Boolean meridian;
+private static int realDay, realMonth, realYear, currentMonth, currentYear;
 protected int ysHeight = 600;
 protected int ysWidth = 600;
 protected int msHeight = 600;
@@ -41,9 +46,13 @@ private static final int subdivisionsXmonth = 4;
 private static final int subdivisionsYday = 6;
 private static final int subdivisionsXday = 6; //change to 7 later
 private JFrame frame;
-
-private JButton back;
-private JButton add;
+private JFrame frm;
+static JLabel labelM, labelY;
+static JComboBox yearBox;
+static DefaultTableModel calendarTableDefault;
+static JPanel panelCalendar;
+static JTable tableCalendar;
+private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
 
@@ -53,9 +62,10 @@ public static void main(String[] args){
 	@Override
 	public void run(){
 	CalendarClass c = new CalendarClass();
-	c.dayScreen();
-	c.monthScreen();
+	//c.dayScreen();
+	//c.monthScreen();
 	c.yearScreen();
+	c.testMain();
 
 
 	}});
@@ -87,9 +97,62 @@ public void testGrid(){ // another test to try a grid layout
 	frame.setVisible(true);
 }
 
+public void testMain(){
+	frm = new JFrame("Calendar");
+	frm.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	Container pane = frm.getContentPane();
+	pane.setLayout(null);
+	frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	labelM = new JLabel("January");
+	labelY = new JLabel("Change Year:");
+	yearBox = new JComboBox();
+		for (int i = realYear - 5; i <= realYear + 100; i++){
+			yearBox.addItem(String.valueOf(i));
+		}
+	prev = new JButton("Back");
+	next = new JButton("Next");
+	calendarTableDefault = new DefaultTableModel();
+	tableCalendar = new JTable(calendarTableDefault);
+	panelCalendar = new JPanel(null);
+
+	GregorianCalendar cal = new GregorianCalendar(); //sets up the calendar with a real calendar
+	realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
+	realMonth = cal.get(GregorianCalendar.MONTH);
+	realYear = cal.get(GregorianCalendar.YEAR);
+	currentMonth = realMonth;
+	currentYear = realYear;
+	
+	pane.add(panelCalendar);
+	panelCalendar.add(labelM);
+	panelCalendar.add(labelY);
+	panelCalendar.add(yearBox);
+	panelCalendar.add(prev);
+	panelCalendar.add(next);
+	panelCalendar.add(tableCalendar);
+	panelCalendar.setBounds(0,0,600,800);
+	labelM.setBounds(10,200,80,20);
+	labelY.setBounds(200,20,80,20);
+	yearBox.setBounds(arg0, arg1, arg2, arg3);
+	prev.setBounds(arg0, arg1, arg2, arg3);
+	next.setBounds(arg0, arg1, arg2, arg3);
+	tableCalendar.setBounds(0,0,0,0);
+	frm.setVisible(true);
+	
+	
+	
+	
+	
+	
+}
+
 public void yearScreen(){
 	JFrame frame = new JFrame("Year");
-	
+	GregorianCalendar cal = new GregorianCalendar();
+	realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
+	realMonth = cal.get(GregorianCalendar.MONTH);
+	realYear = cal.get(GregorianCalendar.YEAR);
+	currentMonth = realMonth;
+	currentYear = realYear;
 	
 	
 	JPanel panel = new JPanel(){
@@ -110,7 +173,7 @@ public void yearScreen(){
 	
 	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
 	panel.setLayout(new GridLayout(3,3,150,150));
-	JLabel component = new JLabel("2016");
+	JLabel component = new JLabel("");
 	JLabel component1 = new JLabel("2017");
 	JLabel component2 = new JLabel("2018");
 	JLabel component3 = new JLabel("2019");
