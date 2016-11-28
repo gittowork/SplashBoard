@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.color.ColorSpace;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,6 +24,7 @@ import sun.net.www.content.audio.x_aiff;
 import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,6 +44,8 @@ public class Notes {
 	private JPanel p3;
 	private JButton save;
 	private JButton backButton;
+	private JTextArea title = new JTextArea(1, 15);
+	private JTextArea body = new JTextArea(100, 100);
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -77,6 +84,9 @@ public class Notes {
 	}
 	public void saveNote() { //To add completed note on screen.
 		HashMap<Integer, String> hmap = new HashMap<Integer, String>();
+		for(int i = 0; i <= 100000; i++) {
+			hmap.put(i, title.getText());
+		}
 		
 	}
 	
@@ -93,7 +103,6 @@ public class Notes {
 	
 	// Note Title:
 	p1 = new JPanel();
-	JTextArea title = new JTextArea(1, 15);
 	title.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
 	title.setEditable(true);
 	title.setFont(new Font("Calibri",Font.PLAIN,60)); // Sets font style and size of font. 
@@ -106,7 +115,6 @@ public class Notes {
 	frm.getContentPane().add(p1, BorderLayout.NORTH);
 	
 	// Note Body:
-	JTextArea body = new JTextArea(100, 100);
 	body.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
 	body.setEditable(true);
 	body.setFont(new Font("Calibri", Font.PLAIN, 28));
@@ -121,7 +129,15 @@ public class Notes {
 	save = new JButton("Save");
 	p2.add(save);
 	p1.add(p2, BorderLayout.EAST); // Adds save button to East side of the North panel.
-	
+	save.addActionListener(new ActionListener() { //When button is clicked.
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		saveNote(); // This is the desired action.
+		System.out.print("Note is saved!");
+		}
+		
+	});
 	
 	// Back Button:
 	p3 = new JPanel(); 
@@ -135,5 +151,4 @@ public class Notes {
 	b1.grabFocus();
 	b2.grabFocus();
 	}
-	
 }
