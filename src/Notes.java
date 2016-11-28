@@ -134,8 +134,13 @@ public class Notes {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 		saveNote(); // This is the desired action.
-		System.out.print("Note is saved!");
+		if(title.getText() == null) { // Puts a generalized title if user does not input one.
+			for (int i = 1; i <= 100000; i++) {
+			title.setText("Untitled" + i);
+			}
 		}
+		
+	}
 		
 	});
 	
