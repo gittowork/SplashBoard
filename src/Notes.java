@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.color.ColorSpace;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -74,6 +76,7 @@ public class Notes {
 		this.back = back;
 	}
 	public void saveNote() { //To add completed note on screen.
+		HashMap<Integer, String> hmap = new HashMap<Integer, String>();
 		
 	}
 	
@@ -118,6 +121,7 @@ public class Notes {
 	save = new JButton("Save");
 	p2.add(save);
 	p1.add(p2, BorderLayout.EAST); // Adds save button to East side of the North panel.
+	
 	
 	// Back Button:
 	p3 = new JPanel(); 
