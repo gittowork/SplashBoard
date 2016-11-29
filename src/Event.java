@@ -152,6 +152,7 @@ public class Event {
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				save();
+				frm.dispose();
 			}
 		});
 	}
