@@ -51,6 +51,7 @@ public class Notes {
 	protected static int POP_HEIGHT = 400;
 	protected static int POP_WIDTH = 200;
 	private JPanel p4;
+	private JPanel p5;
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -92,10 +93,6 @@ public class Notes {
 		hmap.put(title.getText(), title.getText()+body.getText());
 		
 		}
-	
-	public void folderScreen() { //Consider taking this out?.....
-		
-	}
 	
 	public void noteScreen() {
 		
@@ -147,6 +144,19 @@ public class Notes {
 		JLabel saved = new JLabel("Note Saved!");
 		saved.setFont(new Font("Calibri", Font.PLAIN, 40));
 		p4.add(saved);
+		JButton confirm = new JButton("OK");
+		p5 = new JPanel();
+		p5.add(confirm);
+		confirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+			
+		});
+		pop1.getContentPane().add(p5, BorderLayout.SOUTH);
 		pop1.getContentPane().add(p4, BorderLayout.CENTER);
 		pop1.pack();
 		pop1.setVisible(true);
