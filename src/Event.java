@@ -160,8 +160,7 @@ public class Event {
         e = new CalSave(mt, d, md, y, h, mi, f);
 		hm = new HashMap();
 		hm.put(f, e);
-		System.out.print(hm.get(f));
-		
+		e = (CalSave)hm.get(f);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
