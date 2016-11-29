@@ -35,7 +35,7 @@ public class Event {
 	protected JComboBox hour;
 	protected JComboBox min;
 	protected JComboBox meridium;
-	private CalSave r;
+	private CalSave w;
 	private HashMap hm;
 	private int y;
 	private int h;
@@ -160,9 +160,9 @@ public class Event {
 		
 		
 	public void save(){
-        r = new CalSave(mt, d, md, y, h, mi, f);
+        w = new CalSave(mt, d, md, y, h, mi, f);
 		hm = new HashMap();
-		hm.put(r.getEvent(), r);
+		hm.put(w.getEvent(), w);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
