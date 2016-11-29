@@ -17,15 +17,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class CalSave {
-	private int month;
+	private String month;
 	private int day;
-	private boolean meridium;
+	private String meridium;
 	private int year;
 	private int hr;
 	private int min;
 	private String event;
 	
-	public void CalSave(int m, int d, boolean md, int y, int h, int mi, String e){
+	public void CalSave(String m, int d, String md, int y, int h, int mi, String e){
 		month = m;
 		day = d;
 		meridium = md;
@@ -35,7 +35,7 @@ public class CalSave {
 		event = e;
 	}
 	
-	public void setMonth(int m){
+	public void setMonth(String m){
 		month = m;
 	}
 	
@@ -43,7 +43,7 @@ public class CalSave {
 		day = d;
 	}
 	
-	public void setMeridium(boolean md){
+	public void setMeridium(String md){
 		meridium = md;
 	}
 	
@@ -63,7 +63,7 @@ public class CalSave {
 		event = e;
 	}
 
-	public int getMonth(){
+	public String getMonth(){
 		return month;
 	}
 	
@@ -71,7 +71,7 @@ public class CalSave {
 		return day;
 	}
 	
-	public boolean getMeridium(){
+	public String getMeridium(){
 		return meridium;
 	}
 	

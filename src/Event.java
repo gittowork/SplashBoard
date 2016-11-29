@@ -150,10 +150,31 @@ public class Event {
 	}
 		
 	public void save(){
-		e = new CalSave();
+
 		hm = new HashMap();
 		
 		
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+        months = (JComboBox)e.getSource();
+        String m = (String)months.getSelectedItem();
+        days = (JComboBox)e.getSource();
+        int d = (int)days.getSelectedItem();
+        years = (JComboBox)e.getSource();
+        int y = (int)years.getSelectedItem();
+        hour = (JComboBox)e.getSource();
+        int h = (int)hour.getSelectedItem();
+        min = (JComboBox)e.getSource();
+        int mi = (int)min.getSelectedItem();
+        meridium = (JComboBox)e.getSource();
+        String md = (String)meridium.getSelectedItem();
+        
+        String f = text.getText();
+
+        
+        e = new CalSave(m, d, md, y, h, mi, f);
+        
 	}
 }
 
