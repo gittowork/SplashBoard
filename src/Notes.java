@@ -109,10 +109,11 @@ public class Notes {
 		s = new NoteSave(month, day, year, t, b);
 		HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 		hmap.put(t, s);
-		
+		System.out.print("Note is saved to" + " " + (NoteSave)hmap.get(t)); // Testing of hashmap!!!
+		// As of 11/29 10:20am - Hashmap is saving to different memory addresses. (When wanting to override content of a key). 
 		}
 	
-	public void noteScreen() {
+	public void noteMain() {
 		
 	}
 	
@@ -153,7 +154,7 @@ public class Notes {
 		public void actionPerformed(ActionEvent e) {
 			if(title.getText() == null) { // Puts a general title if user does not input one. --------------- Needs to be fixed, doesn't work??
 				int i = 1;
-				title.setText("Untitled" + i);
+				title.setText("Untitled" + " " + i);
 				i++;
 				p1.add(title);
 			}
