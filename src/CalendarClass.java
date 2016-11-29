@@ -95,7 +95,7 @@ public void testMain(){
 	next = new JButton ("Next");
 	next.setEnabled(true);
 	next.addActionListener(new buttonNext());
-	calendarTableDefault = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int colIndex){return true;}};
+	calendarTableDefault = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int colIndex){return false;}};
 	tableCalendar = new JTable(calendarTableDefault);
 	panelCalendar = new JPanel(null);
 
