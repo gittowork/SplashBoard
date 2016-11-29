@@ -25,7 +25,7 @@ public class CalSave {
 	private int min;
 	private String event;
 	
-	public void CalSave(String m, int d, String md, int y, int h, int mi, String e){
+	public CalSave(String m, int d, String md, int y, int h, int mi, String e){
 		month = m;
 		day = d;
 		meridium = md;
