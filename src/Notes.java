@@ -16,12 +16,15 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.Border;
 
+import org.junit.Before;
+
 import com.sun.corba.se.impl.orb.ParserTable.TestORBInitializer1;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
 
 import javafx.geometry.Point3D;
 import javafx.scene.shape.Shape3D;
+import jdk.internal.dynalink.beans.StaticClass;
 import sun.net.www.content.audio.x_aiff;
 import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 
@@ -63,6 +66,7 @@ public class Notes {
 	private JPanel p7;
 	private JButton yes;
 	private JButton no;
+	private JPanel p8;
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -187,17 +191,23 @@ public class Notes {
 	backButton.addActionListener(new ActionListener() { // When user clicks on "Back":
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			pop2.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
 			p6 = new JPanel();
 			p7 = new JPanel();
-			JLabel q = new JLabel("Would you like to save your note before going back?");
-			q.setFont(new Font("Calibri", Font.PLAIN, 35));
+			p8 = new JPanel();
+			JLabel q = new JLabel("Would you like to save your");
+			q.setFont(new Font("Calibri", Font.PLAIN, 20));
 			p6.add(q);
+			JLabel q1 = new JLabel("note before exiting?");
+			q1.setFont(new Font("Calibri", Font.PLAIN, 20));
+			p8.add(q1);
 			yes = new JButton("Yes, definitely!");
 			no = new JButton("No, forget it.");
 			p7.add(yes, BorderLayout.WEST);
 			p7.add(no, BorderLayout.EAST);
 			pop2.getContentPane().add(p7, BorderLayout.SOUTH);
 			pop2.getContentPane().add(p6, BorderLayout.NORTH);
+			pop2.getContentPane().add(p8, BorderLayout.CENTER);
 			pop2.pack();
 			pop2.setVisible(true);
 			
