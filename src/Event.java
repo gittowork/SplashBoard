@@ -139,27 +139,28 @@ public class Event {
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
-	}
-	public void backButton(){
+		
+		confirm.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				save();
+				frm.dispose();
+			}
+		});
+		
 		back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				frm.dispose();
 			}
 		});
 	}
-	
-	public void confirmButton(){
-		confirm.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				save();
-			}
-		});
-	}
+
+		
 		
 	public void save(){
         e = new CalSave(mt, d, md, y, h, mi, f);
 		hm = new HashMap();
 		hm.put(f, e);
+		System.out.print(hm.get(f));
 		
 	}
 	
