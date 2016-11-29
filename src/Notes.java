@@ -240,4 +240,12 @@ public class Notes {
 	b1.grabFocus();
 	b2.grabFocus();
 	}
+	
+	public void editNote() {
+		// Method that is called when user wants to edit an existing note.
+	}
+	
+	public void deleteNote() {
+		// Method that is called when user wants to delete an existing note.
+	}
 }
