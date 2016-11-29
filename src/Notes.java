@@ -151,7 +151,7 @@ public class Notes {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(title.getText() == null) { // Puts a general title if user does not input one. Needs to be fixed, doesn't work??
+			if(title.getText() == null) { // Puts a general title if user does not input one. --------------- Needs to be fixed, doesn't work??
 				int i = 1;
 				title.setText("Untitled" + i);
 				i++;
@@ -191,11 +191,13 @@ public class Notes {
 	p1.add(p3); // Add back button icon and reformat button layout.
 	backButton.addActionListener(new ActionListener() { // When user clicks on "Back":
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) { 
 			pop2.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
 			p6 = new JPanel();
 			p7 = new JPanel();
 			p8 = new JPanel();
+			
+			// Save-before-exit confirmation message pop-up:
 			JLabel q = new JLabel("Would you like to save your");
 			q.setFont(new Font("Calibri", Font.PLAIN, 20));
 			p6.add(q);
@@ -216,11 +218,11 @@ public class Notes {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					saveNote();
-					System.out.print("Saved before closing");
+					saveNote(); // The note is saved.
+					System.out.print("Saved before closing"); // Test message!!
 					pop2.dispose();
 					frm.dispose();
-					
+					// Both frames are disposed.
 				}
 			});
 			
@@ -229,7 +231,7 @@ public class Notes {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					pop2.dispose();
-					frm.dispose();
+					frm.dispose(); // Both frames are disposed.
 				}
 			});
 		}
