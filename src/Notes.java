@@ -206,19 +206,20 @@ public class Notes {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					saveNote();
+					System.out.print("Saved before closing");
+					pop2.dispose();
+					frm.dispose();
 					
 				}
-				
 			});
 			
-			no.addActionListener(new ActionListener() {
+			no.addActionListener(new ActionListener() { // When user clicks "No":
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-					
+					pop2.dispose();
+					frm.dispose();
 				}
-				
 			});
 		}
 	});
