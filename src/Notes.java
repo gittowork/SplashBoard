@@ -83,12 +83,10 @@ public class Notes {
 		this.back = back;
 	}
 	public void saveNote() { //To add completed note on screen.
-		HashMap<Integer, String> hmap = new HashMap<Integer, String>();
-		for(int i = 0; i <= 100000; i++) {
-			hmap.put(i, title.getText());
-		}
+		HashMap<String, String> hmap = new HashMap<String, String>();
+		hmap.put(title.getText(), title.getText()+body.getText());
 		
-	}
+		}
 	
 	public void folderScreen() { //Consider taking this out?.....
 		
