@@ -104,11 +104,6 @@ public class Notes {
 		this.back = back;
 	}
 	public void saveNote() { //To add completed note on screen.
-		if(title.getText() == null) { // Puts a generalized title if user does not input one.
-			for (int i = 1; i <= 100000; i++) {
-				title.setText("Untitled" + i);
-			}
-		}
 		t = (String)title.getText();
 		b = (String)body.getText();
 		s = new NoteSave(month, day, year, t, b);
@@ -156,6 +151,12 @@ public class Notes {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if(title.getText() == null) { // Puts a general title if user does not input one. Needs to be fixed, doesn't work??
+				int i = 1;
+				title.setText("Untitled" + i);
+				i++;
+				p1.add(title);
+			}
 			saveNote(); // Calls saveNote() method.
 			
 			// Save confirmation pop-up:
