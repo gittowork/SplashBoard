@@ -152,7 +152,7 @@ public static void newCalendarScreen(int month, int year){
 			calendarTableDefault.setValueAt(null, i, j);
 		}
 	}
-	
+	 
 	GregorianCalendar calScreen = new GregorianCalendar(year, month, 1);
 	numDays = calScreen.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 	monthDays = calScreen.get(GregorianCalendar.DAY_OF_WEEK);
