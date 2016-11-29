@@ -25,6 +25,7 @@ import javafx.scene.shape.Shape3D;
 import sun.net.www.content.audio.x_aiff;
 import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 
+import javax.imageio.ImageTypeSpecifier;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +58,11 @@ public class Notes {
 	protected String t;
 	protected String b;
 	private NoteSave s;
+	private JFrame pop2 = new JFrame();
+	private JPanel p6;
+	private JPanel p7;
+	private JButton yes;
+	private JButton no;
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -94,6 +100,11 @@ public class Notes {
 		this.back = back;
 	}
 	public void saveNote() { //To add completed note on screen.
+		if(title.getText() == null) { // Puts a generalized title if user does not input one.
+			for (int i = 1; i <= 100000; i++) {
+				title.setText("Untitled" + i);
+			}
+		}
 		t = (String)title.getText();
 		b = (String)body.getText();
 		s = new NoteSave(month, day, year, t, b);
@@ -141,43 +152,76 @@ public class Notes {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-		if(title.getText() == null) { // Puts a generalized title if user does not input one.
-			for (int i = 1; i <= 100000; i++) {
-			title.setText("Untitled" + i);
-			}
-		}
-		saveNote(); // This is the desired action.
-		
-		// Save confirmation pop-up:
-		pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
-		p4 = new JPanel();
-		JLabel saved = new JLabel("Note Saved!");
-		saved.setFont(new Font("Calibri", Font.PLAIN, 40));
-		p4.add(saved);
-		JButton confirm = new JButton("OK");
-		p5 = new JPanel();
-		p5.add(confirm);
-		pop1.getContentPane().add(p5, BorderLayout.SOUTH);
-		pop1.getContentPane().add(p4, BorderLayout.CENTER);
-		pop1.pack();
-		pop1.setVisible(true);
-		confirm.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pop1.dispose();
-			}
+			saveNote(); // Calls saveNote() method.
 			
-		});
-	}
-		
+			// Save confirmation pop-up:
+			pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+			p4 = new JPanel();
+			JLabel saved = new JLabel("Note Saved!");
+			saved.setFont(new Font("Calibri", Font.PLAIN, 40));
+			p4.add(saved);
+			JButton confirm = new JButton("OK");
+			p5 = new JPanel();
+			p5.add(confirm);
+			pop1.getContentPane().add(p5, BorderLayout.SOUTH);
+			pop1.getContentPane().add(p4, BorderLayout.CENTER);
+			pop1.pack();
+			pop1.setVisible(true);
+			confirm.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					pop1.dispose(); // When the "OK" button is clicked, the window disappears.
+				}
+				
+			});
+		}
 	});
+		
 	
 	// Back Button:
 	p3 = new JPanel(); 
 	backButton = new JButton("Back");
 	p3.add(backButton);
 	p1.add(p3); // Add back button icon and reformat button layout.
+	backButton.addActionListener(new ActionListener() { // When user clicks on "Back":
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			p6 = new JPanel();
+			p7 = new JPanel();
+			JLabel q = new JLabel("Would you like to save your note before going back?");
+			q.setFont(new Font("Calibri", Font.PLAIN, 35));
+			p6.add(q);
+			yes = new JButton("Yes, definitely!");
+			no = new JButton("No, forget it.");
+			p7.add(yes, BorderLayout.WEST);
+			p7.add(no, BorderLayout.EAST);
+			pop2.getContentPane().add(p7, BorderLayout.SOUTH);
+			pop2.getContentPane().add(p6, BorderLayout.NORTH);
+			pop2.pack();
+			pop2.setVisible(true);
+			
+			yes.addActionListener(new ActionListener() { // When user clicks "Yes":
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					saveNote();
+					
+				}
+				
+			});
+			
+			no.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					
+				}
+				
+			});
+		}
+	});
 	
 	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 	frm.setVisible(true);
