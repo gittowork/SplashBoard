@@ -49,6 +49,7 @@ private JFrame frame;
 private JFrame frm;
 static JLabel labelM, labelY;
 static JComboBox yearBox;
+static Container pane;
 static DefaultTableModel calendarTableDefault;
 static JPanel panelCalendar;
 static JTable tableCalendar;
@@ -64,7 +65,7 @@ public static void main(String[] args){
 	CalendarClass c = new CalendarClass();
 	//c.dayScreen();
 	//c.monthScreen();
-	c.yearScreen();
+	//c.yearScreen();
 	c.testMain();
 
 
@@ -100,28 +101,36 @@ public void testGrid(){ // another test to try a grid layout
 public void testMain(){
 	frm = new JFrame("Calendar");
 	frm.setPreferredSize(new Dimension(ysHeight, ysWidth));
-	Container pane = frm.getContentPane();
+	pane = frm.getContentPane();
 	pane.setLayout(null);
 	frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	labelM = new JLabel("January");
 	labelY = new JLabel("Change Year:");
 	yearBox = new JComboBox();
-		for (int i = realYear - 5; i <= realYear + 100; i++){
+		for (int i = 2016 - 10; i <= 2016 + 10; i++){
 			yearBox.addItem(String.valueOf(i));
 		}
+	yearBox.addActionListener(null);
 	prev = new JButton("Back");
+	prev.setEnabled(true);
+	prev.addActionListener(new buttonPrev());
 	next = new JButton("Next");
-	calendarTableDefault = new DefaultTableModel();
+	next.setEnabled(true);
+	next.addActionListener(new buttonNext());
+	calendarTableDefault = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return true;}};
 	tableCalendar = new JTable(calendarTableDefault);
 	panelCalendar = new JPanel(null);
 
-	GregorianCalendar cal = new GregorianCalendar(); //sets up the calendar with a real calendar
-	realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
-	realMonth = cal.get(GregorianCalendar.MONTH);
-	realYear = cal.get(GregorianCalendar.YEAR);
+	GregorianCalendar calendar = new GregorianCalendar(); //sets up the calendar with a real calendar
+	realDay = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+	realMonth = calendar.get(GregorianCalendar.MONTH);
+	realYear = calendar.get(GregorianCalendar.YEAR);
 	currentMonth = realMonth;
 	currentYear = realYear;
-	
+	String[] headers = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		for(int i =0; i < 7; i++){
+			calendarTableDefault.addColumn(headers[i]);
+		}
 	pane.add(panelCalendar);
 	panelCalendar.add(labelM);
 	panelCalendar.add(labelY);
@@ -129,21 +138,56 @@ public void testMain(){
 	panelCalendar.add(prev);
 	panelCalendar.add(next);
 	panelCalendar.add(tableCalendar);
-	panelCalendar.setBounds(0,0,600,800);
-	labelM.setBounds(10,200,80,20);
-	labelY.setBounds(200,20,80,20);
-	yearBox.setBounds(arg0, arg1, arg2, arg3);
-	prev.setBounds(arg0, arg1, arg2, arg3);
-	next.setBounds(arg0, arg1, arg2, arg3);
-	tableCalendar.setBounds(0,0,0,0);
+	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
+	labelM.setBounds(210+labelM.getPreferredSize().width/2,25,100,25);
+	labelY.setBounds(10,505,80,20);
+	yearBox.setBounds(430, 505, 80, 20);
+	prev.setBounds(20, 25, 50, 25);
+	next.setBounds(500, 25, 50, 25);
+	tableCalendar.setBounds(10,50,550,550);
+	
+	tableCalendar.getParent().setBackground(tableCalendar.getBackground());
+	
+	tableCalendar.setRowHeight(76);
+	calendarTableDefault.setColumnCount(7);
+	calendarTableDefault.setRowCount(6);
+	
+	
+	frm.setResizable(false);
+	frm.pack();
 	frm.setVisible(true);
+
 	
-	
-	
-	
-	
+
+}
+
+class buttonPrev implements ActionListener{
+	public void actionPerformed (ActionEvent e){
+		if (currentMonth == 0){
+			currentMonth = 11;
+			currentYear --;
+		}
+		else{
+			currentMonth --;
+		}
+		
+	}
+}
+
+class buttonNext implements ActionListener{
+	public void actionPerformed (ActionEvent e){
+		if (currentMonth == 12){
+			currentMonth = 1;
+			currentYear++;
+		}
+		else{
+			currentMonth++;
+		}
+	}
 	
 }
+
+
 
 public void yearScreen(){
 	JFrame frame = new JFrame("Year");
@@ -404,13 +448,6 @@ public void addButtons(){
 	back.addActionListener((ActionListener) this);
 }
 
-public void actionPerformed(ActionEvent e) {
-    if ("add".equals(e.getActionCommand())) {
-     //add event
-    } else {
-        //go back
-    }
-} 
 
 
 
