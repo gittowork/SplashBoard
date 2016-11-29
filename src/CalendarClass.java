@@ -72,31 +72,9 @@ public static void main(String[] args){
 	}});
 }
 
-public void addPanel(){	//wanted to see if this created a grid of JLabel
-	int i = 3;
-	int j = 4;
-	JPanel[][] panelHolder = new JPanel[i][j];
-	setLayout(new GridLayout(i,j));
-	
-	for(int m = 0; m < i; m++){
-		for(int n = 0; n < j; n++){
-			add(panelHolder[m][n]);
-		}
-	}
-	panelHolder[2][3].add(new JLabel("Test"));
-}
 
-public void testGrid(){ // another test to try a grid layout
-	JFrame frame = new JFrame("Test");
-	JPanel panel = new JPanel();
-	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
-	panel.setLayout(new GridLayout(3,3,1,1));
-	JLabel component = new JLabel("Test");
-	panel.add(component, 0, 0);
-	
-	frame.pack();
-	frame.setVisible(true);
-}
+
+
 
 public void testMain(){
 	frm = new JFrame("Calendar");
@@ -111,13 +89,13 @@ public void testMain(){
 			yearBox.addItem(String.valueOf(i));
 		}
 	yearBox.addActionListener(null);
-	prev = new JButton("Back");
+	prev = new JButton ("Back");
 	prev.setEnabled(true);
 	prev.addActionListener(new buttonPrev());
-	next = new JButton("Next");
+	next = new JButton ("Next");
 	next.setEnabled(true);
 	next.addActionListener(new buttonNext());
-	calendarTableDefault = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return true;}};
+	calendarTableDefault = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int colIndex){return true;}};
 	tableCalendar = new JTable(calendarTableDefault);
 	panelCalendar = new JPanel(null);
 
@@ -127,10 +105,8 @@ public void testMain(){
 	realYear = calendar.get(GregorianCalendar.YEAR);
 	currentMonth = realMonth;
 	currentYear = realYear;
-	String[] headers = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		for(int i =0; i < 7; i++){
-			calendarTableDefault.addColumn(headers[i]);
-		}
+	
+	
 	pane.add(panelCalendar);
 	panelCalendar.add(labelM);
 	panelCalendar.add(labelY);
@@ -139,14 +115,16 @@ public void testMain(){
 	panelCalendar.add(next);
 	panelCalendar.add(tableCalendar);
 	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
-	labelM.setBounds(210+labelM.getPreferredSize().width/2,25,100,25);
+	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
 	labelY.setBounds(10,505,80,20);
 	yearBox.setBounds(430, 505, 80, 20);
-	prev.setBounds(20, 25, 50, 25);
-	next.setBounds(500, 25, 50, 25);
+	prev.setBounds(20, 20, 75, 25);
+	next.setBounds(500, 20, 75, 25);
 	tableCalendar.setBounds(10,50,550,550);
 	
 	tableCalendar.getParent().setBackground(tableCalendar.getBackground());
+	
+
 	
 	tableCalendar.setRowHeight(76);
 	calendarTableDefault.setColumnCount(7);
@@ -157,9 +135,36 @@ public void testMain(){
 	frm.pack();
 	frm.setVisible(true);
 
+
 	
 
 }
+
+public static void newCalendarScreen(int month, int year){
+	int numDays;
+	int monthDays;
+	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
+	labelM.setText(months[month]);
+	yearBox.setSelectedItem(String.valueOf(year));
+	
+	for (int i=0; i<6; i++){
+		for (int j=0; j<7; j++){
+			calendarTableDefault.setValueAt(null, i, j);
+		}
+	}
+	
+	GregorianCalendar calScreen = new GregorianCalendar(year, month, 1);
+	numDays = calScreen.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+	monthDays = calScreen.get(GregorianCalendar.DAY_OF_WEEK);
+	
+	for(int i = 1; i <=numDays; i++){
+		int row = new Integer((i+monthDays-2)/7);
+		int col = (i+monthDays-2)%7;
+		calendarTableDefault.setValueAt(i, row, col);
+	}
+	
+}
+
 
 class buttonPrev implements ActionListener{
 	public void actionPerformed (ActionEvent e){
@@ -170,8 +175,9 @@ class buttonPrev implements ActionListener{
 		else{
 			currentMonth --;
 		}
-		
+		newCalendarScreen(currentMonth, currentYear);
 	}
+	
 }
 
 class buttonNext implements ActionListener{
@@ -183,6 +189,7 @@ class buttonNext implements ActionListener{
 		else{
 			currentMonth++;
 		}
+		newCalendarScreen(currentMonth, currentYear);
 	}
 	
 }
