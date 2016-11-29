@@ -27,6 +27,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -46,6 +47,10 @@ public class Notes {
 	private JButton backButton;
 	private JTextArea title = new JTextArea(1, 15);
 	private JTextArea body = new JTextArea(100, 100);
+	private JFrame pop1 = new JFrame();
+	protected static int POP_HEIGHT = 400;
+	protected static int POP_WIDTH = 200;
+	private JPanel p4;
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -137,7 +142,14 @@ public class Notes {
 			title.setText("Untitled" + i);
 			}
 		}
-		
+		pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+		p4 = new JPanel();
+		JLabel saved = new JLabel("Note Saved!");
+		saved.setFont(new Font("Calibri", Font.PLAIN, 40));
+		p4.add(saved);
+		pop1.getContentPane().add(p4, BorderLayout.CENTER);
+		pop1.pack();
+		pop1.setVisible(true);
 	}
 		
 	});
