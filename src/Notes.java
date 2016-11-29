@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ import javax.swing.border.Border;
 
 import com.sun.corba.se.impl.orb.ParserTable.TestORBInitializer1;
 import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
 
 import javafx.geometry.Point3D;
 import javafx.scene.shape.Shape3D;
@@ -45,13 +47,16 @@ public class Notes {
 	private JPanel p3;
 	private JButton save;
 	private JButton backButton;
-	private JTextArea title = new JTextArea(1, 15);
-	private JTextArea body = new JTextArea(100, 100);
+	protected JTextArea title = new JTextArea(1, 15);
+	protected JTextArea body = new JTextArea(100, 100);
 	private JFrame pop1 = new JFrame();
 	protected static int POP_HEIGHT = 400;
 	protected static int POP_WIDTH = 200;
 	private JPanel p4;
 	private JPanel p5;
+	protected String t;
+	protected String b;
+	private NoteSave s;
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -89,8 +94,11 @@ public class Notes {
 		this.back = back;
 	}
 	public void saveNote() { //To add completed note on screen.
-		HashMap<String, String> hmap = new HashMap<String, String>();
-		hmap.put(title.getText(), title.getText()+body.getText());
+		t = (String)title.getText();
+		b = (String)body.getText();
+		s = new NoteSave(month, day, year, t, b);
+		HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
+		hmap.put(t, s);
 		
 		}
 	
@@ -133,12 +141,14 @@ public class Notes {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-		saveNote(); // This is the desired action.
 		if(title.getText() == null) { // Puts a generalized title if user does not input one.
 			for (int i = 1; i <= 100000; i++) {
 			title.setText("Untitled" + i);
 			}
 		}
+		saveNote(); // This is the desired action.
+		
+		// Save confirmation pop-up:
 		pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
 		p4 = new JPanel();
 		JLabel saved = new JLabel("Note Saved!");
@@ -147,19 +157,18 @@ public class Notes {
 		JButton confirm = new JButton("OK");
 		p5 = new JPanel();
 		p5.add(confirm);
-		confirm.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}
-			
-		});
 		pop1.getContentPane().add(p5, BorderLayout.SOUTH);
 		pop1.getContentPane().add(p4, BorderLayout.CENTER);
 		pop1.pack();
 		pop1.setVisible(true);
+		confirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop1.dispose();
+			}
+			
+		});
 	}
 		
 	});
