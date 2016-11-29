@@ -1,10 +1,14 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import acm.program.*;
 import acm.graphics.*;
 import acm.util.*;
@@ -26,6 +30,7 @@ protected String title;
 protected String description;
 protected Boolean allday;
 protected Boolean meridian;
+private static int realDay, realMonth, realYear, currentMonth, currentYear;
 protected int ysHeight = 600;
 protected int ysWidth = 600;
 protected int msHeight = 600;
@@ -41,9 +46,14 @@ private static final int subdivisionsXmonth = 4;
 private static final int subdivisionsYday = 6;
 private static final int subdivisionsXday = 6; //change to 7 later
 private JFrame frame;
-
-private JButton back;
-private JButton add;
+private JFrame frm;
+static JLabel labelM, labelY;
+static JComboBox yearBox;
+static Container pane;
+static DefaultTableModel calendarTableDefault;
+static JPanel panelCalendar;
+static JTable tableCalendar;
+private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
 
@@ -53,9 +63,10 @@ public static void main(String[] args){
 	@Override
 	public void run(){
 	CalendarClass c = new CalendarClass();
-	c.dayScreen();
-	c.monthScreen();
-	c.yearScreen();
+	//c.dayScreen();
+	//c.monthScreen();
+	//c.yearScreen();
+	c.testMain();
 
 
 	}});
@@ -87,9 +98,105 @@ public void testGrid(){ // another test to try a grid layout
 	frame.setVisible(true);
 }
 
+public void testMain(){
+	frm = new JFrame("Calendar");
+	frm.setPreferredSize(new Dimension(ysHeight, ysWidth));
+	pane = frm.getContentPane();
+	pane.setLayout(null);
+	frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	labelM = new JLabel("January");
+	labelY = new JLabel("Change Year:");
+	yearBox = new JComboBox();
+		for (int i = 2016 - 10; i <= 2016 + 10; i++){
+			yearBox.addItem(String.valueOf(i));
+		}
+	yearBox.addActionListener(null);
+	prev = new JButton("Back");
+	prev.setEnabled(true);
+	prev.addActionListener(new buttonPrev());
+	next = new JButton("Next");
+	next.setEnabled(true);
+	next.addActionListener(new buttonNext());
+	calendarTableDefault = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return true;}};
+	tableCalendar = new JTable(calendarTableDefault);
+	panelCalendar = new JPanel(null);
+
+	GregorianCalendar calendar = new GregorianCalendar(); //sets up the calendar with a real calendar
+	realDay = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+	realMonth = calendar.get(GregorianCalendar.MONTH);
+	realYear = calendar.get(GregorianCalendar.YEAR);
+	currentMonth = realMonth;
+	currentYear = realYear;
+	String[] headers = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		for(int i =0; i < 7; i++){
+			calendarTableDefault.addColumn(headers[i]);
+		}
+	pane.add(panelCalendar);
+	panelCalendar.add(labelM);
+	panelCalendar.add(labelY);
+	panelCalendar.add(yearBox);
+	panelCalendar.add(prev);
+	panelCalendar.add(next);
+	panelCalendar.add(tableCalendar);
+	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
+	labelM.setBounds(210+labelM.getPreferredSize().width/2,25,100,25);
+	labelY.setBounds(10,505,80,20);
+	yearBox.setBounds(430, 505, 80, 20);
+	prev.setBounds(20, 25, 50, 25);
+	next.setBounds(500, 25, 50, 25);
+	tableCalendar.setBounds(10,50,550,550);
+	
+	tableCalendar.getParent().setBackground(tableCalendar.getBackground());
+	
+	tableCalendar.setRowHeight(76);
+	calendarTableDefault.setColumnCount(7);
+	calendarTableDefault.setRowCount(6);
+	
+	
+	frm.setResizable(false);
+	frm.pack();
+	frm.setVisible(true);
+
+	
+
+}
+
+class buttonPrev implements ActionListener{
+	public void actionPerformed (ActionEvent e){
+		if (currentMonth == 0){
+			currentMonth = 11;
+			currentYear --;
+		}
+		else{
+			currentMonth --;
+		}
+		
+	}
+}
+
+class buttonNext implements ActionListener{
+	public void actionPerformed (ActionEvent e){
+		if (currentMonth == 12){
+			currentMonth = 1;
+			currentYear++;
+		}
+		else{
+			currentMonth++;
+		}
+	}
+	
+}
+
+
+
 public void yearScreen(){
 	JFrame frame = new JFrame("Year");
-	
+	GregorianCalendar cal = new GregorianCalendar();
+	realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
+	realMonth = cal.get(GregorianCalendar.MONTH);
+	realYear = cal.get(GregorianCalendar.YEAR);
+	currentMonth = realMonth;
+	currentYear = realYear;
 	
 	
 	JPanel panel = new JPanel(){
@@ -110,7 +217,7 @@ public void yearScreen(){
 	
 	panel.setPreferredSize(new Dimension(ysHeight, ysWidth));
 	panel.setLayout(new GridLayout(3,3,150,150));
-	JLabel component = new JLabel("2016");
+	JLabel component = new JLabel("");
 	JLabel component1 = new JLabel("2017");
 	JLabel component2 = new JLabel("2018");
 	JLabel component3 = new JLabel("2019");
@@ -341,13 +448,6 @@ public void addButtons(){
 	back.addActionListener((ActionListener) this);
 }
 
-public void actionPerformed(ActionEvent e) {
-    if ("add".equals(e.getActionCommand())) {
-     //add event
-    } else {
-        //go back
-    }
-} 
 
 
 
