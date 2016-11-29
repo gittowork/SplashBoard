@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class Event {
 	private JPanel s;
 	private JPanel t;
 	private JFrame frm;
+	private JFrame pop1;
 	protected JComboBox months;
 	protected JComboBox days;
 	protected JComboBox years;
@@ -33,7 +35,7 @@ public class Event {
 	protected JComboBox hour;
 	protected JComboBox min;
 	protected JComboBox meridium;
-	private CalSave e;
+	private CalSave w;
 	private HashMap hm;
 	private int y;
 	private int h;
@@ -143,6 +145,7 @@ public class Event {
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				save();
+				popwindow();
 				frm.dispose();
 			}
 		});
@@ -157,10 +160,9 @@ public class Event {
 		
 		
 	public void save(){
-        e = new CalSave(mt, d, md, y, h, mi, f);
+        w = new CalSave(mt, d, md, y, h, mi, f);
 		hm = new HashMap();
-		hm.put(f, e);
-		e = (CalSave)hm.get(f);
+		hm.put(w.getEvent(), w);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -182,6 +184,32 @@ public class Event {
         
 
         
+	}
+	
+	public void popwindow(){
+		JFrame pop1 = new JFrame();
+		pop1.setPreferredSize(new Dimension(400, 200));
+		JPanel p4 = new JPanel();
+		JLabel saved = new JLabel("Note Saved!");
+		saved.setFont(new Font("Calibri", Font.PLAIN, 40));
+		p4.add(saved);
+		JButton confirm = new JButton("OK");
+		JPanel p5 = new JPanel();
+		p5.add(confirm);
+		pop1.getContentPane().add(p5, BorderLayout.SOUTH);
+		pop1.getContentPane().add(p4, BorderLayout.CENTER);
+		pop1.pack();
+		pop1.setVisible(true);
+		confirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop1.dispose();
+				
+			}
+			
+		});
+		
 	}
 }
 
