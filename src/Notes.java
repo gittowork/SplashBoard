@@ -39,9 +39,6 @@ import javax.swing.JTextArea;
 
 
 public class Notes {
-	protected int month;
-	protected int day;
-	protected int year;
 	protected String back;
 	private JFrame frm = new JFrame();
 	protected static int PROGRAM_HEIGHT = 1280; // Standard largest preferred size of screen.
@@ -67,6 +64,7 @@ public class Notes {
 	private JButton yes;
 	private JButton no;
 	private JPanel p8;
+	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -79,45 +77,22 @@ public class Notes {
 		});
 	}
 	
-	public int getMonth() {
-		return month;
-	}
-	public int getDay() {
-		return day;
-	}
-	public int getYear() {
-		return year;
-	}
 	public String getBack() {
 		return back;
-	}
-	public void setMonth() {
-		this.month = month;
-	}
-	public void setDay() {
-		this.day = day;
-	}
-	public void setYear() {
-		this.year = year;
 	}
 	public void setBack() {
 		this.back = back;
 	}
+	public void saveNote() { //To add completed note on screen.
+		s = new NoteSave(t, b);
+		hmap.put(t, s);
+		System.out.println("Note is saved to" + " " + (NoteSave)hmap.get(t)); // Testing of hashmap!!!
+		// As of 11/29 10:20am - Hashmap is saving to different memory addresses. (When wanting to override content of a key). 
+		}
 	
-	public void noteMain() { // Main screen for notes. (Shows listed set of notes). 
+	public void noteMain() {
 		
 	}
-	
-	public void saveNote() { //To add completed note on screen.
-		t = (String)title.getText();
-		b = (String)body.getText();
-		s = new NoteSave(month, day, year, t, b);
-		HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
-		hmap.put(t, s);
-		System.out.print("Note is saved to" + " " + (NoteSave)hmap.get(t)); // Testing of hashmap!!!
-		// As of 11/29 10:20am - Hashmap is saving to different memory addresses. (When wanting to override content of a key). 
-		
-		}
 	
 	public void addNoteScreen() {
 	frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
@@ -160,6 +135,8 @@ public class Notes {
 				i++;
 				p1.add(title);
 			}
+			t = (String)title.getText();
+			b = (String)body.getText();
 			saveNote(); // Calls saveNote() method.
 			
 			// Save confirmation pop-up:
@@ -242,12 +219,15 @@ public class Notes {
 	
 	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 	frm.setVisible(true);
+	frm.getContentPane().setForeground(Color.WHITE); // Still doesn't work?? What the heck.........
 	b1.grabFocus();
 	b2.grabFocus();
 	}
 	
 	public void editNote() {
 		// Method that is called when user wants to edit an existing note.
+		addNoteScreen();
+		hmap.get(t);
 	}
 	
 	public void deleteNote() {
