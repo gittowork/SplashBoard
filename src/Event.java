@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import javax.swing.AbstractButton;
@@ -35,8 +38,8 @@ public class Event {
 	protected JComboBox hour;
 	protected JComboBox min;
 	protected JComboBox meridium;
-	private CalSave w;
-	private HashMap hm;
+	private CalSave w = new CalSave();
+	private HashMap<String, CalSave> hm;
 	private int y;
 	private int h;
 	private int mi;
@@ -160,9 +163,16 @@ public class Event {
 		
 		
 	public void save(){
-        w = new CalSave(mt, d, md, y, h, mi, f);
-		hm = new HashMap();
-		hm.put(w.getEvent(), w);
+		try{
+			FileOutputStream fileOut = new FileOutputStream("/tmp/event.ser");
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(w);
+		out.close();
+		fileOut.close();
+		System.out.print("Serialized data saved");
+		}catch(IOException i){
+			i.printStackTrace();
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -182,7 +192,12 @@ public class Event {
         f = text.getText();
 
         
-
+        w.month = mt;
+        w.day = d;
+        w.year = y;
+        w.hr = h;
+        w.min = mi;
+        w.meridium = md;
         
 	}
 	

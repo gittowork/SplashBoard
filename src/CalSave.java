@@ -16,16 +16,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class CalSave {
-	private String month;
-	private int day;
-	private String meridium;
-	private int year;
-	private int hr;
-	private int min;
-	private String event;
-	
-	public CalSave(String m, int d, String md, int y, int h, int mi, String e){
+public class CalSave implements java.io.Serializable{
+	public String month;
+	public int day;
+	public String meridium;
+	public int year;
+	public int hr;
+	public int min;
+	public String event;
+}	
+	/*public CalSave(String m, int d, String md, int y, int h, int mi, String e){
 		month = m;
 		day = d;
 		meridium = md;
@@ -91,4 +91,4 @@ public class CalSave {
 		return event;
 	}
 	
-}
+}*/
