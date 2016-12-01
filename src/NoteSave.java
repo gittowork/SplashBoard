@@ -1,6 +1,6 @@
-public class NoteSave {
-		private String t;
-		private String b;
+public class NoteSave implements java.io.Serializable {
+		public String t;
+		public String b;
 		
 		public NoteSave(String title, String body){
 			t = title;
