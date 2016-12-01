@@ -226,7 +226,6 @@ public class Notes {
 	
 	public void editNote() {
 		// Method that is called when user wants to edit an existing note.
-		addNoteScreen();
 		hmap.get(t);
 	}
 	
