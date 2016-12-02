@@ -23,7 +23,7 @@ public class NoteSave implements java.io.Serializable {
 			return b;
 		}
 		
-		@Override
+		@Override // Returns the body as a string.
 		public String toString() {
 			return getBody();
 		}
