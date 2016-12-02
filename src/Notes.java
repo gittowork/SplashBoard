@@ -91,7 +91,7 @@ public class Notes {
 			@Override
 			public void run() {
 				Notes n = new Notes();
-				n.addNoteScreen();
+				n.noteMain();
 
 			}
 		});
@@ -125,9 +125,17 @@ public class Notes {
 	public void noteMain() {
 		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
 		JPanel north = new JPanel(); // North Panel.
-		JPanel nTitle = new JPanel(); // "Notes" goes in the North panel > center.
+		JLabel nTitle = new JLabel("Notes"); // "Notes" goes in the North panel > center.
 		JPanel addNote = new JPanel(); // "Add Note" goes in the North panel > east.
 		JButton addN = new JButton("Add Note"); // Goes in addNote JPanel.
+		
+		north.add(nTitle, BorderLayout.CENTER);
+		north.add(addNote, BorderLayout.EAST);
+		
+		
+		
+		main.add(north, BorderLayout.NORTH);
+		
 
 	}
 
