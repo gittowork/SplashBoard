@@ -78,6 +78,7 @@ public class Notes {
 	private JButton no;
 	private JPanel p8;
 	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
+	private JPanel main;
 
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -85,7 +86,7 @@ public class Notes {
 			@Override
 			public void run() {
 				Notes n = new Notes();
-				n.addNoteScreen();
+				n.noteMain();
 
 			}
 		});
@@ -113,11 +114,12 @@ public class Notes {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
-		editNote(); // Testing deserialization. 
+		editNote(); // Testing de-serialization. 
 	}
 
 	public void noteMain() {
-
+		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
+		
 	}
 
 	public void addNoteScreen() {
@@ -243,7 +245,7 @@ public class Notes {
 
 		frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 		frm.setVisible(true);
-		frm.getContentPane().setForeground(Color.WHITE); // Still doesn't work?? What the heck.........
+		frm.getContentPane().setForeground(Color.WHITE); 
 		b1.grabFocus();
 		b2.grabFocus();
 		
