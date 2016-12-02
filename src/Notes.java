@@ -6,14 +6,16 @@ import java.awt.Font;
 import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -40,6 +42,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 public class Notes {
@@ -95,15 +104,16 @@ public class Notes {
 		hmap.put(t, s);
 
 		try { // Serializing object from hashmap.
-			FileOutputStream fileOut = new FileOutputStream("/tmp/notes.ser");
+			FileOutputStream fileOut = new FileOutputStream(t + ".ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(s);
+			out.writeObject(hmap);
 			out.close();
 			fileOut.close();
-			System.out.printf("Serialized data is saved in /tmp/notes.ser");
+			System.out.print("Serialized data is saved in" + " " + t + ".ser");
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
+		editNote(); // Testing deserialization. 
 	}
 
 	public void noteMain() {
@@ -145,12 +155,12 @@ public class Notes {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(title.getText() == null) { // Puts a general title if user does not input one. --------------- Needs to be fixed, doesn't work??
+				/*if(title.getText() == null) { // Puts a general title if user does not input one. --------------- Needs to be fixed, doesn't work??
 					int i = 1;
 					title.setText("Untitled" + " " + i);
 					i++;
 					p1.add(title);
-				}
+				} */ 
 				saveNote(); // Calls saveNote() method.
 
 				// Save confirmation pop-up:
@@ -236,11 +246,32 @@ public class Notes {
 		frm.getContentPane().setForeground(Color.WHITE); // Still doesn't work?? What the heck.........
 		b1.grabFocus();
 		b2.grabFocus();
+		
 	}
 
 	public void editNote() {
 		// Method that is called when user wants to edit an existing note.
-		hmap.get(t);
+		try {
+			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			hmap = (HashMap)in.readObject();
+			in.close();
+			fileIn.close();
+		}catch(IOException ioe) {
+			ioe.printStackTrace();
+			return;
+		}catch(ClassNotFoundException c) {
+			System.out.println("Class not found");
+			c.printStackTrace();
+			return;
+		}
+		  Set set = hmap.entrySet();
+	      Iterator iterator = set.iterator();
+	      while(iterator.hasNext()) {
+	         Map.Entry mentry = (Map.Entry)iterator.next();
+	         System.out.print("key: "+ mentry.getKey() + " & Value: ");
+	         System.out.println(mentry.getValue());
+	      }
 	}
 
 	public void deleteNote() {
