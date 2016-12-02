@@ -91,7 +91,7 @@ public class Notes {
 			@Override
 			public void run() {
 				Notes n = new Notes();
-				n.noteMain();
+				n.addNoteScreen();
 
 			}
 		});
