@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 
 import org.junit.Before;
 import org.omg.CORBA.SystemException;
+import org.omg.PortableServer.POAPackage.AdapterAlreadyExists;
 
 import com.sun.corba.se.impl.orb.ParserTable.TestORBInitializer1;
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -74,8 +75,8 @@ public class Notes {
 	private JFrame pop2 = new JFrame();
 	private JPanel p6;
 	private JPanel p7;
-	private JButton yes;
-	private JButton no;
+	private JButton yes = new JButton("Yes, definitely!");
+	private JButton no = new JButton("No, forget it.");
 	private JPanel p8;
 	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 	private static String bHint = "Start typing...";
@@ -84,6 +85,9 @@ public class Notes {
 	private JFrame pop3 = new JFrame();
 	private JPanel p9;
 	private JPanel p10;
+	private JFrame pop4 = new JFrame();
+	private JPanel p11;
+	private JPanel p12;
 
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -107,6 +111,59 @@ public class Notes {
 		t = title.getText();
 		b = body.getText();
 		s = new NoteSave(t, b);
+		
+		// PUT THIS IN SAVE ACTION LISTENER!!!!!!!!!!!!!!!!!!!!!
+		try {
+			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			hmap = (HashMap)in.readObject();
+			in.close();
+			fileIn.close();
+		}catch(IOException ioe) {
+			ioe.printStackTrace();
+			return;
+		}catch(ClassNotFoundException c) {
+			System.out.println("Class not found");
+			c.printStackTrace();
+			return;
+		}
+		Set set = hmap.entrySet();
+		Iterator iterator = set.iterator();
+		while(iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry)iterator.next();
+			if(mentry.getKey().equals(t)) {
+				pop4.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+				p11 = new JPanel();
+				p12 = new JPanel();
+				JLabel exists = new JLabel("<html>A note with this title already exists.<br>Would you like to save this note anyway?</html>");
+				exists.setFont(new Font("Calibri", Font.PLAIN, 20));
+				p11.add(exists);
+				p12.add(yes, BorderLayout.WEST);
+				p12.add(no, BorderLayout.EAST);
+
+				pop4.getContentPane().add(p11, BorderLayout.NORTH);
+				pop4.getContentPane().add(p12, BorderLayout.SOUTH);
+				pop4.pack();
+				pop4.setVisible(true);
+
+				yes.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						pop4.dispose();
+					}
+				});
+
+				no.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						pop4.dispose();
+					}
+				});
+
+			}
+		}
 		hmap.put(t, s);
 
 		try { // Serializing object from hashmap.
@@ -128,14 +185,14 @@ public class Notes {
 		JLabel nTitle = new JLabel("Notes"); // "Notes" goes in the North panel > center.
 		JPanel addNote = new JPanel(); // "Add Note" goes in the North panel > east.
 		JButton addN = new JButton("Add Note"); // Goes in addNote JPanel.
-		
+
 		north.add(nTitle, BorderLayout.CENTER);
 		north.add(addNote, BorderLayout.EAST);
-		
-		
-		
+
+
+
 		main.add(north, BorderLayout.NORTH);
-		
+
 
 	}
 
@@ -200,7 +257,7 @@ public class Notes {
 
 				else {
 					saveNote(); // Calls saveNote() method.
-					
+
 					// Save confirmation pop-up:
 					pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
 					p4 = new JPanel();
@@ -242,19 +299,13 @@ public class Notes {
 				p8 = new JPanel();
 
 				// Save-before-exit confirmation message pop-up:
-				JLabel q = new JLabel("Would you like to save your");
+				JLabel q = new JLabel("<html>Would you like to save your<br>note before exiting?<html>");
 				q.setFont(new Font("Calibri", Font.PLAIN, 20));
 				p6.add(q);
-				JLabel q1 = new JLabel("note before exiting?");
-				q1.setFont(new Font("Calibri", Font.PLAIN, 20));
-				p8.add(q1);
-				yes = new JButton("Yes, definitely!");
-				no = new JButton("No, forget it.");
 				p7.add(yes, BorderLayout.WEST);
 				p7.add(no, BorderLayout.EAST);
 				pop2.getContentPane().add(p7, BorderLayout.SOUTH);
 				pop2.getContentPane().add(p6, BorderLayout.NORTH);
-				pop2.getContentPane().add(p8, BorderLayout.CENTER);
 				pop2.pack();
 				pop2.setVisible(true);
 
