@@ -78,7 +78,12 @@ public class Notes {
 	private JButton no;
 	private JPanel p8;
 	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
+	private static String bHint = "Start typing...";
+	private static String tHint = "Note Title";
 	private JPanel main;
+	private JFrame pop3 = new JFrame();
+	private JPanel p9;
+	private JPanel p10;
 
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -86,7 +91,7 @@ public class Notes {
 			@Override
 			public void run() {
 				Notes n = new Notes();
-				n.noteMain();
+				n.addNoteScreen();
 
 			}
 		});
@@ -119,7 +124,7 @@ public class Notes {
 
 	public void noteMain() {
 		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
-		
+
 	}
 
 	public void addNoteScreen() {
@@ -131,7 +136,7 @@ public class Notes {
 		title.setEditable(true);
 		title.setFont(new Font("Calibri",Font.PLAIN,60)); // Sets font style and size of font. 
 		JButton b1 = new JButton();
-		TextFieldHint h1 = new TextFieldHint(title, "Note Title"); // Sets the text field hint. 
+		TextFieldHint h1 = new TextFieldHint(title, tHint); // Sets the text field hint. 
 		p1.add(title);
 		b1.setContentAreaFilled(false); // Make button transparent. 
 		b1.setBorderPainted(false);
@@ -143,7 +148,7 @@ public class Notes {
 		body.setEditable(true);
 		body.setFont(new Font("Calibri", Font.PLAIN, 28));
 		JButton b2 = new JButton();
-		TextFieldHint h2 = new TextFieldHint(body, "Start typing..."); // Sets text field hint.
+		TextFieldHint h2 = new TextFieldHint(body, bHint); // Sets text field hint.
 		b2.setContentAreaFilled(false); // Make button transparent.
 		b2.setBorderPainted(false);
 		frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
@@ -157,35 +162,56 @@ public class Notes {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*if(title.getText() == null) { // Puts a general title if user does not input one. --------------- Needs to be fixed, doesn't work??
-					int i = 1;
-					title.setText("Untitled" + " " + i);
-					i++;
-					p1.add(title);
-				} */ 
-				saveNote(); // Calls saveNote() method.
+				if(title.getText().equals(tHint)) { // Tells user to input title if there is not title before save.
+					pop3.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+					p9 = new JPanel();
+					JLabel needTitle = new JLabel("Please input a note title before saving.");
+					needTitle.setFont(new Font("Calibri", Font.PLAIN, 20));
+					p9.add(needTitle);
+					p10 = new JPanel();
+					JButton ok = new JButton("OK");
+					p10.add(ok);
+					pop3.getContentPane().add(p9, BorderLayout.CENTER);
+					pop3.getContentPane().add(p10, BorderLayout.SOUTH);
+					pop3.pack();
+					pop3.setVisible(true);
 
-				// Save confirmation pop-up:
-				pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
-				p4 = new JPanel();
-				JLabel saved = new JLabel("Note Saved!");
-				saved.setFont(new Font("Calibri", Font.PLAIN, 40));
-				p4.add(saved);
-				JButton confirm = new JButton("OK");
-				p5 = new JPanel();
-				p5.add(confirm);
-				pop1.getContentPane().add(p5, BorderLayout.SOUTH);
-				pop1.getContentPane().add(p4, BorderLayout.CENTER);
-				pop1.pack();
-				pop1.setVisible(true);
-				confirm.addActionListener(new ActionListener() {
+					ok.addActionListener(new ActionListener() {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						pop1.dispose(); // When the "OK" button is clicked, the window disappears.
-					}
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							pop3.dispose();
 
-				});
+						}
+					});
+				}
+
+				else {
+					saveNote(); // Calls saveNote() method.
+					
+					// Save confirmation pop-up:
+					pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+					p4 = new JPanel();
+					JLabel saved = new JLabel("Note Saved!");
+					saved.setFont(new Font("Calibri", Font.PLAIN, 40));
+					p4.add(saved);
+					JButton confirm = new JButton("OK");
+					p5 = new JPanel();
+					p5.add(confirm);
+					pop1.getContentPane().add(p5, BorderLayout.SOUTH);
+					pop1.getContentPane().add(p4, BorderLayout.CENTER);
+					pop1.pack();
+					pop1.setVisible(true);
+
+					confirm.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							pop1.dispose(); // When the "OK" button is clicked, the window disappears.
+						}
+
+					});
+				}
 			}
 		});
 
@@ -248,7 +274,7 @@ public class Notes {
 		frm.getContentPane().setForeground(Color.WHITE); 
 		b1.grabFocus();
 		b2.grabFocus();
-		
+
 	}
 
 	public void editNote() {
@@ -267,13 +293,13 @@ public class Notes {
 			c.printStackTrace();
 			return;
 		}
-		  Set set = hmap.entrySet();
-	      Iterator iterator = set.iterator();
-	      while(iterator.hasNext()) {
-	         Map.Entry mentry = (Map.Entry)iterator.next();
-	         System.out.print("key: "+ mentry.getKey() + " & Value: ");
-	         System.out.println(mentry.getValue());
-	      }
+		Set set = hmap.entrySet();
+		Iterator iterator = set.iterator();
+		while(iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry)iterator.next();
+			System.out.print("key: "+ mentry.getKey() + " & Value: ");
+			System.out.println(mentry.getValue());
+		}
 	}
 
 	public void deleteNote() {
