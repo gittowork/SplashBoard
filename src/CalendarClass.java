@@ -82,13 +82,14 @@ public void testMain(){
 	pane = frm.getContentPane();
 	pane.setLayout(null);
 	frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	labelM = new JLabel("January");
+	labelM = new JLabel("Default");
 	labelY = new JLabel("Change Year:");
 	yearBox = new JComboBox();
-		for (int i = 2016 - 10; i <= 2016 + 10; i++){
-			yearBox.addItem(String.valueOf(i));
+		for (int i = 2016; i <= 2016 + 10; i++){
+			//yearBox.addItem(String.valueOf(i));
+			yearBox.addItem(i);
 		}
-	yearBox.addActionListener(null);
+	yearBox.addActionListener(new yearBoxListener());  //new yearBoxListener()
 	prev = new JButton ("Back");
 	prev.setEnabled(true);
 	prev.addActionListener(new buttonPrev());
@@ -99,7 +100,7 @@ public void testMain(){
 	tableCalendar = new JTable(calendarTableDefault);
 	panelCalendar = new JPanel(null);
 
-	GregorianCalendar calendar = new GregorianCalendar(); //sets up the calendar with a real calendar
+	GregorianCalendar calendar = new GregorianCalendar(); //aligns the calendar with a real calendar
 	realDay = calendar.get(GregorianCalendar.DAY_OF_MONTH);
 	realMonth = calendar.get(GregorianCalendar.MONTH);
 	realYear = calendar.get(GregorianCalendar.YEAR);
@@ -130,12 +131,23 @@ public void testMain(){
 	calendarTableDefault.setColumnCount(7);
 	calendarTableDefault.setRowCount(6);
 	
+	tableCalendar.addMouseListener(new MouseAdapter(){
+		public void mousePressed(MouseEvent e){
+			JTable selected = (JTable)e.getSource();
+			int row = selected.getSelectedRow();
+			int column = selected.getSelectedColumn();
+			//go to add event
+		}
+		
+	});
 	
+	String[] rowDays = {"Sunday", "Monday", "Tuesday" , "Wednesday" , "Thursday", "Friday", "Saturday"};
 	frm.setResizable(false);
 	frm.pack();
 	frm.setVisible(true);
+	
 
-
+	newCalendarScreen(currentMonth, currentYear);
 	
 
 }
@@ -182,9 +194,10 @@ class buttonPrev implements ActionListener{
 
 class buttonNext implements ActionListener{
 	public void actionPerformed (ActionEvent e){
-		if (currentMonth == 12){
-			currentMonth = 1;
+		if (currentMonth == 11){
+			currentMonth = 0;
 			currentYear++;
+			//currentYear = yearBox.setSelectedIndex();
 		}
 		else{
 			currentMonth++;
@@ -192,6 +205,15 @@ class buttonNext implements ActionListener{
 		newCalendarScreen(currentMonth, currentYear);
 	}
 	
+}
+
+class yearBoxListener implements ActionListener{
+	public void actionPerformed (ActionEvent e){
+		currentYear = (int) yearBox.getSelectedItem();
+		//currentMonth = currentMonth+11;
+		
+		newCalendarScreen(currentMonth, currentYear);
+	}
 }
 
 
