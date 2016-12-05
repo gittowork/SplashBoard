@@ -96,11 +96,31 @@ public class Notes {
 			public void run() {
 				Notes n = new Notes();
 				n.noteMain();
-
 			}
 		});
 	}
-
+	
+	public Notes() {
+		title.setText("");
+		body.setText("");
+	}
+	
+	public String getTitle() {
+		return title.getText();
+	}
+	
+	public void setTitle(JTextArea t) {
+		this.title = t;
+	}
+	
+	public String getBody() {
+		return body.getText();
+	}
+	
+	public void setBody(JTextArea b) {
+		this.body = b;
+	}
+	
 	public String getBack() {
 		return back;
 	}
@@ -124,7 +144,8 @@ public class Notes {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addNoteScreen();
+				Notes x = new Notes();
+				x.addNoteScreen();
 
 			}
 		});
