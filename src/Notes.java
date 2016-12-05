@@ -81,7 +81,7 @@ public class Notes {
 	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 	private static String bHint = "Start typing...";
 	private static String tHint = "Note Title";
-	private JPanel main;
+	private JFrame main; // Change back to JPanel - JFrame is just for testing!!!
 	private JFrame pop3 = new JFrame();
 	private JPanel p9;
 	private JPanel p10;
@@ -95,7 +95,7 @@ public class Notes {
 			@Override
 			public void run() {
 				Notes n = new Notes();
-				n.addNoteScreen();
+				n.noteMain();
 
 			}
 		});
@@ -107,12 +107,36 @@ public class Notes {
 	public void setBack() {
 		this.back = back;
 	}
-	public void saveNote() { //To add completed note on screen.
-		t = title.getText();
-		b = body.getText();
-		s = new NoteSave(t, b);
-		
-		// PUT THIS IN SAVE ACTION LISTENER!!!!!!!!!!!!!!!!!!!!!
+
+	public void noteMain() {
+		main = new JFrame(); // Note main screen is a JPanel that is located below the calendar.
+		JPanel north = new JPanel(); // North Panel.
+		JLabel nTitle = new JLabel("Notes"); // "Notes" goes in the North panel > center.
+		nTitle.setFont(new Font("Calibri", Font.PLAIN, 60));
+		JPanel addNote = new JPanel(); // "Add Note" goes in the North panel > east.
+		JButton addN = new JButton("Add Note"); // Goes in addNote JPanel.
+		addNote.add(addN);
+
+		north.add(nTitle, BorderLayout.CENTER);
+		north.add(addNote, BorderLayout.EAST);
+
+		addN.addActionListener(new ActionListener() { // Calls addNoteScreen() when user clicks on "Add Note" button.
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addNoteScreen();
+
+			}
+		});
+
+		main.add(north, BorderLayout.NORTH);
+		main.pack();
+		main.setVisible(true);
+
+
+	}
+
+	public void readInFix() { // ------------------------------------------------- Needs to be placed somewhere... probably in save action listener??
 		try {
 			FileInputStream fileIn = new FileInputStream(t + ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -164,6 +188,12 @@ public class Notes {
 
 			}
 		}
+	}
+
+	public void saveNote() { //To add completed note on screen.
+		t = title.getText();
+		b = body.getText();
+		s = new NoteSave(t, b);
 		hmap.put(t, s);
 
 		try { // Serializing object from hashmap.
@@ -172,28 +202,10 @@ public class Notes {
 			out.writeObject(hmap);
 			out.close();
 			fileOut.close();
-			System.out.print("Serialized data is saved in" + " " + t + ".ser");
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
 		editNote(); // Testing de-serialization. 
-	}
-
-	public void noteMain() {
-		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
-		JPanel north = new JPanel(); // North Panel.
-		JLabel nTitle = new JLabel("Notes"); // "Notes" goes in the North panel > center.
-		JPanel addNote = new JPanel(); // "Add Note" goes in the North panel > east.
-		JButton addN = new JButton("Add Note"); // Goes in addNote JPanel.
-
-		north.add(nTitle, BorderLayout.CENTER);
-		north.add(addNote, BorderLayout.EAST);
-
-
-
-		main.add(north, BorderLayout.NORTH);
-
-
 	}
 
 	public void addNoteScreen() {
@@ -299,7 +311,7 @@ public class Notes {
 				p8 = new JPanel();
 
 				// Save-before-exit confirmation message pop-up:
-				JLabel q = new JLabel("<html>Would you like to save your<br>note before exiting?<html>");
+				JLabel q = new JLabel("<html>Would you like to save your<br>note before exiting?</html>");
 				q.setFont(new Font("Calibri", Font.PLAIN, 20));
 				p6.add(q);
 				p7.add(yes, BorderLayout.WEST);
@@ -313,11 +325,37 @@ public class Notes {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						saveNote(); // The note is saved.
-						System.out.print("Saved before closing"); // Test message!!
-						pop2.dispose();
-						frm.dispose();
-						// Both frames are disposed.
+						if(title.getText().equals(tHint)) { // Tells user to input title if there is not title before save.
+							pop3.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+							p9 = new JPanel();
+							JLabel needTitle = new JLabel("Please input a note title before saving.");
+							needTitle.setFont(new Font("Calibri", Font.PLAIN, 20));
+							p9.add(needTitle);
+							p10 = new JPanel();
+							JButton ok = new JButton("OK");
+							p10.add(ok);
+							pop3.getContentPane().add(p9, BorderLayout.CENTER);
+							pop3.getContentPane().add(p10, BorderLayout.SOUTH);
+							pop3.pack();
+							pop3.setVisible(true);
+
+							ok.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									pop3.dispose();
+									pop2.dispose();
+
+								}
+							});
+						}
+						else {
+							saveNote(); // The note is saved.
+							System.out.print("Saved before closing"); // ------------------------------------------------------------- Test message!!
+							pop2.dispose();
+							frm.dispose();
+							// Both frames are disposed.
+						}
 					}
 				});
 
