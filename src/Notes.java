@@ -6,17 +6,23 @@ import java.awt.Font;
 import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.Border;
 
 import org.junit.Before;
+import org.omg.CORBA.SystemException;
 
 import com.sun.corba.se.impl.orb.ParserTable.TestORBInitializer1;
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -37,11 +43,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 
 public class Notes {
-	protected int month;
-	protected int day;
-	protected int year;
 	protected String back;
 	private JFrame frm = new JFrame();
 	protected static int PROGRAM_HEIGHT = 1280; // Standard largest preferred size of screen.
@@ -67,7 +77,14 @@ public class Notes {
 	private JButton yes;
 	private JButton no;
 	private JPanel p8;
-	
+	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
+	private static String bHint = "Start typing...";
+	private static String tHint = "Note Title";
+	private JPanel main;
+	private JFrame pop3 = new JFrame();
+	private JPanel p9;
+	private JPanel p10;
+
 	public static void main(String[] args) {
 		// This is equivalent to "run".
 		java.awt.EventQueue.invokeLater(new Runnable(){
@@ -75,180 +92,216 @@ public class Notes {
 			public void run() {
 				Notes n = new Notes();
 				n.addNoteScreen();
+
 			}
 		});
 	}
-	
-	public int getMonth() {
-		return month;
-	}
-	public int getDay() {
-		return day;
-	}
-	public int getYear() {
-		return year;
-	}
+
 	public String getBack() {
 		return back;
-	}
-	public void setMonth() {
-		this.month = month;
-	}
-	public void setDay() {
-		this.day = day;
-	}
-	public void setYear() {
-		this.year = year;
 	}
 	public void setBack() {
 		this.back = back;
 	}
 	public void saveNote() { //To add completed note on screen.
-		t = (String)title.getText();
-		b = (String)body.getText();
-		s = new NoteSave(month, day, year, t, b);
-		HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
+		t = title.getText();
+		b = body.getText();
+		s = new NoteSave(t, b);
 		hmap.put(t, s);
-		System.out.print("Note is saved to" + " " + (NoteSave)hmap.get(t)); // Testing of hashmap!!!
-		// As of 11/29 10:20am - Hashmap is saving to different memory addresses. (When wanting to override content of a key). 
+
+		try { // Serializing object from hashmap.
+			FileOutputStream fileOut = new FileOutputStream(t + ".ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(hmap);
+			out.close();
+			fileOut.close();
+			System.out.print("Serialized data is saved in" + " " + t + ".ser");
+		}catch(IOException i) {
+			i.printStackTrace();
 		}
-	
+		editNote(); // Testing de-serialization. 
+	}
+
 	public void noteMain() {
-		
+		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
+
 	}
-	
+
 	public void addNoteScreen() {
-	frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
-	
-	// Note Title:
-	p1 = new JPanel();
-	title.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
-	title.setEditable(true);
-	title.setFont(new Font("Calibri",Font.PLAIN,60)); // Sets font style and size of font. 
-	JButton b1 = new JButton();
-	TextFieldHint h1 = new TextFieldHint(title, "Note Title"); // Sets the text field hint. 
-	p1.add(title);
-	b1.setContentAreaFilled(false); // Make button transparent. 
-	b1.setBorderPainted(false);
-	p1.add(b1);
-	frm.getContentPane().add(p1, BorderLayout.NORTH);
-	
-	// Note Body:
-	body.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
-	body.setEditable(true);
-	body.setFont(new Font("Calibri", Font.PLAIN, 28));
-	JButton b2 = new JButton();
-	TextFieldHint h2 = new TextFieldHint(body, "Start typing..."); // Sets text field hint.
-	b2.setContentAreaFilled(false); // Make button transparent.
-	b2.setBorderPainted(false);
-	frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
-	
-	// Save Button:
-	p2 = new JPanel();
-	save = new JButton("Save");
-	p2.add(save);
-	p1.add(p2, BorderLayout.EAST); // Adds save button to East side of the North panel.
-	save.addActionListener(new ActionListener() { //When button is clicked.
+		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(title.getText() == null) { // Puts a general title if user does not input one. --------------- Needs to be fixed, doesn't work??
-				int i = 1;
-				title.setText("Untitled" + " " + i);
-				i++;
-				p1.add(title);
+		// Note Title:
+		p1 = new JPanel();
+		title.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
+		title.setEditable(true);
+		title.setFont(new Font("Calibri",Font.PLAIN,60)); // Sets font style and size of font. 
+		JButton b1 = new JButton();
+		TextFieldHint h1 = new TextFieldHint(title, tHint); // Sets the text field hint. 
+		p1.add(title);
+		b1.setContentAreaFilled(false); // Make button transparent. 
+		b1.setBorderPainted(false);
+		p1.add(b1);
+		frm.getContentPane().add(p1, BorderLayout.NORTH);
+
+		// Note Body:
+		body.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
+		body.setEditable(true);
+		body.setFont(new Font("Calibri", Font.PLAIN, 28));
+		JButton b2 = new JButton();
+		TextFieldHint h2 = new TextFieldHint(body, bHint); // Sets text field hint.
+		b2.setContentAreaFilled(false); // Make button transparent.
+		b2.setBorderPainted(false);
+		frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
+
+		// Save Button:
+		p2 = new JPanel();
+		save = new JButton("Save");
+		p2.add(save);
+		p1.add(p2, BorderLayout.EAST); // Adds save button to East side of the North panel.
+		save.addActionListener(new ActionListener() { //When button is clicked.
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(title.getText().equals(tHint)) { // Tells user to input title if there is not title before save.
+					pop3.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+					p9 = new JPanel();
+					JLabel needTitle = new JLabel("Please input a note title before saving.");
+					needTitle.setFont(new Font("Calibri", Font.PLAIN, 20));
+					p9.add(needTitle);
+					p10 = new JPanel();
+					JButton ok = new JButton("OK");
+					p10.add(ok);
+					pop3.getContentPane().add(p9, BorderLayout.CENTER);
+					pop3.getContentPane().add(p10, BorderLayout.SOUTH);
+					pop3.pack();
+					pop3.setVisible(true);
+
+					ok.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							pop3.dispose();
+
+						}
+					});
+				}
+
+				else {
+					saveNote(); // Calls saveNote() method.
+					
+					// Save confirmation pop-up:
+					pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+					p4 = new JPanel();
+					JLabel saved = new JLabel("Note Saved!");
+					saved.setFont(new Font("Calibri", Font.PLAIN, 40));
+					p4.add(saved);
+					JButton confirm = new JButton("OK");
+					p5 = new JPanel();
+					p5.add(confirm);
+					pop1.getContentPane().add(p5, BorderLayout.SOUTH);
+					pop1.getContentPane().add(p4, BorderLayout.CENTER);
+					pop1.pack();
+					pop1.setVisible(true);
+
+					confirm.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							pop1.dispose(); // When the "OK" button is clicked, the window disappears.
+						}
+
+					});
+				}
 			}
-			saveNote(); // Calls saveNote() method.
-			
-			// Save confirmation pop-up:
-			pop1.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
-			p4 = new JPanel();
-			JLabel saved = new JLabel("Note Saved!");
-			saved.setFont(new Font("Calibri", Font.PLAIN, 40));
-			p4.add(saved);
-			JButton confirm = new JButton("OK");
-			p5 = new JPanel();
-			p5.add(confirm);
-			pop1.getContentPane().add(p5, BorderLayout.SOUTH);
-			pop1.getContentPane().add(p4, BorderLayout.CENTER);
-			pop1.pack();
-			pop1.setVisible(true);
-			confirm.addActionListener(new ActionListener() {
+		});
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					pop1.dispose(); // When the "OK" button is clicked, the window disappears.
-				}
-				
-			});
-		}
-	});
-		
-	
-	// Back Button:
-	p3 = new JPanel(); 
-	backButton = new JButton("Back");
-	p3.add(backButton);
-	p1.add(p3); // Add back button icon and reformat button layout.
-	backButton.addActionListener(new ActionListener() { // When user clicks on "Back":
-		@Override
-		public void actionPerformed(ActionEvent e) { 
-			pop2.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
-			p6 = new JPanel();
-			p7 = new JPanel();
-			p8 = new JPanel();
-			
-			// Save-before-exit confirmation message pop-up:
-			JLabel q = new JLabel("Would you like to save your");
-			q.setFont(new Font("Calibri", Font.PLAIN, 20));
-			p6.add(q);
-			JLabel q1 = new JLabel("note before exiting?");
-			q1.setFont(new Font("Calibri", Font.PLAIN, 20));
-			p8.add(q1);
-			yes = new JButton("Yes, definitely!");
-			no = new JButton("No, forget it.");
-			p7.add(yes, BorderLayout.WEST);
-			p7.add(no, BorderLayout.EAST);
-			pop2.getContentPane().add(p7, BorderLayout.SOUTH);
-			pop2.getContentPane().add(p6, BorderLayout.NORTH);
-			pop2.getContentPane().add(p8, BorderLayout.CENTER);
-			pop2.pack();
-			pop2.setVisible(true);
-			
-			yes.addActionListener(new ActionListener() { // When user clicks "Yes":
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					saveNote(); // The note is saved.
-					System.out.print("Saved before closing"); // Test message!!
-					pop2.dispose();
-					frm.dispose();
-					// Both frames are disposed.
-				}
-			});
-			
-			no.addActionListener(new ActionListener() { // When user clicks "No":
+		// Back Button:
+		p3 = new JPanel(); 
+		backButton = new JButton("Back");
+		p3.add(backButton);
+		p1.add(p3); // Add back button icon and reformat button layout.
+		backButton.addActionListener(new ActionListener() { // When user clicks on "Back":
+			@Override
+			public void actionPerformed(ActionEvent e) { 
+				pop2.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
+				p6 = new JPanel();
+				p7 = new JPanel();
+				p8 = new JPanel();
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					pop2.dispose();
-					frm.dispose(); // Both frames are disposed.
-				}
-			});
-		}
-	});
-	
-	frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
-	frm.setVisible(true);
-	frm.getContentPane().setForeground(Color.WHITE); // Still doesn't work?? What the heck.........
-	b1.grabFocus();
-	b2.grabFocus();
+				// Save-before-exit confirmation message pop-up:
+				JLabel q = new JLabel("Would you like to save your");
+				q.setFont(new Font("Calibri", Font.PLAIN, 20));
+				p6.add(q);
+				JLabel q1 = new JLabel("note before exiting?");
+				q1.setFont(new Font("Calibri", Font.PLAIN, 20));
+				p8.add(q1);
+				yes = new JButton("Yes, definitely!");
+				no = new JButton("No, forget it.");
+				p7.add(yes, BorderLayout.WEST);
+				p7.add(no, BorderLayout.EAST);
+				pop2.getContentPane().add(p7, BorderLayout.SOUTH);
+				pop2.getContentPane().add(p6, BorderLayout.NORTH);
+				pop2.getContentPane().add(p8, BorderLayout.CENTER);
+				pop2.pack();
+				pop2.setVisible(true);
+
+				yes.addActionListener(new ActionListener() { // When user clicks "Yes":
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						saveNote(); // The note is saved.
+						System.out.print("Saved before closing"); // Test message!!
+						pop2.dispose();
+						frm.dispose();
+						// Both frames are disposed.
+					}
+				});
+
+				no.addActionListener(new ActionListener() { // When user clicks "No":
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						pop2.dispose();
+						frm.dispose(); // Both frames are disposed.
+					}
+				});
+			}
+		});
+
+		frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
+		frm.setVisible(true);
+		frm.getContentPane().setForeground(Color.WHITE); 
+		b1.grabFocus();
+		b2.grabFocus();
+
 	}
-	
+
 	public void editNote() {
 		// Method that is called when user wants to edit an existing note.
+		try {
+			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			hmap = (HashMap)in.readObject();
+			in.close();
+			fileIn.close();
+		}catch(IOException ioe) {
+			ioe.printStackTrace();
+			return;
+		}catch(ClassNotFoundException c) {
+			System.out.println("Class not found");
+			c.printStackTrace();
+			return;
+		}
+		Set set = hmap.entrySet();
+		Iterator iterator = set.iterator();
+		while(iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry)iterator.next();
+			System.out.print("key: "+ mentry.getKey() + " & Value: ");
+			System.out.println(mentry.getValue());
+		}
 	}
-	
+
 	public void deleteNote() {
 		// Method that is called when user wants to delete an existing note.
 	}

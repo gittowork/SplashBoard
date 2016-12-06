@@ -2,8 +2,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import javax.swing.AbstractButton;
@@ -17,12 +23,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class Event {
+public class Event implements ActionListener{
 	private JPanel o;
 	private JPanel m;
 	private JPanel s;
 	private JPanel t;
 	private JFrame frm;
+	private JFrame pop1;
+	private int filecount = 1;
 	protected JComboBox months;
 	protected JComboBox days;
 	protected JComboBox years;
@@ -33,8 +41,8 @@ public class Event {
 	protected JComboBox hour;
 	protected JComboBox min;
 	protected JComboBox meridium;
-	private CalSave e;
-	private HashMap hm;
+	private CalSave w = new CalSave();
+	private HashMap<String, String> hm;
 	private int y;
 	private int h;
 	private int mi;
@@ -140,9 +148,34 @@ public class Event {
 		frm.pack();
 		frm.setVisible(true);
 		
+		months.addActionListener(this);
+		days.addActionListener(this);
+		years.addActionListener(this);
+		hour.addActionListener(this);
+		min.addActionListener(this);
+		meridium.addActionListener(this);
+		
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+		        mt = (String)months.getSelectedItem();
+		        d = (int)days.getSelectedItem();
+		        y = (int)years.getSelectedItem();
+		        h = (int)hour.getSelectedItem();
+		        mi = (int)min.getSelectedItem();
+		        md = (String)meridium.getSelectedItem();
+		        
+		        f = text.getText();
+
+		        w.month = mt;
+		        w.day = d;
+		        w.year = y;
+		        w.hr = h;
+		        w.min = mi;
+		        w.meridium = md;
+		        w.event = f;
 				save();
+				popwindow();
+				deserialize();
 				frm.dispose();
 			}
 		});
@@ -157,31 +190,82 @@ public class Event {
 		
 		
 	public void save(){
-        e = new CalSave(mt, d, md, y, h, mi, f);
-		hm = new HashMap();
-		hm.put(f, e);
-		e = (CalSave)hm.get(f);
+		HashMap<String, String> hm = new HashMap<String, String>();
+		String n = "" + filecount;
+		hm.put(f, n);
+		
+		
+		try{
+			FileOutputStream fileOut = new FileOutputStream(n);
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(w);
+		out.close();
+		fileOut.close();
+		System.out.println("Serialized data saved");
+		}catch(IOException i){
+			i.printStackTrace();
+		}
+		filecount++;
+	}
+
+	
+	public void popwindow(){
+		JFrame pop1 = new JFrame();
+		pop1.setPreferredSize(new Dimension(400, 200));
+		JPanel p4 = new JPanel();
+		JLabel saved = new JLabel("Event Saved!");
+		saved.setFont(new Font("Calibri", Font.PLAIN, 40));
+		p4.add(saved);
+		JButton confirm = new JButton("OK");
+		JPanel p5 = new JPanel();
+		p5.add(confirm);
+		pop1.getContentPane().add(p5, BorderLayout.SOUTH);
+		pop1.getContentPane().add(p4, BorderLayout.CENTER);
+		pop1.pack();
+		pop1.setVisible(true);
+		confirm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop1.dispose();
+				
+			}
+			
+		});
+		
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-        months = (JComboBox)e.getSource();
-        mt = (String)months.getSelectedItem();
-        days = (JComboBox)e.getSource();
-        d = (int)days.getSelectedItem();
-        years = (JComboBox)e.getSource();
-        y = (int)years.getSelectedItem();
-        hour = (JComboBox)e.getSource();
-        h = (int)hour.getSelectedItem();
-        min = (JComboBox)e.getSource();
-        mi = (int)min.getSelectedItem();
-        meridium = (JComboBox)e.getSource();
-        md = (String)meridium.getSelectedItem();
-        
-        f = text.getText();
-
-        
-
-        
+	public void deserialize(){
+		String file = (String)hm.get(f);
+		w = null;
+		try{
+			FileInputStream fileIn =  new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			w = (CalSave) in.readObject();
+			in.close();
+			fileIn.close();
+		}catch(IOException i){
+			i.printStackTrace();
+			return;
+		}catch(ClassNotFoundException c){
+			System.out.println("CalSave class not found");
+			c.printStackTrace();
+			return;
+		}
+		System.out.println("event: " + w.event);
+		System.out.println("day: " + w.day);
 	}
+	
+	public void modify(){
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+
+	
 }
 

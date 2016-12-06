@@ -1,28 +1,10 @@
-public class NoteSave {
-		private int month;
-		private int day;
-		private int year;
-		private String t;
-		private String b;
+public class NoteSave implements java.io.Serializable {
+		public String t;
+		public String b;
 		
-		public NoteSave(int m, int d, int y, String title, String body){
-			month = m;
-			day = d;
-			year = y;
+		public NoteSave(String title, String body){
 			t = title;
 			b = body;
-		}
-		
-		public void setMonth(int m){
-			month = m;
-		}
-		
-		public void setDay(int d){
-			day = d;
-		}
-		
-		public void setYear(int y){
-			year = y;
 		}
 		
 		public void setTitle(String title) {
@@ -32,18 +14,6 @@ public class NoteSave {
 		public void setBody(String body) {
 			b = body;
 		}
-
-		public int getMonth(){
-			return month;
-		}
-		
-		public int getDay(){
-			return day;
-		}
-		
-		public int getYear(){
-			return year;
-		}
 		
 		public String getTitle() {
 			return t;
@@ -52,6 +22,12 @@ public class NoteSave {
 		public String getBody() {
 			return b;
 		}
+		
+		@Override // Returns the body as a string.
+		public String toString() {
+			return getBody();
+		}
+		
 		
 	}
 
