@@ -82,7 +82,7 @@ public class Notes {
 	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 	private static String bHint = "Start typing...";
 	private static String tHint = "Note Title";
-	private JFrame main; // Change back to JPanel - JFrame is just for testing!!!
+	private JPanel main; // Change back to JPanel - JFrame is just for testing!!!
 	private JFrame pop3 = new JFrame();
 	private JPanel p9;
 	private JPanel p10;
@@ -91,16 +91,16 @@ public class Notes {
 	private JPanel p12;
 	private JScrollPane scrollPane;
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		// This is equivalent to "run".
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			@Override
 			public void run() {
-				Notes n = new Notes();
-				n.noteMain();
+				//Notes n = new Notes();
+				//n.noteMain();
 			}
 		});
-	}
+	} */
 
 	public Notes() {
 		title.setText("");
@@ -130,8 +130,8 @@ public class Notes {
 		this.back = back;
 	}
 
-	public void noteMain() {
-		main = new JFrame(); // Note main screen is a JPanel that is located below the calendar.
+	public JPanel noteMain() {
+		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
 		JPanel north = new JPanel(); // North Panel.
 		JLabel nTitle = new JLabel("Notes"); // "Notes" goes in the North panel > center.
 		nTitle.setFont(new Font("Calibri", Font.PLAIN, 60));
@@ -153,10 +153,9 @@ public class Notes {
 		});
 
 		main.add(north, BorderLayout.NORTH);
-		main.pack();
 		main.setVisible(true);
-		//System.out.println("Hello");
-		//return main;
+		System.out.println("Hello");
+		return main;
 	}
 
 	public void readInFix() { // ------------------------------------------------- Needs to be placed somewhere... probably in save action listener??
