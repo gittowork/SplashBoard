@@ -19,6 +19,7 @@ import java.util.Set;
 
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import org.junit.Before;
@@ -42,6 +43,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.io.FileInputStream;
@@ -88,6 +90,7 @@ public class Notes {
 	private JFrame pop4 = new JFrame();
 	private JPanel p11;
 	private JPanel p12;
+	private JScrollPane scrollPane;
 
 	public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -145,7 +148,7 @@ public class Notes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Notes x = new Notes();
-				x.NoteScreen();
+				x.noteScreen();
 
 			}
 		});
@@ -153,8 +156,8 @@ public class Notes {
 		main.add(north, BorderLayout.NORTH);
 		main.pack();
 		main.setVisible(true);
-
-
+		//System.out.println("Hello");
+		//return main;
 	}
 
 	public void readInFix() { // ------------------------------------------------- Needs to be placed somewhere... probably in save action listener??
@@ -229,7 +232,7 @@ public class Notes {
 		editNote(t); // Testing de-serialization. 
 	}
 
-	public void NoteScreen() {
+	public void noteScreen() {
 		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
 		// Note Title:
@@ -259,8 +262,12 @@ public class Notes {
 			b2.setBorderPainted(false);
 			b2.grabFocus();
 		}
+		/*scrollPane = new JScrollPane();
+		scrollPane.setBounds(23, 40, 394, 191);
+		frm.getContentPane().add(scrollPane);
+		scrollPane.setViewportView(body);*/ // HEEEEEEEEEEEEEEEEEEELLLLPPPPPPPPPPPPPPP THIIISSSSSS DOESSSSN'TTTT WORRRKKKKKKKKKKKKKKKKKKKKKK.
 		frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
-
+		
 		// Save Button:
 		p2 = new JPanel();
 		save = new JButton("Save");
@@ -427,7 +434,7 @@ public class Notes {
 				title.setText(mentry.getKey().toString());
 				body.setText(mentry.getValue().toString());
 
-				NoteScreen();
+				noteScreen();
 			}
 		}
 	}

@@ -56,6 +56,7 @@ static JTable tableCalendar;
 private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
+private Notes n = new Notes();
 
 
 public static void main(String[] args){
@@ -108,7 +109,6 @@ public void testMain(){
 	currentYear = realYear;
 	
 	
-	pane.add(panelCalendar);
 	panelCalendar.add(labelM);
 	panelCalendar.add(labelY);
 	panelCalendar.add(yearBox);
@@ -116,6 +116,7 @@ public void testMain(){
 	panelCalendar.add(next);
 	panelCalendar.add(tableCalendar);
 	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
+	pane.add(panelCalendar);
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
 	labelY.setBounds(10,505,80,20);
 	yearBox.setBounds(430, 505, 80, 20);
@@ -149,8 +150,6 @@ public void testMain(){
 		
 	tableCalendar.setColumnSelectionAllowed(false);
 	tableCalendar.setRowSelectionAllowed(false);
-	
-	
 	
 	frm.setResizable(false);
 	frm.pack();
