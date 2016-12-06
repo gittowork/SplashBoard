@@ -159,7 +159,7 @@ public class Notes {
 
 	public void readInFix() { // ------------------------------------------------- Needs to be placed somewhere... probably in save action listener??
 		try {
-			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			FileInputStream fileIn = new FileInputStream(t + ".txt");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			hmap = (HashMap)in.readObject();
 			in.close();
@@ -218,7 +218,7 @@ public class Notes {
 		hmap.put(t, s);
 
 		try { // Serializing object from hashmap.
-			FileOutputStream fileOut = new FileOutputStream(t + ".ser");
+			FileOutputStream fileOut = new FileOutputStream(t + ".txt");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(hmap);
 			out.close();
@@ -404,7 +404,7 @@ public class Notes {
 	public void editNote(String t) {
 		// Method that is called when user wants to edit an existing note.
 		try {
-			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			FileInputStream fileIn = new FileInputStream(t + ".txt");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			hmap = (HashMap)in.readObject();
 			in.close();
@@ -435,7 +435,7 @@ public class Notes {
 	public void deleteNote(String t) {
 		// Method that is called when user wants to delete an existing note.
 		try {
-			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			FileInputStream fileIn = new FileInputStream(t + ".txt");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			hmap = (HashMap)in.readObject();
 			in.close();

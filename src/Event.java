@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.ComboBoxModel;
@@ -41,8 +44,7 @@ public class Event implements ActionListener{
 	protected JComboBox hour;
 	protected JComboBox min;
 	protected JComboBox meridium;
-	private CalSave w = new CalSave();
-	private HashMap<String, String> hm;
+	protected HashMap<String, CalSave> hm = new HashMap<String, CalSave>();
 	private int y;
 	private int h;
 	private int mi;
@@ -56,7 +58,8 @@ public class Event implements ActionListener{
 	private String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	public static final int PROGRAM_WIDTH = 480;
 	public static final int PROGRAM_HEIGHT = 640;
-	
+	private CalSave w;
+
 	public static void main(String[] args){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			@Override
@@ -67,7 +70,7 @@ public class Event implements ActionListener{
 		});
 
 	}
-	
+
 	public void drawPanel(){ 
 		//adding the days to the combo box
 		days = new JComboBox();	
@@ -147,39 +150,23 @@ public class Event implements ActionListener{
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
-		
+
 		months.addActionListener(this);
 		days.addActionListener(this);
 		years.addActionListener(this);
 		hour.addActionListener(this);
 		min.addActionListener(this);
 		meridium.addActionListener(this);
-		
+
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-		        mt = (String)months.getSelectedItem();
-		        d = (int)days.getSelectedItem();
-		        y = (int)years.getSelectedItem();
-		        h = (int)hour.getSelectedItem();
-		        mi = (int)min.getSelectedItem();
-		        md = (String)meridium.getSelectedItem();
-		        
-		        f = text.getText();
-
-		        w.month = mt;
-		        w.day = d;
-		        w.year = y;
-		        w.hr = h;
-		        w.min = mi;
-		        w.meridium = md;
-		        w.event = f;
 				save();
 				popwindow();
 				deserialize();
 				frm.dispose();
 			}
 		});
-		
+
 		back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				frm.dispose();
@@ -187,28 +174,35 @@ public class Event implements ActionListener{
 		});
 	}
 
-		
-		
+
+
 	public void save(){
-		HashMap<String, String> hm = new HashMap<String, String>();
-		String n = "" + filecount;
-		hm.put(f, n);
 		
+		f = text.getText();
+		mt = (String)months.getSelectedItem();
+		d = (int)days.getSelectedItem();
+		y = (int)years.getSelectedItem();
+		h = (int)hour.getSelectedItem();
+		mi = (int)min.getSelectedItem();
+		md = (String)meridium.getSelectedItem();
 		
+		w = new CalSave(mt, d, md, y, h, mi, f);
+		
+		hm.put(f, w);
+
 		try{
-			FileOutputStream fileOut = new FileOutputStream(n);
-		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		out.writeObject(w);
-		out.close();
-		fileOut.close();
-		System.out.println("Serialized data saved");
+			FileOutputStream fileOut = new FileOutputStream(f + ".ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(hm);
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data saved");
 		}catch(IOException i){
 			i.printStackTrace();
 		}
-		filecount++;
 	}
 
-	
+
 	public void popwindow(){
 		JFrame pop1 = new JFrame();
 		pop1.setPreferredSize(new Dimension(400, 200));
@@ -228,20 +222,18 @@ public class Event implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pop1.dispose();
-				
+
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	public void deserialize(){
-		String file = (String)hm.get(f);
-		w = null;
 		try{
-			FileInputStream fileIn =  new FileInputStream(file);
+			FileInputStream fileIn =  new FileInputStream(f + ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			w = (CalSave) in.readObject();
+			hm = (HashMap)in.readObject();
 			in.close();
 			fileIn.close();
 		}catch(IOException i){
@@ -252,20 +244,25 @@ public class Event implements ActionListener{
 			c.printStackTrace();
 			return;
 		}
-		System.out.println("event: " + w.event);
-		System.out.println("day: " + w.day);
+		Set set = hm.entrySet();
+		Iterator iterator = set.iterator();
+		while(iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry)iterator.next();
+			System.out.print("KEY: " + mentry.getKey() + " & VALUE: ");
+			System.out.println(mentry.getValue());
+		}
 	}
-	
+
 	public void modify(){
-		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 	}
 
 
-	
+
 }
 
