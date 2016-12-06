@@ -79,7 +79,6 @@ public class Notes {
 	private JPanel p7;
 	private JButton yes = new JButton("Yes, definitely!");
 	private JButton no = new JButton("No, forget it.");
-	private JPanel p8;
 	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 	private static String bHint = "Start typing...";
 	private static String tHint = "Note Title";
@@ -342,7 +341,6 @@ public class Notes {
 				pop2.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
 				p6 = new JPanel();
 				p7 = new JPanel();
-				p8 = new JPanel();
 
 				// Save-before-exit confirmation message pop-up:
 				JLabel q = new JLabel("<html>Would you like to save your<br>note before exiting?</html>");
