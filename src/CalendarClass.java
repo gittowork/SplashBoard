@@ -133,7 +133,7 @@ public void testMain(){
 	panelCalendar.add(tableCalendar);
 	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
-	labelY.setBounds(10,505,80,20);
+	labelY.setBounds(10,525,80,20);
 	labelSun.setBounds(gridbase,50,80,20);
 	labelMon.setBounds(gridbase+gridwidth,50,80,20);
 	labelTue.setBounds(gridbase+ (2*gridwidth)-5,50,80,20);
@@ -141,10 +141,10 @@ public void testMain(){
 	labelThu.setBounds(gridbase+ (4*gridwidth)-6,50,80,20);
 	labelFri.setBounds(gridbase+ (5*gridwidth),50,80,20);
 	labelSat.setBounds(gridbase+ (6*gridwidth)-13,50,80,20);
-	yearBox.setBounds(430, 505, 80, 20);
-	prev.setBounds(20, 20, 75, 25);
-	next.setBounds(500, 20, 75, 25);
-	tableCalendar.setBounds(10,50,550,550);
+	yearBox.setBounds(480, 525, 80, 20);
+	prev.setBounds(10, 20, 75, 25);
+	next.setBounds(485, 20, 75, 25);
+	tableCalendar.setBounds(10,70,550,550);
 	
 	tableCalendar.getParent().setBackground(tableCalendar.getBackground());
 	
@@ -190,13 +190,7 @@ public static void newCalendarScreen(int month, int year){
 	int monthDays;
 	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 	labelM.setText(months[month]);
-	labelSun.setText("Sunday");
-	labelMon.setText("Monday");
-	labelTue.setText("Tuesday");
-	labelWed.setText("Wednesday");
-	labelThu.setText("Thursday");
-	labelFri.setText("Friday");
-	labelSat.setText("Saturday");
+
 	yearBox.setSelectedItem(String.valueOf(year));
 	
 	
@@ -206,6 +200,7 @@ public static void newCalendarScreen(int month, int year){
 		}
 	}
 	 
+	
 	GregorianCalendar calScreen = new GregorianCalendar(year, month, 1);
 	numDays = calScreen.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 	monthDays = calScreen.get(GregorianCalendar.DAY_OF_WEEK);
@@ -215,6 +210,14 @@ public static void newCalendarScreen(int month, int year){
 		int col = (i+monthDays-2)%7;
 		calendarTableDefault.setValueAt(i, row, col);
 	}
+	
+	labelSun.setText("Sunday");
+	labelMon.setText("Monday");
+	labelTue.setText("Tuesday");
+	labelWed.setText("Wednesday");
+	labelThu.setText("Thursday");
+	labelFri.setText("Friday");
+	labelSat.setText("Saturday");
 	
 }
 
