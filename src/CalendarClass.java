@@ -223,7 +223,7 @@ class yearBoxListener implements ActionListener{
 		String boxYear = yearBox.getSelectedItem().toString();
 		currentYear = Integer.parseInt(boxYear);
 
-		
+	 	
 		newCalendarScreen(currentMonth, currentYear);
 	}
 }
