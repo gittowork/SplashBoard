@@ -145,7 +145,7 @@ public class Notes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Notes x = new Notes();
-				x.addNoteScreen();
+				x.NoteScreen();
 
 			}
 		});
@@ -229,7 +229,7 @@ public class Notes {
 		editNote(t); // Testing de-serialization. 
 	}
 
-	public void addNoteScreen() {
+	public void NoteScreen() {
 		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
 		// Note Title:
@@ -427,12 +427,34 @@ public class Notes {
 				title.setText(mentry.getKey().toString());
 				body.setText(mentry.getValue().toString());
 
-				addNoteScreen();
+				NoteScreen();
 			}
 		}
 	}
 
-	public void deleteNote() {
+	public void deleteNote(String t) {
 		// Method that is called when user wants to delete an existing note.
+		try {
+			FileInputStream fileIn = new FileInputStream(t + ".ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			hmap = (HashMap)in.readObject();
+			in.close();
+			fileIn.close();
+		}catch(IOException ioe) {
+			ioe.printStackTrace();
+			return;
+		}catch(ClassNotFoundException c) {
+			System.out.println("Class not found");
+			c.printStackTrace();
+			return;
+		}
+		Set set = hmap.entrySet();
+		Iterator iterator = set.iterator();
+		while(iterator.hasNext()) {
+			Map.Entry mentry = (Map.Entry)iterator.next();
+			if(mentry.getKey().equals(t)) { // If key in hash map matches the specified title, the key is removed. 
+				hmap.remove(mentry.getKey());
+			}
+		}
 	}
 }
