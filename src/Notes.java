@@ -99,28 +99,28 @@ public class Notes {
 			}
 		});
 	}
-	
+
 	public Notes() {
 		title.setText("");
 		body.setText("");
 	}
-	
+
 	public String getTitle() {
 		return title.getText();
 	}
-	
+
 	public void setTitle(JTextArea t) {
 		this.title = t;
 	}
-	
+
 	public String getBody() {
 		return body.getText();
 	}
-	
+
 	public void setBody(JTextArea b) {
 		this.body = b;
 	}
-	
+
 	public String getBack() {
 		return back;
 	}
@@ -226,7 +226,7 @@ public class Notes {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
-		editNote(); // Testing de-serialization. 
+		editNote(t); // Testing de-serialization. 
 	}
 
 	public void addNoteScreen() {
@@ -237,22 +237,28 @@ public class Notes {
 		title.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
 		title.setEditable(true);
 		title.setFont(new Font("Calibri",Font.PLAIN,60)); // Sets font style and size of font. 
-		JButton b1 = new JButton();
-		TextFieldHint h1 = new TextFieldHint(title, tHint); // Sets the text field hint. 
+		if(title.getText().equals("")) {
+			JButton b1 = new JButton();
+			TextFieldHint h1 = new TextFieldHint(title, tHint); // Sets the text field hint. 
+			b1.setContentAreaFilled(false); // Make button transparent. 
+			b1.setBorderPainted(false);
+			p1.add(b1);
+			b1.grabFocus();
+		}
 		p1.add(title);
-		b1.setContentAreaFilled(false); // Make button transparent. 
-		b1.setBorderPainted(false);
-		p1.add(b1);
 		frm.getContentPane().add(p1, BorderLayout.NORTH);
 
 		// Note Body:
 		body.setLineWrap(true); // Wraps text to new line if it exceeds spec. width.
 		body.setEditable(true);
 		body.setFont(new Font("Calibri", Font.PLAIN, 28));
-		JButton b2 = new JButton();
-		TextFieldHint h2 = new TextFieldHint(body, bHint); // Sets text field hint.
-		b2.setContentAreaFilled(false); // Make button transparent.
-		b2.setBorderPainted(false);
+		if(body.getText().equals("")) {
+			JButton b2 = new JButton();
+			TextFieldHint h2 = new TextFieldHint(body, bHint); // Sets text field hint.
+			b2.setContentAreaFilled(false); // Make button transparent.
+			b2.setBorderPainted(false);
+			b2.grabFocus();
+		}
 		frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
 
 		// Save Button:
@@ -364,15 +370,13 @@ public class Notes {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
-									pop3.dispose();
 									pop2.dispose();
-
+									pop3.dispose();
 								}
 							});
 						}
 						else {
 							saveNote(); // The note is saved.
-							System.out.print("Saved before closing"); // ------------------------------------------------------------- Test message!!
 							pop2.dispose();
 							frm.dispose();
 							// Both frames are disposed.
@@ -394,12 +398,10 @@ public class Notes {
 		frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 		frm.setVisible(true);
 		frm.getContentPane().setForeground(Color.WHITE); 
-		b1.grabFocus();
-		b2.grabFocus();
 
 	}
 
-	public void editNote() {
+	public void editNote(String t) {
 		// Method that is called when user wants to edit an existing note.
 		try {
 			FileInputStream fileIn = new FileInputStream(t + ".ser");
@@ -421,6 +423,12 @@ public class Notes {
 			Map.Entry mentry = (Map.Entry)iterator.next();
 			System.out.print("key: "+ mentry.getKey() + " & Value: ");
 			System.out.println(mentry.getValue());
+			if(mentry.getKey().equals(t)) {
+				title.setText(mentry.getKey().toString());
+				body.setText(mentry.getValue().toString());
+
+				addNoteScreen();
+			}
 		}
 	}
 
