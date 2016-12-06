@@ -91,7 +91,7 @@ public class Notes {
 	private JPanel p11;
 	private JPanel p12;
 	private JScrollPane scrollPane;
-
+	
 	public static void main(String[] args) {
 		// This is equivalent to "run".
 		java.awt.EventQueue.invokeLater(new Runnable(){
@@ -148,7 +148,7 @@ public class Notes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Notes x = new Notes();
-				x.noteScreen();
+				x.noteScreen("", "");
 
 			}
 		});
@@ -162,7 +162,7 @@ public class Notes {
 
 	public void readInFix() { // ------------------------------------------------- Needs to be placed somewhere... probably in save action listener??
 		try {
-			FileInputStream fileIn = new FileInputStream(t + ".txt");
+			FileInputStream fileIn = new FileInputStream(t + ".note");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			hmap = (HashMap)in.readObject();
 			in.close();
@@ -221,7 +221,7 @@ public class Notes {
 		hmap.put(t, s);
 
 		try { // Serializing object from hashmap.
-			FileOutputStream fileOut = new FileOutputStream(t + ".txt");
+			FileOutputStream fileOut = new FileOutputStream(t + ".note");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(hmap);
 			out.close();
@@ -229,10 +229,13 @@ public class Notes {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
-		editNote(t); // Testing de-serialization. 
+		//editNote(t); // Testing de-serialization. 
 	}
 
-	public void noteScreen() {
+	public void noteScreen(String t, String b) {
+		title.setText(t);
+		body.setText(b);
+		
 		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
 		// Note Title:
@@ -262,10 +265,7 @@ public class Notes {
 			b2.setBorderPainted(false);
 			b2.grabFocus();
 		}
-		/*scrollPane = new JScrollPane();
-		scrollPane.setBounds(23, 40, 394, 191);
-		frm.getContentPane().add(scrollPane);
-		scrollPane.setViewportView(body);*/ // HEEEEEEEEEEEEEEEEEEELLLLPPPPPPPPPPPPPPP THIIISSSSSS DOESSSSN'TTTT WORRRKKKKKKKKKKKKKKKKKKKKKK.
+		
 		frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
 		
 		// Save Button:
@@ -411,7 +411,7 @@ public class Notes {
 	public void editNote(String t) {
 		// Method that is called when user wants to edit an existing note.
 		try {
-			FileInputStream fileIn = new FileInputStream(t + ".txt");
+			FileInputStream fileIn = new FileInputStream(t + ".note");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			hmap = (HashMap)in.readObject();
 			in.close();
@@ -431,10 +431,7 @@ public class Notes {
 			System.out.print("key: "+ mentry.getKey() + " & Value: ");
 			System.out.println(mentry.getValue());
 			if(mentry.getKey().equals(t)) {
-				title.setText(mentry.getKey().toString());
-				body.setText(mentry.getValue().toString());
-
-				noteScreen();
+				noteScreen(mentry.getKey().toString(), mentry.getValue().toString());
 			}
 		}
 	}
@@ -442,7 +439,7 @@ public class Notes {
 	public void deleteNote(String t) {
 		// Method that is called when user wants to delete an existing note.
 		try {
-			FileInputStream fileIn = new FileInputStream(t + ".txt");
+			FileInputStream fileIn = new FileInputStream(t + ".note");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			hmap = (HashMap)in.readObject();
 			in.close();
