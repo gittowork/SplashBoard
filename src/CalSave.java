@@ -22,9 +22,9 @@ public class CalSave implements java.io.Serializable{
 	public String meridium;
 	public int year;
 	public int hr;
-	public int min;
+	public String min;
 	public String event;
-}	
+	
 	/*public CalSave(String m, int d, String md, int y, int h, int mi, String e){
 		month = m;
 		day = d;
@@ -33,7 +33,7 @@ public class CalSave implements java.io.Serializable{
 		hr = h; 
 		min = mi;
 		event = e;
-	}
+	}*/
 	
 	public void setMonth(String m){
 		month = m;
@@ -55,7 +55,7 @@ public class CalSave implements java.io.Serializable{
 		hr = h;
 	}
 	
-	public void setMin(int mi){
+	public void setMin(String mi){
 		min =mi;
 	}
 	
@@ -83,7 +83,7 @@ public class CalSave implements java.io.Serializable{
 		return hr;
 	}
 	
-	public int getMin(){
+	public String getMin(){
 		return min;
 	}
 	
@@ -91,4 +91,4 @@ public class CalSave implements java.io.Serializable{
 		return event;
 	}
 	
-}*/
+}

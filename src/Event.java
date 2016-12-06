@@ -45,11 +45,12 @@ public class Event implements ActionListener{
 	private HashMap<String, String> hm;
 	private int y;
 	private int h;
-	private int mi;
+	private String mi;
 	private String md;
 	private int d;
 	private String mt;
 	private String f;
+	String z = null;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
@@ -91,7 +92,14 @@ public class Event implements ActionListener{
 		min = new JComboBox();
 		min.addItem("Min");
 		for(int i = 0; i < 60; i++){
-			min.addItem(i);
+			if(i < 10){
+				String l = "0" + i;
+				min.addItem(l);
+			}
+			else{
+				String l = "" + i;
+				min.addItem(i);
+			}
 		}
 		meridium = new JComboBox();
 		meridium.addItem("AM");
@@ -161,11 +169,11 @@ public class Event implements ActionListener{
 		        d = (int)days.getSelectedItem();
 		        y = (int)years.getSelectedItem();
 		        h = (int)hour.getSelectedItem();
-		        mi = (int)min.getSelectedItem();
+		        mi = (String)min.getSelectedItem();
 		        md = (String)meridium.getSelectedItem();
 		        
 		        f = text.getText();
-
+		        
 		        w.month = mt;
 		        w.day = d;
 		        w.year = y;
@@ -174,11 +182,11 @@ public class Event implements ActionListener{
 		        w.meridium = md;
 		        w.event = f;
 				save();
-				popwindow();
-				deserialize();
+				modify();
 				frm.dispose();
 			}
 		});
+		
 		
 		back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -187,11 +195,13 @@ public class Event implements ActionListener{
 		});
 	}
 
-		
+	public String event(){
+		return f;
+	}
 		
 	public void save(){
-		HashMap<String, String> hm = new HashMap<String, String>();
-		String n = "" + filecount;
+		hm = new HashMap<String, String>();
+		String n = filecount + ".ser";
 		hm.put(f, n);
 		
 		
@@ -236,7 +246,8 @@ public class Event implements ActionListener{
 	}
 	
 	public void deserialize(){
-		String file = (String)hm.get(f);
+		hm.get(f);
+		String file = hm.get(f);
 		w = null;
 		try{
 			FileInputStream fileIn =  new FileInputStream(file);
@@ -254,9 +265,60 @@ public class Event implements ActionListener{
 		}
 		System.out.println("event: " + w.event);
 		System.out.println("day: " + w.day);
+		f = w.event;
+		d = w.day;
+		h = w.hr;
+		y = w.year;
+		mi = w.min;
+		md = w.meridium;
+		mt = w.month;
+		
 	}
 	
 	public void modify(){
+		deserialize();
+		JFrame pop2 = new JFrame();
+		pop2.setPreferredSize(new Dimension(450, 450));
+		JPanel p4 = new JPanel();
+		p4.setPreferredSize(new Dimension(200, 200));
+		JLabel load = new JLabel("Event:" + f);
+		load.setFont(new Font("Calibri", Font.PLAIN, 40));
+		p4.add(load);
+		JButton ok = new JButton("OK");
+		JButton modify = new JButton("Edit");
+		JPanel p5 = new JPanel();
+		p5.setPreferredSize(new Dimension(50, 50));
+		p5.add(modify);
+		p5.add(ok);
+		JPanel p6 = new JPanel();
+		p6.setPreferredSize(new Dimension(200, 200));
+		JLabel d1 = new JLabel("Date: " + mt + d + ", " + y);
+		JLabel d2 = new JLabel("Time: " + h + ":" + mi);
+		p6.add(d1, BorderLayout.SOUTH);
+		p6.add(d2, BorderLayout.CENTER);
+		pop2.getContentPane().add(p5, BorderLayout.SOUTH);
+		pop2.getContentPane().add(p6, BorderLayout.CENTER);
+		pop2.getContentPane().add(p4, BorderLayout.NORTH);
+		pop2.pack();
+		pop2.setVisible(true);
+		ok.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop2.dispose();
+				
+			}
+			
+		});
+		modify.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop2.dispose();
+				
+			}
+			
+		});
 		
 	}
 
