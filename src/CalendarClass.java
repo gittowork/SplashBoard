@@ -144,7 +144,7 @@ public void testMain(){
 	
 	String[] rowDays = {"Sunday", "Monday", "Tuesday" , "Wednesday" , "Thursday", "Friday", "Saturday"};
 		for (int i = 0; i < 7; i++){
-			//calendarTableDefault.addColumn(rowDays[i]);
+		//	calendarTableDefault.addColumn(rowDays[i]);
 		}
 		
 	tableCalendar.setColumnSelectionAllowed(false);
@@ -168,6 +168,7 @@ public static void newCalendarScreen(int month, int year){
 	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 	labelM.setText(months[month]);
 	yearBox.setSelectedItem(String.valueOf(year));
+	
 	
 	for (int i=0; i<6; i++){
 		for (int j=0; j<7; j++){
@@ -193,6 +194,10 @@ class buttonPrev implements ActionListener{
 		if (currentMonth == 0){
 			currentMonth = 11;
 			currentYear -= 1;
+			int j = yearBox.getSelectedIndex();
+			j--;
+			yearBox.setSelectedIndex(j);
+			
 		}
 		else{
 			currentMonth -= 1;
@@ -207,7 +212,11 @@ class buttonNext implements ActionListener{
 		if (currentMonth == 11){
 			currentMonth = 0;
 			currentYear += 1;
-			//currentYear = yearBox.setSelectedIndex();
+			
+			int j = yearBox.getSelectedIndex();
+			j++;
+			yearBox.setSelectedIndex(j);
+			
 		}
 		else{
 			currentMonth += 1;
