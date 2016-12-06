@@ -45,9 +45,11 @@ private static final int subdivisionsYmonth = 3;
 private static final int subdivisionsXmonth = 4;
 private static final int subdivisionsYday = 6;
 private static final int subdivisionsXday = 6; //change to 7 later
+private int gridwidth = 80;
+private int gridbase = 25;
 private JFrame frame;
 private JFrame frm;
-static JLabel labelM, labelY;
+static JLabel labelM, labelY, labelSun, labelMon, labelTue, labelWed, labelThu, labelFri, labelSat;
 static JComboBox yearBox;
 static Container pane;
 static DefaultTableModel calendarTableDefault;
@@ -84,6 +86,13 @@ public void testMain(){
 	frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	labelM = new JLabel("Default");
 	labelY = new JLabel("Change Year:");
+	labelSun = new JLabel("Sunday");
+	labelMon = new JLabel("Monday");
+	labelTue = new JLabel("Tuesday");
+	labelWed = new JLabel("Wednesday");
+	labelThu = new JLabel("Thursday");
+	labelFri = new JLabel("Friday");
+	labelSat = new JLabel("Saturday");
 	yearBox = new JComboBox();
 		for (int i = 2016; i <= 2016 + 10; i++){
 			//yearBox.addItem(String.valueOf(i));
@@ -111,6 +120,13 @@ public void testMain(){
 	pane.add(panelCalendar);
 	panelCalendar.add(labelM);
 	panelCalendar.add(labelY);
+	panelCalendar.add(labelSun);
+	panelCalendar.add(labelMon);
+	panelCalendar.add(labelTue);
+	panelCalendar.add(labelWed);
+	panelCalendar.add(labelThu);
+	panelCalendar.add(labelFri);
+	panelCalendar.add(labelSat);
 	panelCalendar.add(yearBox);
 	panelCalendar.add(prev);
 	panelCalendar.add(next);
@@ -118,6 +134,13 @@ public void testMain(){
 	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
 	labelY.setBounds(10,505,80,20);
+	labelSun.setBounds(gridbase,50,80,20);
+	labelMon.setBounds(gridbase+gridwidth,50,80,20);
+	labelTue.setBounds(gridbase+ (2*gridwidth)-5,50,80,20);
+	labelWed.setBounds(gridbase+ (3*gridwidth)-13,50,80,20);
+	labelThu.setBounds(gridbase+ (4*gridwidth)-6,50,80,20);
+	labelFri.setBounds(gridbase+ (5*gridwidth),50,80,20);
+	labelSat.setBounds(gridbase+ (6*gridwidth)-13,50,80,20);
 	yearBox.setBounds(430, 505, 80, 20);
 	prev.setBounds(20, 20, 75, 25);
 	next.setBounds(500, 20, 75, 25);
@@ -167,6 +190,13 @@ public static void newCalendarScreen(int month, int year){
 	int monthDays;
 	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 	labelM.setText(months[month]);
+	labelSun.setText("Sunday");
+	labelMon.setText("Monday");
+	labelTue.setText("Tuesday");
+	labelWed.setText("Wednesday");
+	labelThu.setText("Thursday");
+	labelFri.setText("Friday");
+	labelSat.setText("Saturday");
 	yearBox.setSelectedItem(String.valueOf(year));
 	
 	
