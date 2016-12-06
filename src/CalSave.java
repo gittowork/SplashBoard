@@ -1,21 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.AbstractButton;
-import javax.swing.ComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 public class CalSave implements java.io.Serializable{
 	public String month;
 	public int day;
@@ -24,8 +6,8 @@ public class CalSave implements java.io.Serializable{
 	public int hr;
 	public int min;
 	public String event;
-}	
-	/*public CalSave(String m, int d, String md, int y, int h, int mi, String e){
+
+	public CalSave(String m, int d, String md, int y, int h, int mi, String e){
 		month = m;
 		day = d;
 		meridium = md;
@@ -34,31 +16,35 @@ public class CalSave implements java.io.Serializable{
 		min = mi;
 		event = e;
 	}
-	
+
+	public String toString() {
+		return getEvent();
+	}
+
 	public void setMonth(String m){
 		month = m;
 	}
-	
+
 	public void setDay(int d){
 		day = d;
 	}
-	
+
 	public void setMeridium(String md){
 		meridium = md;
 	}
-	
+
 	public void setYear(int y){
 		year = y;
 	}
-	
+
 	public void setHr(int h){
 		hr = h;
 	}
-	
+
 	public void setMin(int mi){
 		min =mi;
 	}
-	
+
 	public void setEvent(String e){
 		event = e;
 	}
@@ -66,29 +52,29 @@ public class CalSave implements java.io.Serializable{
 	public String getMonth(){
 		return month;
 	}
-	
+
 	public int getDay(){
 		return day;
 	}
-	
+
 	public String getMeridium(){
 		return meridium;
 	}
-	
+
 	public int getYear(){
 		return year;
 	}
-	
+
 	public int getHr(){
 		return hr;
 	}
-	
+
 	public int getMin(){
 		return min;
 	}
-	
+
 	public String getEvent(){
 		return event;
-	}
-	
-}*/
+	} 
+
+}
