@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import acm.program.*;
 import acm.graphics.*;
 import acm.util.*;
+import javafx.scene.layout.Border;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -58,7 +60,8 @@ static JTable tableCalendar;
 private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
-private Notes n = new Notes();
+private JPanel notePanel;
+private Notes n;
 
 
 public static void main(String[] args){
@@ -75,6 +78,10 @@ public static void main(String[] args){
 	}});
 }
 
+/*public CalendarClass() {
+	n = new Notes();
+	notePanel = new JPanel();
+}*/
 
 
 
@@ -117,7 +124,6 @@ public void testMain(){
 	currentMonth = realMonth;
 	currentYear = realYear;
 	
-	
 	panelCalendar.add(labelM);
 	panelCalendar.add(labelY);
 	panelCalendar.add(labelSun);
@@ -132,7 +138,15 @@ public void testMain(){
 	panelCalendar.add(next);
 	panelCalendar.add(tableCalendar);
 	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
-	pane.add(panelCalendar);
+	pane.add(panelCalendar, BorderLayout.CENTER);
+	
+	// ----------------------------------- FIX ----------------------------------------
+	notePanel = new JPanel();
+	n = new Notes();
+	notePanel.add(n.noteMain());
+	pane.add(notePanel, BorderLayout.SOUTH); // Adding note panel to South region.
+	//-----------------------------------------------------------------------------------------
+	
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
 	labelY.setBounds(10,505,80,20);
 	labelSun.setBounds(gridbase,50,80,20);
