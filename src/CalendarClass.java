@@ -141,7 +141,17 @@ public void testMain(){
 		
 	});
 	
+	
 	String[] rowDays = {"Sunday", "Monday", "Tuesday" , "Wednesday" , "Thursday", "Friday", "Saturday"};
+		for (int i = 0; i < 7; i++){
+			//calendarTableDefault.addColumn(rowDays[i]);
+		}
+		
+	tableCalendar.setColumnSelectionAllowed(false);
+	tableCalendar.setRowSelectionAllowed(false);
+	
+	
+	
 	frm.setResizable(false);
 	frm.pack();
 	frm.setVisible(true);
@@ -182,10 +192,10 @@ class buttonPrev implements ActionListener{
 	public void actionPerformed (ActionEvent e){
 		if (currentMonth == 0){
 			currentMonth = 11;
-			currentYear --;
+			currentYear -= 1;
 		}
 		else{
-			currentMonth --;
+			currentMonth -= 1;
 		}
 		newCalendarScreen(currentMonth, currentYear);
 	}
@@ -196,11 +206,11 @@ class buttonNext implements ActionListener{
 	public void actionPerformed (ActionEvent e){
 		if (currentMonth == 11){
 			currentMonth = 0;
-			currentYear++;
+			currentYear += 1;
 			//currentYear = yearBox.setSelectedIndex();
 		}
 		else{
-			currentMonth++;
+			currentMonth += 1;
 		}
 		newCalendarScreen(currentMonth, currentYear);
 	}
@@ -209,8 +219,10 @@ class buttonNext implements ActionListener{
 
 class yearBoxListener implements ActionListener{
 	public void actionPerformed (ActionEvent e){
-		currentYear = (int) yearBox.getSelectedItem();
-		//currentMonth = currentMonth+11;
+		
+		String boxYear = yearBox.getSelectedItem().toString();
+		currentYear = Integer.parseInt(boxYear);
+
 		
 		newCalendarScreen(currentMonth, currentYear);
 	}
