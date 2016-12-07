@@ -89,7 +89,10 @@ public class Notes {
 	private JFrame pop4 = new JFrame();
 	private JPanel p11;
 	private JPanel p12;
-	
+	private JPanel addNote;
+	private JButton addNoteL;
+	private JPanel center;
+
 	/*public static void main(String[] args) {
 		// This is equivalent to "run".
 		java.awt.EventQueue.invokeLater(new Runnable(){
@@ -100,7 +103,7 @@ public class Notes {
 			}
 		});
 	}*/
-	
+
 	public Notes() {
 		title.setText("");
 		body.setText("");
@@ -132,14 +135,18 @@ public class Notes {
 	public JPanel noteMain() {
 		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
 		JPanel north = new JPanel(); // North Panel.
-		JLabel nTitle = new JLabel("Notes"); // "Notes" goes in the North panel > center.
-		nTitle.setFont(new Font("Calibri", Font.PLAIN, 60));
+		JLabel nTitle = new JLabel("        Notes"); // "Notes" goes in the North panel > center.
+		nTitle.setFont(new Font("Calibri", Font.PLAIN, 40));
 		JPanel addNote = new JPanel(); // "Add Note" goes in the North panel > east.
 		JButton addN = new JButton("Add Note"); // Goes in addNote JPanel.
 		addNote.add(addN);
+		addNote.setBackground(Color.WHITE);
 
 		north.add(nTitle, BorderLayout.CENTER);
 		north.add(addNote, BorderLayout.EAST);
+		north.setBackground(Color.WHITE);
+		
+		center = new JPanel();
 
 		addN.addActionListener(new ActionListener() { // Calls addNoteScreen() when user clicks on "Add Note" button.
 
@@ -147,12 +154,15 @@ public class Notes {
 			public void actionPerformed(ActionEvent e) {
 				Notes x = new Notes();
 				x.noteScreen("", "");
-
+				center.add(x.addNote());
 			}
 		});
-
+		
+		// Need to get this to show up??
+		main.setLayout(new BorderLayout());
+		main.add(center, BorderLayout.CENTER);
 		main.add(north, BorderLayout.NORTH);
-		//main.pack();
+		main.setBackground(Color.WHITE);
 		main.setVisible(true);
 		return main;
 	}
@@ -172,12 +182,26 @@ public class Notes {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
-		//editNote(t); // Testing de-serialization. 
+	}
+
+	public JPanel addNote() {
+		// Adds note to screen.
+		addNote = new JPanel();
+		addNoteL = new JButton(t);
+		
+		addNoteL.setBackground(Color.WHITE);
+		//addNoteL.setContentAreaFilled(false);
+		addNote.setBackground(Color.WHITE);
+		
+		addNote.add(addNoteL, BorderLayout.LINE_START);
+		addNote.setVisible(true);
+		
+		return addNote;
 	}
 
 	public void noteScreen(String t, String b) {
 		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
-		
+
 		title.setText(t);
 		body.setText(b);
 
@@ -208,9 +232,9 @@ public class Notes {
 			b2.setBorderPainted(false);
 			b2.grabFocus();
 		}
-		
+
 		frm.getContentPane().add(body, BorderLayout.CENTER); // Adds body to the center of frame.
-		
+
 		// Save Button:
 		p2 = new JPanel();
 		save = new JButton("Save");
