@@ -44,21 +44,22 @@ public class Event implements ActionListener{
 	protected JComboBox hour;
 	protected JComboBox min;
 	protected JComboBox meridium;
-	protected HashMap<String, CalSave> hm = new HashMap<String, CalSave>();
+	private CalSave w = new CalSave();
+	protected HashMap<String, String> hm;
 	private int y;
 	private int h;
-	private int mi;
+	private String mi;
 	private String md;
 	private int d;
 	private String mt;
 	private String f;
+	String z = null;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
 	private String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	public static final int PROGRAM_WIDTH = 480;
 	public static final int PROGRAM_HEIGHT = 640;
-	private CalSave w;
 
 	public static void main(String[] args){
 		java.awt.EventQueue.invokeLater(new Runnable(){
@@ -94,7 +95,14 @@ public class Event implements ActionListener{
 		min = new JComboBox();
 		min.addItem("Min");
 		for(int i = 0; i < 60; i++){
-			min.addItem(i);
+			if(i < 10){
+				String l = "0" + i;
+				min.addItem(l);
+			}
+			else{
+				String l = "" + i;
+				min.addItem(i);
+			}
 		}
 		meridium = new JComboBox();
 		meridium.addItem("AM");
@@ -160,9 +168,24 @@ public class Event implements ActionListener{
 
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				mt = (String)months.getSelectedItem();
+				d = (int)days.getSelectedItem();
+				y = (int)years.getSelectedItem();
+				h = (int)hour.getSelectedItem();
+				mi = (String)min.getSelectedItem();
+				md = (String)meridium.getSelectedItem();
+
+				f = text.getText();
+
+				w.month = mt;
+				w.day = d;
+				w.year = y;
+				w.hr = h;
+				w.min = mi;
+				w.meridium = md;
+				w.event = f;
 				save();
-				popwindow();
-				deserialize();
+				modify();
 				frm.dispose();
 			}
 		});
@@ -174,21 +197,14 @@ public class Event implements ActionListener{
 		});
 	}
 
-
+	public String event(){
+		return f;
+	}
 
 	public void save(){
-		
-		f = text.getText();
-		mt = (String)months.getSelectedItem();
-		d = (int)days.getSelectedItem();
-		y = (int)years.getSelectedItem();
-		h = (int)hour.getSelectedItem();
-		mi = (int)min.getSelectedItem();
-		md = (String)meridium.getSelectedItem();
-		
-		w = new CalSave(mt, d, md, y, h, mi, f);
-		
-		hm.put(f, w);
+		hm = new HashMap<String, String>();
+		String n = filecount + ".ser";
+		hm.put(f, n);
 
 		try{
 			FileOutputStream fileOut = new FileOutputStream(f + ".ser");
@@ -200,6 +216,7 @@ public class Event implements ActionListener{
 		}catch(IOException i){
 			i.printStackTrace();
 		}
+		filecount++;
 	}
 
 
@@ -230,6 +247,8 @@ public class Event implements ActionListener{
 	}
 
 	public void deserialize(){
+		String file = hm.get(f);
+		w = null;
 		try{
 			FileInputStream fileIn =  new FileInputStream(f + ".ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -244,17 +263,63 @@ public class Event implements ActionListener{
 			c.printStackTrace();
 			return;
 		}
-		Set set = hm.entrySet();
-		Iterator iterator = set.iterator();
-		while(iterator.hasNext()) {
-			Map.Entry mentry = (Map.Entry)iterator.next();
-			System.out.print("KEY: " + mentry.getKey() + " & VALUE: ");
-			System.out.println(mentry.getValue());
-		}
+		
+		System.out.println("event: " + w.event);
+		System.out.println("day: " + w.day);
+		f = w.event;
+		d = w.day;
+		h = w.hr;
+		y = w.year;
+		mi = w.min;
+		md = w.meridium;
+		mt = w.month;
+
 	}
 
 	public void modify(){
+		deserialize();
+		JFrame pop2 = new JFrame();
+		pop2.setPreferredSize(new Dimension(450, 450));
+		JPanel p4 = new JPanel();
+		p4.setPreferredSize(new Dimension(200, 200));
+		JLabel load = new JLabel("Event:" + f);
+		load.setFont(new Font("Calibri", Font.PLAIN, 40));
+		p4.add(load);
+		JButton ok = new JButton("OK");
+		JButton modify = new JButton("Edit");
+		JPanel p5 = new JPanel();
+		p5.setPreferredSize(new Dimension(50, 50));
+		p5.add(modify);
+		p5.add(ok);
+		JPanel p6 = new JPanel();
+		p6.setPreferredSize(new Dimension(200, 200));
+		JLabel d1 = new JLabel("Date: " + mt + d + ", " + y);
+		JLabel d2 = new JLabel("Time: " + h + ":" + mi);
+		p6.add(d1, BorderLayout.SOUTH);
+		p6.add(d2, BorderLayout.CENTER);
+		pop2.getContentPane().add(p5, BorderLayout.SOUTH);
+		pop2.getContentPane().add(p6, BorderLayout.CENTER);
+		pop2.getContentPane().add(p4, BorderLayout.NORTH);
+		pop2.pack();
+		pop2.setVisible(true);
+		ok.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop2.dispose();
+
+			}
+
+		});
+		modify.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pop2.dispose();
+
+			}
+
+		});
 	}
 
 	@Override
