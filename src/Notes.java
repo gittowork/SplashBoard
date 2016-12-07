@@ -39,6 +39,7 @@ import javax.imageio.ImageTypeSpecifier;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -88,19 +89,18 @@ public class Notes {
 	private JFrame pop4 = new JFrame();
 	private JPanel p11;
 	private JPanel p12;
-	private JScrollPane scrollPane;
 	
 	/*public static void main(String[] args) {
 		// This is equivalent to "run".
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			@Override
 			public void run() {
-				//Notes n = new Notes();
-				//n.noteMain();
+				Notes n = new Notes();
+				n.noteScreen("", "");
 			}
 		});
-	} */
-
+	}*/
+	
 	public Notes() {
 		title.setText("");
 		body.setText("");
@@ -152,63 +152,9 @@ public class Notes {
 		});
 
 		main.add(north, BorderLayout.NORTH);
+		//main.pack();
 		main.setVisible(true);
-		System.out.println("Hello");
 		return main;
-	}
-
-	public void readInFix() { // ------------------------------------------------- Needs to be placed somewhere... probably in save action listener??
-		try {
-			FileInputStream fileIn = new FileInputStream(t + ".note");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			hmap = (HashMap)in.readObject();
-			in.close();
-			fileIn.close();
-		}catch(IOException ioe) {
-			ioe.printStackTrace();
-			return;
-		}catch(ClassNotFoundException c) {
-			System.out.println("Class not found");
-			c.printStackTrace();
-			return;
-		}
-		Set set = hmap.entrySet();
-		Iterator iterator = set.iterator();
-		while(iterator.hasNext()) {
-			Map.Entry mentry = (Map.Entry)iterator.next();
-			if(mentry.getKey().equals(t)) {
-				pop4.setPreferredSize(new Dimension(POP_HEIGHT, POP_WIDTH));
-				p11 = new JPanel();
-				p12 = new JPanel();
-				JLabel exists = new JLabel("<html>A note with this title already exists.<br>Would you like to save this note anyway?</html>");
-				exists.setFont(new Font("Calibri", Font.PLAIN, 20));
-				p11.add(exists);
-				p12.add(yes, BorderLayout.WEST);
-				p12.add(no, BorderLayout.EAST);
-
-				pop4.getContentPane().add(p11, BorderLayout.NORTH);
-				pop4.getContentPane().add(p12, BorderLayout.SOUTH);
-				pop4.pack();
-				pop4.setVisible(true);
-
-				yes.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						pop4.dispose();
-					}
-				});
-
-				no.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						pop4.dispose();
-					}
-				});
-
-			}
-		}
 	}
 
 	public void saveNote() { //To add completed note on screen.
@@ -230,10 +176,10 @@ public class Notes {
 	}
 
 	public void noteScreen(String t, String b) {
+		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
+		
 		title.setText(t);
 		body.setText(b);
-		
-		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
 		// Note Title:
 		p1 = new JPanel();
