@@ -178,7 +178,7 @@ public class Event implements ActionListener{
 		        w.meridium = md;
 		        w.event = f;
 				save();
-				modifyScreen(f);
+				eventScreen(f);
 				frm.dispose();
 			}
 		});

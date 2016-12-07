@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import acm.program.*;
 import acm.graphics.*;
 import acm.util.*;
+import javafx.scene.layout.Border;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -49,15 +51,15 @@ private int gridwidth = 80;
 private int gridbase = 25;
 private JFrame frame;
 private JFrame frm;
-static JLabel labelM, labelY, labelSun, labelMon, labelTue, labelWed, labelThu, labelFri, labelSat;
-static JComboBox yearBox;
-static Container pane;
-static DefaultTableModel calendarTableDefault;
-static JPanel panelCalendar;
-static JTable tableCalendar;
+private static JLabel labelM, labelY, labelSun, labelMon, labelTue, labelWed, labelThu, labelFri, labelSat;
+private static JComboBox yearBox;
+private static DefaultTableModel calendarTableDefault;
+private JPanel panelCalendar;
+private JTable tableCalendar;
 private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
+private Notes n;
 
 
 public static void main(String[] args){
@@ -74,6 +76,10 @@ public static void main(String[] args){
 	}});
 }
 
+/*public CalendarClass() {
+	n = new Notes();
+	notePanel = new JPanel();
+}*/
 
 
 
@@ -81,8 +87,7 @@ public static void main(String[] args){
 public void testMain(){
 	frm = new JFrame("Calendar");
 	frm.setPreferredSize(new Dimension(ysHeight, ysWidth));
-	pane = frm.getContentPane();
-	pane.setLayout(null);
+	frm.getContentPane().setLayout(null);
 	frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	labelM = new JLabel("Default");
 	labelY = new JLabel("Change Year:");
@@ -116,8 +121,11 @@ public void testMain(){
 	currentMonth = realMonth;
 	currentYear = realYear;
 	
+	// Add note panel to south region of frame:
+	n = new Notes();
+	frm.setLayout(new BorderLayout());
+	frm.getContentPane().add(n.noteMain(), BorderLayout.SOUTH);
 	
-	pane.add(panelCalendar);
 	panelCalendar.add(labelM);
 	panelCalendar.add(labelY);
 	panelCalendar.add(labelSun);
@@ -132,6 +140,8 @@ public void testMain(){
 	panelCalendar.add(next);
 	panelCalendar.add(tableCalendar);
 	panelCalendar.setBounds(0,0,ysHeight, ysWidth);
+	frm.getContentPane().add(panelCalendar, BorderLayout.CENTER);
+	
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
 	labelY.setBounds(10,505,80,20);
 	labelSun.setBounds(gridbase,50,80,20);
@@ -172,8 +182,6 @@ public void testMain(){
 		
 	tableCalendar.setColumnSelectionAllowed(false);
 	tableCalendar.setRowSelectionAllowed(false);
-	
-	
 	
 	frm.setResizable(false);
 	frm.pack();
