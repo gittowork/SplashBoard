@@ -22,7 +22,6 @@ import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
-import org.junit.Before;
 import org.omg.CORBA.SystemException;
 import org.omg.PortableServer.POAPackage.AdapterAlreadyExists;
 
