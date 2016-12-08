@@ -55,7 +55,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
 public class Notes {
 	protected String back;
 	private JFrame frm = new JFrame();
@@ -96,9 +95,11 @@ public class Notes {
 	private JPanel south;
 	private JPanel c1;
 	private JPanel c2;
-	private JButton tList;
 	private JButton dList;
+	private JButton vList;
+	private int noteCount;
 	private JScrollPane listScroll;
+	private Box box;
 
 	/*public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -160,18 +161,36 @@ public class Notes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				x.noteScreen("", "");
-				main.add(x.saveNote(), BorderLayout.SOUTH);
+				
+				south = new JPanel();
+				c1 = new JPanel(); // Note titles.
+				c2 = new JPanel(); // Delete buttons.
+				vList = new JButton("View/Edit");
+				dList = new JButton("Delete");
+				
+				
+				c1.setLayout(new BoxLayout(c1, BoxLayout.Y_AXIS));
+				c1.add(vList);
+				c2.setLayout(new BoxLayout(c2, BoxLayout.Y_AXIS));
+				c2.add(dList);
+				
+				south.add(c1, BorderLayout.WEST);
+				south.add(c2, BorderLayout.EAST); 
+				south.setBackground(Color.WHITE);
+				south.setVisible(true);
+				main.setLayout(new BorderLayout());
+				main.add(south, BorderLayout.CENTER);
+				
 			}
 		});
 		
-		//main.add(center, BorderLayout.SOUTH);
 		main.add(north, BorderLayout.NORTH);
 		main.setBackground(Color.WHITE);
 		main.setVisible(true);
 		return main;
 	}
 
-	public JPanel saveNote() { //To add completed note on screen.
+	public void saveNote() { //To add completed note on screen.
 		t = title.getText();
 		b = body.getText();
 		s = new NoteSave(t, b);
@@ -186,28 +205,14 @@ public class Notes {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
-		
-		south = new JPanel();
-		c1 = new JPanel(); // Note titles.
-		c2 = new JPanel(); // Delete buttons.
-		tList = new JButton(t);
-		
-		c1.setLayout(new BoxLayout(c1, BoxLayout.Y_AXIS));
-		c1.add(tList);
-		
-		south.add(c1, BorderLayout.WEST);
-		south.add(c2, BorderLayout.EAST);
-		south.setVisible(true);
-		return south;
 	}
-
+	
 	public JPanel addNote() {
 		// Adds note to screen.
 		addNote = new JPanel();
 		addNoteL = new JButton(t);
 		
 		addNoteL.setBackground(Color.WHITE);
-		//addNoteL.setContentAreaFilled(false);
 		addNote.setBackground(Color.WHITE);
 		
 		addNote.add(addNoteL, BorderLayout.LINE_START);

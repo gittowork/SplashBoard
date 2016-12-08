@@ -33,8 +33,8 @@ protected String description;
 protected Boolean allday;
 protected Boolean meridian;
 private static int realDay, realMonth, realYear, currentMonth, currentYear;
-protected int ysHeight = 600;
-protected int ysWidth = 600;
+protected int ysHeight = 1280;
+protected int ysWidth = 1024;
 protected int msHeight = 600;
 protected int msWidth = 600;
 protected int dsHeight = 600;
@@ -83,13 +83,6 @@ public static void main(String[] args){
 
 	}});
 }
-
-/*public CalendarClass() {
-	n = new Notes();
-	notePanel = new JPanel();
-}*/
-
-
 
 
 public void testMain(){
