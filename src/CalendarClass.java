@@ -229,7 +229,7 @@ int getCurrentMonth(){
 	return currentMonth;		//returns current month for event class
 }
 
-int getCurrentYear(){ 
+int getCurrentYear(){  
 	return currentYear;			//returns current year for event class
 }
 
