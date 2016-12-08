@@ -17,11 +17,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.Border;
-
 import org.omg.CORBA.SystemException;
 import org.omg.PortableServer.POAPackage.AdapterAlreadyExists;
 
@@ -29,24 +24,12 @@ import com.sun.corba.se.impl.orb.ParserTable.TestORBInitializer1;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
 
-import javafx.geometry.Point3D;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.Shape3D;
 import jdk.internal.dynalink.beans.StaticClass;
 import sun.net.www.content.audio.x_aiff;
 import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 
 import javax.imageio.ImageTypeSpecifier;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -54,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 
 public class Notes {
 	protected String back;
@@ -143,6 +127,7 @@ public class Notes {
 
 	public JPanel noteMain() {
 		main = new JPanel(); // Note main screen is a JPanel that is located below the calendar.
+		main.setLayout(new BorderLayout());
 		JPanel north = new JPanel(); // North Panel.
 		JLabel nTitle = new JLabel("        Notes"); // "Notes" goes in the North panel > center.
 		nTitle.setFont(new Font("Calibri", Font.PLAIN, 40));
@@ -151,37 +136,15 @@ public class Notes {
 		addNote.add(addN);
 		addNote.setBackground(Color.WHITE);
 
-		north.add(nTitle, BorderLayout.CENTER);
-		north.add(addNote, BorderLayout.EAST);
+		north.add(nTitle);
+		north.add(addNote);
 		north.setBackground(Color.WHITE);
-		
-		Notes x = new Notes();
 
 		addN.addActionListener(new ActionListener() { // Calls addNoteScreen() when user clicks on "Add Note" button.
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				x.noteScreen("", "");
-				
-				south = new JPanel();
-				c1 = new JPanel(); // Note titles.
-				c2 = new JPanel(); // Delete buttons.
-				vList = new JButton("View/Edit");
-				dList = new JButton("Delete");
-				
-				
-				c1.setLayout(new BoxLayout(c1, BoxLayout.Y_AXIS));
-				c1.add(vList);
-				c2.setLayout(new BoxLayout(c2, BoxLayout.Y_AXIS));
-				c2.add(dList);
-				
-				south.add(c1, BorderLayout.WEST);
-				south.add(c2, BorderLayout.EAST); 
-				south.setBackground(Color.WHITE);
-				south.setVisible(true);
-				main.setLayout(new BorderLayout());
-				main.add(south, BorderLayout.CENTER);
-				
+				noteScreen("", "");	
 			}
 		});
 		
@@ -194,6 +157,7 @@ public class Notes {
 	public void saveNote() { //To add completed note on screen.
 		t = title.getText();
 		b = body.getText();
+		makeButtonPanel();
 		s = new NoteSave(t, b);
 		hmap.put(t, s);
 
@@ -208,18 +172,31 @@ public class Notes {
 		}
 	}
 	
-	public JPanel addNote() {
-		// Adds note to screen.
-		addNote = new JPanel();
-		addNoteL = new JButton(t);
+	public void makeButtons(String t) {
+		vList = new JButton(t);
+		dList = new JButton("Delete");
 		
-		addNoteL.setBackground(Color.WHITE);
-		addNote.setBackground(Color.WHITE);
+		c1.add(vList);
+		c2.add(dList);
+
+		main.revalidate();
+	}
+	
+	public void makeButtonPanel() {
+		south = new JPanel();
+		south.setLayout(new BorderLayout());
+		c1 = new JPanel(); // Note titles.
+		c2 = new JPanel(); // Delete buttons.
+		makeButtons(t);
 		
-		addNote.add(addNoteL, BorderLayout.LINE_START);
-		addNote.setVisible(true);
+		south.add(Box.createHorizontalGlue());
+		c1.setLayout(new BoxLayout(c1, BoxLayout.Y_AXIS));
+		c2.setLayout(new BoxLayout(c2, BoxLayout.Y_AXIS));
 		
-		return addNote;
+		south.add(c1, BorderLayout.WEST);
+		south.add(c2, BorderLayout.EAST); 
+		south.setBackground(Color.WHITE);
+		main.add(south, BorderLayout.SOUTH);
 	}
 
 	public void noteScreen(String t, String b) {
@@ -391,6 +368,7 @@ public class Notes {
 			}
 		});
 
+		frm.getContentPane().revalidate();
 		frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 		frm.setVisible(true);
 		frm.getContentPane().setForeground(Color.WHITE); 
