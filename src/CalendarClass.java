@@ -86,13 +86,6 @@ public static void main(String[] args){
 	}});
 }
 
-/*public CalendarClass() {
-	n = new Notes();
-	notePanel = new JPanel();
-}*/
-
-
-
 
 public void testMain(){
 	frm = new JFrame("Calendar");

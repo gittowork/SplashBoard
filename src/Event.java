@@ -50,6 +50,7 @@ public class Event implements ActionListener{
 	private int d;
 	private String mt;
 	private String f;
+	//CalendarClass c = new CalendarClass();;
 	String z = null;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
@@ -70,18 +71,15 @@ public class Event implements ActionListener{
 	}
 	
 	public void drawPanel(){ 
-		//adding the days to the combo box
-		days = new JComboBox();	
-		days.addItem("Day");
-		for(int i= 1; i < 32; i++){
-			days.addItem(i);
-		}
-		//adding 5 years to the combo box
-		years = new JComboBox();
-		years.addItem("Year");
-		for(int i = 2016; i < 2022; i++){
-			years.addItem(i);
-		}
+		String num = "n";//"" + c.getRealDay();
+		//int num2 = c.getCurrentMonth();
+		String m1 = "n";//month[num2];
+		String num3 = "n"; //"" + c.getCurrentYear();
+		JLabel t1 = new JLabel(num);
+		JLabel t2 = new JLabel(m1);
+		JLabel t3 = new JLabel(num3);
+
+		
 		//adding the hours to the combo box
 		hour = new JComboBox();
 		hour.addItem("Hr");
@@ -112,11 +110,7 @@ public class Event implements ActionListener{
 		//m.setPreferredSize(new Dimension(480, 400));
 		t = new JPanel();
 		t.setPreferredSize(new Dimension(480, 50));
-		months = new JComboBox();
-		months.addItem("Month");
-		for(int i = 0; i < 12; i++){
-			months.addItem(month[i]);
-		}
+
 		title.setForeground(Color.BLUE);
 		text = new JTextArea(5, 20);
 		JScrollPane scrollpane = new JScrollPane(text);
@@ -129,41 +123,31 @@ public class Event implements ActionListener{
 		confirm.setForeground(Color.BLUE);
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
-		s.add(days, BorderLayout.WEST);
-		s.add(months, BorderLayout.CENTER);
-		s.add(years, BorderLayout.EAST);
+		s.add(t1, BorderLayout.WEST);
+		s.add(t2, BorderLayout.CENTER);
+		s.add(t3, BorderLayout.EAST);
 		s.add(hour, BorderLayout.SOUTH);
 		s.add(min, BorderLayout.SOUTH);
 		s.add(meridium, BorderLayout.SOUTH);
 		t.add(back, BorderLayout.WEST);
 		t.add(confirm, BorderLayout.EAST);
-		//m.add(Description, BorderLayout.NORTH);
-		//m.add(ta, BorderLayout.CENTER);
-		//m.add(t, BorderLayout.SOUTH);
-		//m.setBackground(Color.CYAN);
 		t.setBackground(Color.GRAY);
 		s.setBackground(Color.GRAY);
 		frm = new JFrame("Add Event");
 		frm.add(o, BorderLayout.NORTH);
 		frm.add(s, BorderLayout.CENTER);
 		frm.add(t, BorderLayout.SOUTH);
-		//frm.add(back, BorderLayout.SOUTH);
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
 		
-		months.addActionListener(this);
-		days.addActionListener(this);
-		years.addActionListener(this);
+		
 		hour.addActionListener(this);
 		min.addActionListener(this);
 		meridium.addActionListener(this);
 		
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-		        mt = (String)months.getSelectedItem();
-		        d = (int)days.getSelectedItem();
-		        y = (int)years.getSelectedItem();
 		        h = (int)hour.getSelectedItem();
 		        mi = (String)min.getSelectedItem();
 		        md = (String)meridium.getSelectedItem();
