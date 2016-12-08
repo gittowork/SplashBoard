@@ -50,11 +50,12 @@ public class Event implements ActionListener{
 	private int d;
 	private String mt;
 	private String f;
+	private CalendarClass c = new CalendarClass();
 	String z = null;
 	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
-	private String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+	private String month[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	public static final int PROGRAM_WIDTH = 480;
 	public static final int PROGRAM_HEIGHT = 640;
 	
@@ -71,23 +72,27 @@ public class Event implements ActionListener{
 	
 	public void drawPanel(){ 
 		//adding the days to the combo box
-		days = new JComboBox();	
-		days.addItem("Day");
-		for(int i= 1; i < 32; i++){
-			days.addItem(i);
-		}
-		//adding 5 years to the combo box
-		years = new JComboBox();
-		years.addItem("Year");
-		for(int i = 2016; i < 2022; i++){
-			years.addItem(i);
-		}
+		String num = "" + c.getRealDay();
+		JLabel days =  new JLabel(num);
+		
+		//setting label to current month
+		int num2 = c.getCurrentMonth();
+		String m = month[num2];
+		JLabel month = new JLabel(m);
+		
+		//Setting label to current year
+		String num3 = "" + c.getCurrentYear();
+		JLabel year = new JLabel(num3);
+		
+		
 		//adding the hours to the combo box
 		hour = new JComboBox();
 		hour.addItem("Hr");
 		for(int i = 1; i < 13; i++){
 			hour.addItem(i);
 		}
+		
+		
 		//adding the minutes to the combo box
 		min = new JComboBox();
 		min.addItem("Min");
@@ -101,32 +106,43 @@ public class Event implements ActionListener{
 				min.addItem(i);
 			}
 		}
+		//adding am and pm to combo box
 		meridium = new JComboBox();
 		meridium.addItem("AM");
 		meridium.addItem("PM");
+		
+		//adding action listeners for the combo boxes
+		hour.addActionListener(this);
+		min.addActionListener(this);
+		meridium.addActionListener(this);
+		
+
+		
+		// making three panels for the different components 
 		o = new JPanel();
 		o.setPreferredSize(new Dimension(480, 120));
 		s =  new JPanel();
 		s.setPreferredSize(new Dimension(480, 120));
-		//m = new JPanel();
-		//m.setPreferredSize(new Dimension(480, 400));
 		t = new JPanel();
 		t.setPreferredSize(new Dimension(480, 50));
-		months = new JComboBox();
-		months.addItem("Month");
-		for(int i = 0; i < 12; i++){
-			months.addItem(month[i]);
-		}
 		title.setForeground(Color.BLUE);
+		
+		
+		
+		//making the text area for the event to be typed in
 		text = new JTextArea(5, 20);
 		JScrollPane scrollpane = new JScrollPane(text);
 		text.setLineWrap(true);
+		
+		//adding back and confirm buttons
 		back = new JButton("Cancel");
 		back.setVerticalTextPosition(AbstractButton.CENTER);
 		back.setForeground(Color.BLUE);
 		confirm = new JButton("Confirm");
 		confirm.setVerticalTextPosition(AbstractButton.CENTER);
 		confirm.setForeground(Color.BLUE);
+		
+		//adding the components to the panels
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
 		s.add(days, BorderLayout.WEST);
@@ -137,42 +153,35 @@ public class Event implements ActionListener{
 		s.add(meridium, BorderLayout.SOUTH);
 		t.add(back, BorderLayout.WEST);
 		t.add(confirm, BorderLayout.EAST);
-		//m.add(Description, BorderLayout.NORTH);
-		//m.add(ta, BorderLayout.CENTER);
-		//m.add(t, BorderLayout.SOUTH);
-		//m.setBackground(Color.CYAN);
 		t.setBackground(Color.GRAY);
 		s.setBackground(Color.GRAY);
+		
+		//adding the panels to the jframe
 		frm = new JFrame("Add Event");
 		frm.add(o, BorderLayout.NORTH);
 		frm.add(s, BorderLayout.CENTER);
 		frm.add(t, BorderLayout.SOUTH);
-		//frm.add(back, BorderLayout.SOUTH);
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
 		
-		months.addActionListener(this);
-		days.addActionListener(this);
-		years.addActionListener(this);
-		hour.addActionListener(this);
-		min.addActionListener(this);
-		meridium.addActionListener(this);
 		
+		
+		
+		//what happens when the confirm button is clicked
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-		        mt = (String)months.getSelectedItem();
-		        d = (int)days.getSelectedItem();
-		        y = (int)years.getSelectedItem();
+				
+				//saves the object selected from combobox
 		        h = (int)hour.getSelectedItem();
 		        mi = (String)min.getSelectedItem();
 		        md = (String)meridium.getSelectedItem();
 		        
 		        f = text.getText();
 		        
-		        w.month = mt;
-		        w.day = d;
-		        w.year = y;
+		        w.month = m;
+		        w.day = c.getRealDay();
+		        w.year = c.getCurrentYear();
 		        w.hr = h;
 		        w.min = mi;
 		        w.meridium = md;
@@ -214,6 +223,7 @@ public class Event implements ActionListener{
 		filecount++;
 	}
 
+	
 	
 	public void popwindow(){
 		JFrame pop1 = new JFrame();

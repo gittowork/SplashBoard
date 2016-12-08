@@ -241,6 +241,10 @@ int getNumDays(){
 	return numDays;				//returns current day for event class
 }
 
+int getRealDay(){
+	return realDay;
+}
+
 
 
 
