@@ -58,6 +58,11 @@ static JTable tableCalendar;
 private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
+private Event ab = new Event();
+private String event = null;
+
+static int numDays;
+static int monthDays;
 
 
 public static void main(String[] args){
@@ -135,7 +140,7 @@ public void testMain(){
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
 	labelY.setBounds(10,525,80,20);
 	labelSun.setBounds(gridbase,50,80,20);
-	labelMon.setBounds(gridbase+gridwidth,50,80,20);
+	labelMon.setBounds(gridbase+ gridwidth,50,80,20);
 	labelTue.setBounds(gridbase+ (2*gridwidth)-5,50,80,20);
 	labelWed.setBounds(gridbase+ (3*gridwidth)-13,50,80,20);
 	labelThu.setBounds(gridbase+ (4*gridwidth)-6,50,80,20);
@@ -160,15 +165,15 @@ public void testMain(){
 			int row = selected.getSelectedRow();
 			int column = selected.getSelectedColumn();
 			//go to add event
+				
+			
+				ab.drawPanel();
+				event = ab.event();
+			
+			
 		}
 		
-	});
-	
-	
-	String[] rowDays = {"Sunday", "Monday", "Tuesday" , "Wednesday" , "Thursday", "Friday", "Saturday"};
-		for (int i = 0; i < 7; i++){
-		//	calendarTableDefault.addColumn(rowDays[i]);
-		}
+	});	
 		
 	tableCalendar.setColumnSelectionAllowed(false);
 	tableCalendar.setRowSelectionAllowed(false);
@@ -186,8 +191,7 @@ public void testMain(){
 }
 
 public static void newCalendarScreen(int month, int year){
-	int numDays;
-	int monthDays;
+
 	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 	labelM.setText(months[month]);
 
@@ -220,6 +224,20 @@ public static void newCalendarScreen(int month, int year){
 	labelSat.setText("Saturday");
 	
 }
+
+int getCurrentMonth(){
+	return currentMonth;		//returns current month for event class
+}
+
+int getCurrentYear(){
+	return currentYear;			//returns current year for event class
+}
+
+int getNumDays(){
+	return numDays;				//returns current day for event class
+}
+
+
 
 
 class buttonPrev implements ActionListener{
