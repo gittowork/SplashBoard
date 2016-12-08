@@ -41,7 +41,7 @@ import java.io.ObjectOutputStream;
 
 public class Notes {
 	protected String back;
-	private JFrame frm = new JFrame();
+	private JFrame frm;
 	protected static int PROGRAM_HEIGHT = 1280; // Standard largest preferred size of screen.
 	protected static int PROGRAM_WIDTH = 1024;
 	private JPanel p1;
@@ -143,7 +143,6 @@ public class Notes {
 			public void actionPerformed(ActionEvent e) {
 				noteScreen("", "");	
 				makeButtonPanel();
-				frm.getContentPane().revalidate();
 			}
 		});
 		
@@ -202,6 +201,7 @@ public class Notes {
 	}
 
 	public void noteScreen(String t, String b) {
+		frm = new JFrame();
 		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
 		title.setText(t);
@@ -372,7 +372,6 @@ public class Notes {
 
 		frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 		frm.setVisible(true);
-		frm.getContentPane().setForeground(Color.WHITE); 
 
 	}
 
