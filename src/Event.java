@@ -52,7 +52,6 @@ public class Event implements ActionListener{
 	private String f;
 	//CalendarClass c = new CalendarClass();;
 	String z = null;
-	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
 	private String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -154,9 +153,9 @@ public class Event implements ActionListener{
 		        
 		        f = text.getText();
 		        
-		        w.month = mt;
-		        w.day = d;
-		        w.year = y;
+		        w.month = mt;//m1;
+		        w.day = d;//c.getRealDay();
+		        w.year = y;//c.getCurrentYear();
 		        w.hr = h;
 		        w.min = mi;
 		        w.meridium = md;
@@ -291,15 +290,7 @@ public class Event implements ActionListener{
 			}
 			
 		});
-		/*modify.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pop2.dispose();
-				
-			}
-			
-		});*/
 		
 	}
 	
