@@ -59,7 +59,15 @@ private JTable tableCalendar;
 private JButton back, add, prev, next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
+
+private Event ab = new Event();
+private String event = null;
+
+static int numDays;
+static int monthDays;
+
 private Notes n;
+
 
 
 public static void main(String[] args){
@@ -143,18 +151,18 @@ public void testMain(){
 	frm.getContentPane().add(panelCalendar, BorderLayout.CENTER);
 	
 	labelM.setBounds(240+labelM.getPreferredSize().width/2,20,100,25);
-	labelY.setBounds(10,505,80,20);
+	labelY.setBounds(10,525,80,20);
 	labelSun.setBounds(gridbase,50,80,20);
-	labelMon.setBounds(gridbase+gridwidth,50,80,20);
+	labelMon.setBounds(gridbase+ gridwidth,50,80,20);
 	labelTue.setBounds(gridbase+ (2*gridwidth)-5,50,80,20);
 	labelWed.setBounds(gridbase+ (3*gridwidth)-13,50,80,20);
 	labelThu.setBounds(gridbase+ (4*gridwidth)-6,50,80,20);
 	labelFri.setBounds(gridbase+ (5*gridwidth),50,80,20);
 	labelSat.setBounds(gridbase+ (6*gridwidth)-13,50,80,20);
-	yearBox.setBounds(430, 505, 80, 20);
-	prev.setBounds(20, 20, 75, 25);
-	next.setBounds(500, 20, 75, 25);
-	tableCalendar.setBounds(10,50,550,550);
+	yearBox.setBounds(480, 525, 80, 20);
+	prev.setBounds(10, 20, 75, 25);
+	next.setBounds(485, 20, 75, 25);
+	tableCalendar.setBounds(10,70,550,550);
 	
 	tableCalendar.getParent().setBackground(tableCalendar.getBackground());
 	
@@ -170,15 +178,15 @@ public void testMain(){
 			int row = selected.getSelectedRow();
 			int column = selected.getSelectedColumn();
 			//go to add event
+				
+			
+				ab.drawPanel();
+				event = ab.event();
+			
+			
 		}
 		
-	});
-	
-	
-	String[] rowDays = {"Sunday", "Monday", "Tuesday" , "Wednesday" , "Thursday", "Friday", "Saturday"};
-		for (int i = 0; i < 7; i++){
-		//	calendarTableDefault.addColumn(rowDays[i]);
-		}
+	});	
 		
 	tableCalendar.setColumnSelectionAllowed(false);
 	tableCalendar.setRowSelectionAllowed(false);
@@ -194,17 +202,10 @@ public void testMain(){
 }
 
 public static void newCalendarScreen(int month, int year){
-	int numDays;
-	int monthDays;
+
 	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 	labelM.setText(months[month]);
-	labelSun.setText("Sunday");
-	labelMon.setText("Monday");
-	labelTue.setText("Tuesday");
-	labelWed.setText("Wednesday");
-	labelThu.setText("Thursday");
-	labelFri.setText("Friday");
-	labelSat.setText("Saturday");
+
 	yearBox.setSelectedItem(String.valueOf(year));
 	
 	
@@ -214,6 +215,7 @@ public static void newCalendarScreen(int month, int year){
 		}
 	}
 	 
+	
 	GregorianCalendar calScreen = new GregorianCalendar(year, month, 1);
 	numDays = calScreen.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 	monthDays = calScreen.get(GregorianCalendar.DAY_OF_WEEK);
@@ -224,7 +226,29 @@ public static void newCalendarScreen(int month, int year){
 		calendarTableDefault.setValueAt(i, row, col);
 	}
 	
+	labelSun.setText("Sunday");
+	labelMon.setText("Monday");
+	labelTue.setText("Tuesday");
+	labelWed.setText("Wednesday");
+	labelThu.setText("Thursday");
+	labelFri.setText("Friday");
+	labelSat.setText("Saturday");
+	
 }
+
+int getCurrentMonth(){
+	return currentMonth;		//returns current month for event class
+}
+
+int getCurrentYear(){  
+	return currentYear;			//returns current year for event class
+}
+
+int getNumDays(){
+	return numDays;				//returns current day for event class
+}
+
+
 
 
 class buttonPrev implements ActionListener{
