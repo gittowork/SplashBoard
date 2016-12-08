@@ -111,6 +111,7 @@ public class Notes {
 			}
 		});
 	}*/
+	//test
 
 	public Notes() {
 		title.setText("");
