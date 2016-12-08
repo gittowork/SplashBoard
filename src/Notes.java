@@ -176,6 +176,26 @@ public class Notes {
 		
 		c1.add(vList);
 		c2.add(dList);
+		
+		vList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editNote(t);
+				main.revalidate();
+			}
+		});
+		
+		dList.addActionListener(new ActionListener() { // Clicking "delete" will remove note.
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteNote(t);
+				c2.remove(dList);
+				c1.remove(vList);
+				main.revalidate();
+			}
+		});
 
 		main.revalidate();
 	}
@@ -395,8 +415,8 @@ public class Notes {
 		Iterator iterator = set.iterator();
 		while(iterator.hasNext()) {
 			Map.Entry mentry = (Map.Entry)iterator.next();
-			System.out.print("key: "+ mentry.getKey() + " & Value: ");
-			System.out.println(mentry.getValue());
+			//System.out.print("key: "+ mentry.getKey() + " & Value: ");
+			//System.out.println(mentry.getValue());
 			if(mentry.getKey().equals(t)) {
 				noteScreen(mentry.getKey().toString(), mentry.getValue().toString());
 			}
