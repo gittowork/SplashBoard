@@ -160,7 +160,7 @@ public class Notes {
 		
 		// Need to get this to show up??
 		main.setLayout(new BorderLayout());
-		main.add(center, BorderLayout.CENTER);
+		main.add(center, BorderLayout.SOUTH);
 		main.add(north, BorderLayout.NORTH);
 		main.setBackground(Color.WHITE);
 		main.setVisible(true);
