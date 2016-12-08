@@ -33,8 +33,8 @@ protected String description;
 protected Boolean allday;
 protected Boolean meridian;
 private static int realDay, realMonth, realYear, currentMonth, currentYear;
-protected int ysHeight = 1280;
-protected int ysWidth = 1024;
+protected int ysHeight = 600;
+protected int ysWidth = 700;
 protected int msHeight = 600;
 protected int msWidth = 600;
 protected int dsHeight = 600;
@@ -56,7 +56,9 @@ private static JComboBox yearBox;
 private static DefaultTableModel calendarTableDefault;
 private JPanel panelCalendar;
 private JTable tableCalendar;
-private JButton back, add, prev, next;
+private JButton back, add;
+private static JButton prev;
+private static JButton next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
 
@@ -196,6 +198,17 @@ public void testMain(){
 
 public static void newCalendarScreen(int month, int year){
 
+	
+	prev.setEnabled(true);
+	next.setEnabled(true);
+	if(month == 0 && year == 2016){
+		prev.setEnabled(false);
+	}
+	if(month == 11 && year == 2026){
+		next.setEnabled(false);
+	}
+	
+	
 	String[] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
 	labelM.setText(months[month]);
 
