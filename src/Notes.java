@@ -30,6 +30,7 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Text;
 
 import javafx.geometry.Point3D;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Shape3D;
 import jdk.internal.dynalink.beans.StaticClass;
 import sun.net.www.content.audio.x_aiff;
@@ -37,6 +38,7 @@ import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 
 import javax.imageio.ImageTypeSpecifier;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -79,7 +81,7 @@ public class Notes {
 	private JPanel p7;
 	private JButton yes = new JButton("Yes, definitely!");
 	private JButton no = new JButton("No, forget it.");
-	protected HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
+	private HashMap<String, NoteSave> hmap = new HashMap<String, NoteSave>();
 	private static String bHint = "Start typing...";
 	private static String tHint = "Note Title";
 	private JPanel main; // Change back to JPanel - JFrame is just for testing!!!
@@ -91,7 +93,12 @@ public class Notes {
 	private JPanel p12;
 	private JPanel addNote;
 	private JButton addNoteL;
-	private JPanel center;
+	private JPanel south;
+	private JPanel c1;
+	private JPanel c2;
+	private JButton tList;
+	private JButton dList;
+	private JScrollPane listScroll;
 
 	/*public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -146,28 +153,25 @@ public class Notes {
 		north.add(addNote, BorderLayout.EAST);
 		north.setBackground(Color.WHITE);
 		
-		center = new JPanel();
+		Notes x = new Notes();
 
 		addN.addActionListener(new ActionListener() { // Calls addNoteScreen() when user clicks on "Add Note" button.
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Notes x = new Notes();
 				x.noteScreen("", "");
-				center.add(x.addNote());
+				main.add(x.saveNote(), BorderLayout.SOUTH);
 			}
 		});
 		
-		// Need to get this to show up??
-		main.setLayout(new BorderLayout());
-		main.add(center, BorderLayout.SOUTH);
+		//main.add(center, BorderLayout.SOUTH);
 		main.add(north, BorderLayout.NORTH);
 		main.setBackground(Color.WHITE);
 		main.setVisible(true);
 		return main;
 	}
 
-	public void saveNote() { //To add completed note on screen.
+	public JPanel saveNote() { //To add completed note on screen.
 		t = title.getText();
 		b = body.getText();
 		s = new NoteSave(t, b);
@@ -182,6 +186,19 @@ public class Notes {
 		}catch(IOException i) {
 			i.printStackTrace();
 		}
+		
+		south = new JPanel();
+		c1 = new JPanel(); // Note titles.
+		c2 = new JPanel(); // Delete buttons.
+		tList = new JButton(t);
+		
+		c1.setLayout(new BoxLayout(c1, BoxLayout.Y_AXIS));
+		c1.add(tList);
+		
+		south.add(c1, BorderLayout.WEST);
+		south.add(c2, BorderLayout.EAST);
+		south.setVisible(true);
+		return south;
 	}
 
 	public JPanel addNote() {
