@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.ComboBoxModel;
@@ -45,7 +42,7 @@ public class Event implements ActionListener{
 	protected JComboBox min;
 	protected JComboBox meridium;
 	private CalSave w = new CalSave();
-	protected HashMap<String, String> hm;
+	private HashMap<String, String> hm;
 	private int y;
 	private int h;
 	private String mi;
@@ -60,7 +57,7 @@ public class Event implements ActionListener{
 	private String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	public static final int PROGRAM_WIDTH = 480;
 	public static final int PROGRAM_HEIGHT = 640;
-
+	
 	public static void main(String[] args){
 		java.awt.EventQueue.invokeLater(new Runnable(){
 			@Override
@@ -71,11 +68,11 @@ public class Event implements ActionListener{
 		});
 
 	}
-
+	
 	public void drawPanel(){ 
 		//adding the days to the combo box
 		days = new JComboBox();	
-		days.addItem("Day");;
+		days.addItem("Day");
 		for(int i= 1; i < 32; i++){
 			days.addItem(i);
 		}
@@ -121,11 +118,7 @@ public class Event implements ActionListener{
 			months.addItem(month[i]);
 		}
 		title.setForeground(Color.BLUE);
-		//Description.setForeground(Color.blue);
-		//Description.setHorizontalAlignment(JLabel.CENTER);
 		text = new JTextArea(5, 20);
-		//ta = new JTextArea(5, 20);
-		//ta.setPreferredSize(new Dimension(450, 300));
 		JScrollPane scrollpane = new JScrollPane(text);
 		text.setLineWrap(true);
 		back = new JButton("Cancel");
@@ -158,38 +151,39 @@ public class Event implements ActionListener{
 		frm.setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 		frm.pack();
 		frm.setVisible(true);
-
+		
 		months.addActionListener(this);
 		days.addActionListener(this);
 		years.addActionListener(this);
 		hour.addActionListener(this);
 		min.addActionListener(this);
 		meridium.addActionListener(this);
-
+		
 		confirm.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				mt = (String)months.getSelectedItem();
-				d = (int)days.getSelectedItem();
-				y = (int)years.getSelectedItem();
-				h = (int)hour.getSelectedItem();
-				mi = (String)min.getSelectedItem();
-				md = (String)meridium.getSelectedItem();
-
-				f = text.getText();
-
-				w.month = mt;
-				w.day = d;
-				w.year = y;
-				w.hr = h;
-				w.min = mi;
-				w.meridium = md;
-				w.event = f;
+		        mt = (String)months.getSelectedItem();
+		        d = (int)days.getSelectedItem();
+		        y = (int)years.getSelectedItem();
+		        h = (int)hour.getSelectedItem();
+		        mi = (String)min.getSelectedItem();
+		        md = (String)meridium.getSelectedItem();
+		        
+		        f = text.getText();
+		        
+		        w.month = mt;
+		        w.day = d;
+		        w.year = y;
+		        w.hr = h;
+		        w.min = mi;
+		        w.meridium = md;
+		        w.event = f;
 				save();
-				modify();
+				eventScreen(f);
 				frm.dispose();
 			}
 		});
-
+		
+		
 		back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				frm.dispose();
@@ -200,26 +194,27 @@ public class Event implements ActionListener{
 	public String event(){
 		return f;
 	}
-
+		
 	public void save(){
 		hm = new HashMap<String, String>();
 		String n = filecount + ".ser";
 		hm.put(f, n);
-
+		
+		
 		try{
-			FileOutputStream fileOut = new FileOutputStream(f + ".ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(hm);
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized data saved");
+			FileOutputStream fileOut = new FileOutputStream(n);
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(w);
+		out.close();
+		fileOut.close();
+		System.out.println("Serialized data saved");
 		}catch(IOException i){
 			i.printStackTrace();
 		}
 		filecount++;
 	}
 
-
+	
 	public void popwindow(){
 		JFrame pop1 = new JFrame();
 		pop1.setPreferredSize(new Dimension(400, 200));
@@ -239,20 +234,20 @@ public class Event implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pop1.dispose();
-
+				
 			}
-
+			
 		});
-
+		
 	}
-
-	public void deserialize(){
+	
+	public void deserialize(String event){
 		String file = hm.get(f);
 		w = null;
 		try{
-			FileInputStream fileIn =  new FileInputStream(f + ".ser");
+			FileInputStream fileIn =  new FileInputStream(file);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			hm = (HashMap)in.readObject();
+			w = (CalSave) in.readObject();
 			in.close();
 			fileIn.close();
 		}catch(IOException i){
@@ -263,7 +258,6 @@ public class Event implements ActionListener{
 			c.printStackTrace();
 			return;
 		}
-		
 		System.out.println("event: " + w.event);
 		System.out.println("day: " + w.day);
 		f = w.event;
@@ -273,11 +267,11 @@ public class Event implements ActionListener{
 		mi = w.min;
 		md = w.meridium;
 		mt = w.month;
-
+		
 	}
-
-	public void modify(){
-		deserialize();
+	
+	public void eventScreen(String event){
+		deserialize(event);
 		JFrame pop2 = new JFrame();
 		pop2.setPreferredSize(new Dimension(450, 450));
 		JPanel p4 = new JPanel();
@@ -286,15 +280,17 @@ public class Event implements ActionListener{
 		load.setFont(new Font("Calibri", Font.PLAIN, 40));
 		p4.add(load);
 		JButton ok = new JButton("OK");
-		JButton modify = new JButton("Edit");
+		//JButton modify = new JButton("Edit");
 		JPanel p5 = new JPanel();
 		p5.setPreferredSize(new Dimension(50, 50));
-		p5.add(modify);
+		//p5.add(modify);
 		p5.add(ok);
 		JPanel p6 = new JPanel();
 		p6.setPreferredSize(new Dimension(200, 200));
-		JLabel d1 = new JLabel("Date: " + mt + d + ", " + y);
+		JLabel d1 = new JLabel("Date: " + mt + " " + d + ", " + y);
+		d1.setFont(new Font("Calibri", Font.PLAIN, 40));
 		JLabel d2 = new JLabel("Time: " + h + ":" + mi);
+		d2.setFont(new Font("Calibri", Font.PLAIN, 40));
 		p6.add(d1, BorderLayout.SOUTH);
 		p6.add(d2, BorderLayout.CENTER);
 		pop2.getContentPane().add(p5, BorderLayout.SOUTH);
@@ -307,27 +303,76 @@ public class Event implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pop2.dispose();
-
+				
 			}
-
+			
 		});
-		modify.addActionListener(new ActionListener() {
+		/*modify.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pop2.dispose();
-
+				
 			}
+			
+		});*/
+		
+	}
+	
+	public void delete(String event){
+		JFrame pop3 = new JFrame();
+		pop3.setPreferredSize(new Dimension(100, 100));
+		JLabel q = new JLabel("Do you wish to delete this event permenantly?");
+		JPanel b = new JPanel();
+		b.add(back);
+		b.add(confirm);
+		pop3.add(q, BorderLayout.CENTER);
+		pop3.add(b, BorderLayout.SOUTH);
+		pop3.pack();
+		pop3.setVisible(true);
+		confirm.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				hm.remove(event);
+				pop3.dispose();
+				JFrame n = new JFrame();
+				n.setPreferredSize(new Dimension(100, 100));
+				JLabel r = new JLabel("The event (" + event + ") was permenantly deleted.");
+				JButton c = new JButton("Ok");
+				n.add(r, BorderLayout.NORTH);
+				n.add(c, BorderLayout.SOUTH);
+				n.pack();
+				n.setVisible(true);
+				c.addActionListener(new ActionListener(){
 
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						n.dispose();
+						
+					}
+					
+				});
+		}
 		});
+		
+		back.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				pop3.dispose();
+		
+		}
+		});
+		
+	}
+	
+	public void Screen(String event){
+		eventScreen(event);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 
 
-
+	
 }
 
