@@ -74,7 +74,7 @@ public class Event implements ActionListener{
 		int num2 = m1;
 		String m2 = month[num2];
 		String num3 = "" + year;
-		JLabel t1 = new JLabel(num);
+		JLabel t1 = new JLabel(num + ", ");
 		JLabel t2 = new JLabel(m2);
 		JLabel t3 = new JLabel(num3);
 
@@ -122,8 +122,8 @@ public class Event implements ActionListener{
 		confirm.setForeground(Color.BLUE);
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
-		s.add(t1, BorderLayout.WEST);
-		s.add(t2, BorderLayout.CENTER);
+		s.add(t2, BorderLayout.WEST);
+		s.add(t1, BorderLayout.CENTER);
 		s.add(t3, BorderLayout.EAST);
 		s.add(hour, BorderLayout.SOUTH);
 		s.add(min, BorderLayout.SOUTH);
