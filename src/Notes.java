@@ -371,10 +371,7 @@ public class Notes {
 							});
 						}
 						else {
-							saveNote(); // The note is saved.
 							pop2.dispose();
-							frm.dispose();
-							// Both frames are disposed.
 						}
 					}
 				});
