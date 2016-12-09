@@ -64,6 +64,7 @@ private GLine newline;
 private CalSave calendarSave = new CalSave();
 private Event ab = new Event();
 private String event = null;
+private static int temp;
 
 static int numDays;
 static int monthDays;
@@ -172,16 +173,19 @@ public void testMain(){
 			JTable selected = (JTable)e.getSource();
 			int row = selected.getSelectedRow();
 			int column = selected.getSelectedColumn();
+			temp = (int) tableCalendar.getValueAt(row, column);
 			//go to add event
 				
 			
-				ab.drawPanel(getRealDay(), getCurrentYear(), getCurrentMonth());
+				ab.drawPanel(temp, getCurrentYear(), getCurrentMonth());
 				event = ab.event();
 			
 			
 		}
 		
 	});	
+	
+
 		
 	tableCalendar.setColumnSelectionAllowed(false);
 	tableCalendar.setRowSelectionAllowed(false);
@@ -230,6 +234,7 @@ public static void newCalendarScreen(int month, int year){
 		int row = new Integer((i+monthDays-2)/7);
 		int col = (i+monthDays-2)%7;
 		calendarTableDefault.setValueAt(i, row, col);
+		
 	}
 	
 	labelSun.setText("Sunday");
@@ -254,9 +259,9 @@ int getNumDays(){
 	return numDays;				//returns current day for event class
 }
 
-int getRealDay(){
-	return realDay;
-}
+
+
+
 
 
 
