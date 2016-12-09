@@ -180,7 +180,7 @@ public void testMain(){
 			//go to add event
 				
 			
-				ab.drawPanel();
+				ab.drawPanel(getRealDay(), getCurrentYear(), getCurrentMonth());
 				event = ab.event();
 			
 			

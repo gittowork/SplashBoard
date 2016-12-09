@@ -63,19 +63,19 @@ public class Event implements ActionListener{
 			@Override
 			public void run(){
 				Event t = new Event();
-				t.drawPanel();
+				//t.drawPanel();
 			}
 		});
 
 	}
 	
-	public void drawPanel(){ 
-		String num = "n";//"" + c.getRealDay();
-		//int num2 = c.getCurrentMonth();
-		String m1 = "n";//month[num2];
-		String num3 = "n"; //"" + c.getCurrentYear();
+	public void drawPanel(int day, int year, int m1){ 
+		String num = "" + day;
+		int num2 = m1;
+		String m2 = month[num2];
+		String num3 = "" + year;
 		JLabel t1 = new JLabel(num);
-		JLabel t2 = new JLabel(m1);
+		JLabel t2 = new JLabel(m2);
 		JLabel t3 = new JLabel(num3);
 
 		
@@ -153,9 +153,9 @@ public class Event implements ActionListener{
 		        
 		        f = text.getText();
 		        
-		        w.month = mt;//m1;
-		        w.day = d;//c.getRealDay();
-		        w.year = y;//c.getCurrentYear();
+		        w.month = m2;
+		        w.day = day;
+		        w.year = year;
 		        w.hr = h;
 		        w.min = mi;
 		        w.meridium = md;
