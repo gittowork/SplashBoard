@@ -61,7 +61,7 @@ private static JButton prev;
 private static JButton next;
 private JButton go2; //when clicking here on yearScreen, will open up month and day panels of that year 
 private GLine newline;
-
+private CalSave calendarSave = new CalSave();
 private Event ab = new Event();
 private String event = null;
 
@@ -260,7 +260,6 @@ int getRealDay(){
 
 
 
-
 class buttonPrev implements ActionListener{
 	public void actionPerformed (ActionEvent e){
 		if (currentMonth == 0){
@@ -309,6 +308,13 @@ class yearBoxListener implements ActionListener{
 	}
 }
 
+/*class eventDisplay extends DefaultTableModel{
+	String e = in.
+	if(currentDay == calendarSave.getDay()){
+		calendarTableDefault.setValueAt(, row, col);
+	}
+	
+}*/
 
 
 public void yearScreen(){
