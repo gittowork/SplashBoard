@@ -174,6 +174,7 @@ public void testMain(){
 			int row = selected.getSelectedRow();
 			int column = selected.getSelectedColumn();
 			temp = (int) tableCalendar.getValueAt(row, column);
+			tableCalendar.setValueAt(event, row, column);
 			//go to add event
 				
 			
