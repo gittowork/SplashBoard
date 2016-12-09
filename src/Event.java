@@ -52,7 +52,6 @@ public class Event implements ActionListener{
 	private String f;
 	//CalendarClass c = new CalendarClass();;
 	String z = null;
-	//private JTextField 
 	private JLabel title = new JLabel("Event:");
 	private JLabel Description = new JLabel("Description");
 	private String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -64,21 +63,23 @@ public class Event implements ActionListener{
 			@Override
 			public void run(){
 				Event t = new Event();
-				t.drawPanel();
+				//t.drawPanel();
 			}
 		});
 
 	}
 	
-	public void drawPanel(){ 
-		String num = "n";//"" + c.getRealDay();
-		//int num2 = c.getCurrentMonth();
-		String m1 = "n";//month[num2];
-		String num3 = "n"; //"" + c.getCurrentYear();
-		JLabel t1 = new JLabel(num);
-		JLabel t2 = new JLabel(m1);
+	public void drawPanel(int day, int year, int m1){ 
+		String num = "" + day;
+		int num2 = m1;
+		String m2 = month[num2];
+		String num3 = "" + year;
+		JLabel t1 = new JLabel(num + ", ");
+		JLabel t2 = new JLabel(m2);
 		JLabel t3 = new JLabel(num3);
-
+		t1.setForeground(Color.WHITE);
+		t2.setForeground(Color.WHITE);
+		t3.setForeground(Color.WHITE);
 		
 		//adding the hours to the combo box
 		hour = new JComboBox();
@@ -123,8 +124,8 @@ public class Event implements ActionListener{
 		confirm.setForeground(Color.BLUE);
 		o.add(title, BorderLayout.WEST);
 		o.add(text, BorderLayout.CENTER);
-		s.add(t1, BorderLayout.WEST);
-		s.add(t2, BorderLayout.CENTER);
+		s.add(t2, BorderLayout.WEST);
+		s.add(t1, BorderLayout.CENTER);
 		s.add(t3, BorderLayout.EAST);
 		s.add(hour, BorderLayout.SOUTH);
 		s.add(min, BorderLayout.SOUTH);
@@ -154,9 +155,9 @@ public class Event implements ActionListener{
 		        
 		        f = text.getText();
 		        
-		        w.month = mt;
-		        w.day = d;
-		        w.year = y;
+		        w.month = m2;
+		        w.day = day;
+		        w.year = year;
 		        w.hr = h;
 		        w.min = mi;
 		        w.meridium = md;
@@ -291,15 +292,7 @@ public class Event implements ActionListener{
 			}
 			
 		});
-		/*modify.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pop2.dispose();
-				
-			}
-			
-		});*/
 		
 	}
 	

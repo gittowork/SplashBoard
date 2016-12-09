@@ -41,7 +41,7 @@ import java.io.ObjectOutputStream;
 
 public class Notes {
 	protected String back;
-	private JFrame frm = new JFrame();
+	private JFrame frm;
 	protected static int PROGRAM_HEIGHT = 1280; // Standard largest preferred size of screen.
 	protected static int PROGRAM_WIDTH = 1024;
 	private JPanel p1;
@@ -81,9 +81,6 @@ public class Notes {
 	private JPanel c2;
 	private JButton dList;
 	private JButton vList;
-	private int noteCount;
-	private JScrollPane listScroll;
-	private Box box;
 
 	/*public static void main(String[] args) {
 		// This is equivalent to "run".
@@ -145,6 +142,7 @@ public class Notes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				noteScreen("", "");	
+				makeButtonPanel();
 			}
 		});
 		
@@ -157,8 +155,8 @@ public class Notes {
 	public void saveNote() { //To add completed note on screen.
 		t = title.getText();
 		b = body.getText();
-		makeButtonPanel();
 		s = new NoteSave(t, b);
+		makeButtons(t);
 		hmap.put(t, s);
 
 		try { // Serializing object from hashmap.
@@ -178,6 +176,26 @@ public class Notes {
 		
 		c1.add(vList);
 		c2.add(dList);
+		
+		vList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editNote(t);
+				main.revalidate();
+			}
+		});
+		
+		dList.addActionListener(new ActionListener() { // Clicking "delete" will remove note.
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteNote(t);
+				c2.remove(dList);
+				c1.remove(vList);
+				main.revalidate();
+			}
+		});
 
 		main.revalidate();
 	}
@@ -187,19 +205,23 @@ public class Notes {
 		south.setLayout(new BorderLayout());
 		c1 = new JPanel(); // Note titles.
 		c2 = new JPanel(); // Delete buttons.
-		makeButtons(t);
 		
-		south.add(Box.createHorizontalGlue());
 		c1.setLayout(new BoxLayout(c1, BoxLayout.Y_AXIS));
 		c2.setLayout(new BoxLayout(c2, BoxLayout.Y_AXIS));
 		
+		south.add(Box.createHorizontalGlue());
+		south.add(Box.createHorizontalGlue());
 		south.add(c1, BorderLayout.WEST);
-		south.add(c2, BorderLayout.EAST); 
+		south.add(Box.createHorizontalGlue());
+		south.add(c2, BorderLayout.EAST);
+		south.add(Box.createHorizontalGlue());
+		south.add(Box.createHorizontalGlue());
 		south.setBackground(Color.WHITE);
 		main.add(south, BorderLayout.SOUTH);
 	}
 
 	public void noteScreen(String t, String b) {
+		frm = new JFrame();
 		frm.setPreferredSize(new Dimension(PROGRAM_HEIGHT, PROGRAM_WIDTH)); //Screen dimension.
 
 		title.setText(t);
@@ -349,10 +371,7 @@ public class Notes {
 							});
 						}
 						else {
-							saveNote(); // The note is saved.
 							pop2.dispose();
-							frm.dispose();
-							// Both frames are disposed.
 						}
 					}
 				});
@@ -368,10 +387,8 @@ public class Notes {
 			}
 		});
 
-		frm.getContentPane().revalidate();
 		frm.pack(); // Packs all content onto screen; this is necessary in order for your content to appear when you run. 
 		frm.setVisible(true);
-		frm.getContentPane().setForeground(Color.WHITE); 
 
 	}
 
@@ -395,8 +412,8 @@ public class Notes {
 		Iterator iterator = set.iterator();
 		while(iterator.hasNext()) {
 			Map.Entry mentry = (Map.Entry)iterator.next();
-			System.out.print("key: "+ mentry.getKey() + " & Value: ");
-			System.out.println(mentry.getValue());
+			//System.out.print("key: "+ mentry.getKey() + " & Value: ");
+			//System.out.println(mentry.getValue());
 			if(mentry.getKey().equals(t)) {
 				noteScreen(mentry.getKey().toString(), mentry.getValue().toString());
 			}
