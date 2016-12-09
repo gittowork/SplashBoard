@@ -77,7 +77,9 @@ public class Event implements ActionListener{
 		JLabel t1 = new JLabel(num + ", ");
 		JLabel t2 = new JLabel(m2);
 		JLabel t3 = new JLabel(num3);
-
+		t1.setForeground(Color.WHITE);
+		t2.setForeground(Color.WHITE);
+		t3.setForeground(Color.WHITE);
 		
 		//adding the hours to the combo box
 		hour = new JComboBox();
