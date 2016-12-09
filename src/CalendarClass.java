@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import acm.program.*;
@@ -65,10 +66,11 @@ private CalSave calendarSave = new CalSave();
 private Event ab = new Event();
 private String event = null;
 private static int temp;
-
+Timer myTimer;
 static int numDays;
 static int monthDays;
-
+int row;
+int column;
 private Notes n;
 
 
@@ -170,16 +172,26 @@ public void testMain(){
 	
 	tableCalendar.addMouseListener(new MouseAdapter(){
 		public void mousePressed(MouseEvent e){
+		
 			JTable selected = (JTable)e.getSource();
-			int row = selected.getSelectedRow();
-			int column = selected.getSelectedColumn();
+			row = selected.getSelectedRow();
+			column = selected.getSelectedColumn();
 			temp = (int) tableCalendar.getValueAt(row, column);
-			tableCalendar.setValueAt(event, row, column);
+			
 			//go to add event
 				
 			
 				ab.drawPanel(temp, getCurrentYear(), getCurrentMonth());
 				event = ab.event();
+			//	tableCalendar.setValueAt(temp +" " + event, row, column);
+			//	tableCalendar.editCellAt(row, column);
+				
+			
+			
+
+					
+				
+			
 			
 			
 		}
@@ -199,6 +211,18 @@ public void testMain(){
 	newCalendarScreen(currentMonth, currentYear);
 	
 
+}
+
+public void thisTimer(){
+	myTimer = new Timer(1000, this);
+	myTimer.setInitialDelay(3000);
+	myTimer.start();
+
+		
+		
+		myTimer.stop();
+		
+		
 }
 
 public static void newCalendarScreen(int month, int year){
